@@ -1,9 +1,18 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.movie;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
+@Entity
 public class Movie {
-    private long id;
+    @Id
+    @GeneratedValue(strategy
+            = GenerationType.AUTO)
+    private Integer id;
     private String title;
     private int length;
     private LocalDate releasedDate;
@@ -16,7 +25,7 @@ public class Movie {
         this.releasedDate = releasedDate;
     }
 
-    public Movie(long id, String title, int length, LocalDate releasedDate) {
+    public Movie(Integer id, String title, int length, LocalDate releasedDate) {
         this.id = id;
         this.title = title;
         this.length = length;
@@ -27,7 +36,7 @@ public class Movie {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

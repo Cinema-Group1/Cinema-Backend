@@ -3,24 +3,19 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
-@RequestMapping(path = "api/v1/movie")
+@RequestMapping(path = "/movie")
 public class MovieController {
 
-    private final MovieService movieService;
-
     @Autowired
-    public MovieController(MovieService movieService) {
-        this.movieService = movieService;
-    }
+    private com.wwi21sebgroup1.CinemaTicketReservationSystem.movie.MovieRepository movieRepository;
 
     @GetMapping
-    public List<Movie> getMovies() {
-        return movieService.getMovies();
+    public @ResponseBody Iterable<Movie> getMovies() {
+        return movieRepository.findAll();
     }
 
 }
