@@ -1,4 +1,4 @@
-package com.wwi21sebgroup1.CinemaTicketReservationSystem.user;
+package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

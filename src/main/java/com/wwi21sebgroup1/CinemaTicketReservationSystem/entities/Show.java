@@ -1,6 +1,6 @@
-package com.wwi21sebgroup1.CinemaTicketReservationSystem.show;
+package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.movie.Movie;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Movie;
 
 import javax.persistence.*;
 
@@ -19,6 +19,10 @@ public class Show {
     private java.sql.Time endTime;
     @ManyToOne
     private Movie movie;
+    @ManyToOne
+    private CinemaHall cinemaHall;
+    @ManyToOne
+    private SeatingPlan seatingPlan;
 
     public Show(){}
 
@@ -27,12 +31,15 @@ public class Show {
                 java.sql.Date endDate,
                 java.sql.Time startTime,
                 java.sql.Time endTime,
-                Movie movie){
+                Movie movie,
+                CinemaHall cinemaHall){
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.startTime = startTime;
         this.endTime = endTime;
         this.movie = movie;
+        this.cinemaHall = cinemaHall;
+        this.seatingPlan = cinemaHall.getSeatingPlanTemplate().getSeatingPlan();
     }
 }
