@@ -1,11 +1,6 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.time.LocalDate;
+import javax.persistence.*;
 
 @Entity
 public class Movie {
@@ -15,21 +10,17 @@ public class Movie {
     private Integer id;
     private String title;
     private int length;
-    private LocalDate releasedDate;
+    private java.sql.Date releasedDate;
+    @ManyToOne
+    private Genre genre;
 
     public Movie() {}
 
-    public Movie(String title, int length, LocalDate releasedDate) {
+    public Movie(String title, int length, java.sql.Date releasedDate, Genre genre) {
         this.title = title;
         this.length = length;
         this.releasedDate = releasedDate;
-    }
-
-    public Movie(Integer id, String title, int length, LocalDate releasedDate) {
-        this.id = id;
-        this.title = title;
-        this.length = length;
-        this.releasedDate = releasedDate;
+        this.genre = genre;
     }
 
     public long getId() {
@@ -56,12 +47,20 @@ public class Movie {
         this.length = length;
     }
 
-    public LocalDate getReleasedDate() {
+    public java.sql.Date getReleasedDate() {
         return releasedDate;
     }
 
-    public void setReleasedDate(LocalDate releasedDate) {
+    public void setReleasedDate(java.sql.Date releasedDate) {
         this.releasedDate = releasedDate;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     @Override

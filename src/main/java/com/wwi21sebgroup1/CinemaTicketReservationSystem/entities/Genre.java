@@ -1,6 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Genre {
@@ -11,15 +12,14 @@ public class Genre {
 
     private String name;
     private String description;
-    @ManyToOne
-    private Movie currentMoviesListed;
+    @OneToMany
+    private List<Movie> currentMoviesListed;
 
     public Genre(){}
 
-    public Genre(String name, String description, Movie currentMoviesListed) {
+    public Genre(String name, String description) {
         this.name = name;
         this.description = description;
-        this.currentMoviesListed = currentMoviesListed;
     }
 
     public Integer getId() {
@@ -46,11 +46,11 @@ public class Genre {
         this.description = description;
     }
 
-    public Movie getCurrentMoviesListed() {
+    public List<Movie> getCurrentMoviesListed() {
         return currentMoviesListed;
     }
 
-    public void setCurrentMoviesListed(Movie currentMoviesListed) {
+    public void setCurrentMoviesListed(List<Movie> currentMoviesListed) {
         this.currentMoviesListed = currentMoviesListed;
     }
 }

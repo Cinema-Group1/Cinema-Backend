@@ -12,15 +12,13 @@ public class Seat {
             = GenerationType.AUTO)
     private Integer id;
 
-    private int row;
-    private int number;
-    private double price;
+    private String number;
+    private int price;
     private boolean occupied;
 
     public Seat(){}
 
-    public Seat(int row, int number, double price, boolean occupied) {
-        this.row = row;
+    public Seat(String number, int price, boolean occupied) {
         this.number = number;
         this.price = price;
         this.occupied = occupied;
@@ -34,27 +32,19 @@ public class Seat {
         this.id = id;
     }
 
-    public int getRow() {
-        return row;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

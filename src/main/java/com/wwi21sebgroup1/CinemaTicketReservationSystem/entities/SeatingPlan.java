@@ -17,9 +17,9 @@ public class SeatingPlan {
 
     public SeatingPlan(){}
 
-    public SeatingPlan(SeatingPlanTemplate seatingPlanTemplate, List<Seat> seats) {
+    public SeatingPlan(SeatingPlanTemplate seatingPlanTemplate) {
         this.seatingPlanTemplate = seatingPlanTemplate;
-        this.seats = seats;
+        //TODO: create SeatingPlan based on template
     }
 
     public Integer getId() {

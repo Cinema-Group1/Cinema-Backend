@@ -1,11 +1,9 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Movie;
-
 import javax.persistence.*;
 
 @Entity
-public class Show {
+public class Showing {
 
     @Id
     @GeneratedValue(strategy
@@ -24,15 +22,15 @@ public class Show {
     @ManyToOne
     private SeatingPlan seatingPlan;
 
-    public Show(){}
+    public Showing(){}
 
-    public Show(String title,
-                java.sql.Date startDate,
-                java.sql.Date endDate,
-                java.sql.Time startTime,
-                java.sql.Time endTime,
-                Movie movie,
-                CinemaHall cinemaHall){
+    public Showing(String title,
+                   java.sql.Date startDate,
+                   java.sql.Date endDate,
+                   java.sql.Time startTime,
+                   java.sql.Time endTime,
+                   Movie movie,
+                   CinemaHall cinemaHall){
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -40,6 +38,6 @@ public class Show {
         this.endTime = endTime;
         this.movie = movie;
         this.cinemaHall = cinemaHall;
-        this.seatingPlan = cinemaHall.getSeatingPlanTemplate().getSeatingPlan();
+        this.seatingPlan = new SeatingPlan(cinemaHall.getSeatingPlanTemplate());
     }
 }

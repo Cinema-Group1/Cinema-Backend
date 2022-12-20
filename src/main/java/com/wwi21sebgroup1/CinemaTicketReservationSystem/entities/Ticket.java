@@ -11,7 +11,7 @@ public class Ticket {
     private Integer id;
 
     @ManyToOne
-    private Show show;
+    private Showing show;
     @OneToMany
     private List<Seat> seats;
     private double price;
