@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path="/show")
+@RequestMapping(path="/showing")
 public class ShowingController {
     @Autowired
     private ShowingRepository showingRepository;
 
-    @GetMapping("/all_shows")
+    @GetMapping("/all")
     public @ResponseBody Iterable<Showing> getShowings() {
         return showingRepository.findAll();
     }

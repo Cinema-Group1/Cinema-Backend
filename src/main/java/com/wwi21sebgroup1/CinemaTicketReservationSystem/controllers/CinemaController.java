@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/Cinema")
+@RequestMapping("/cinema")
 public class CinemaController {
     @Autowired
     private CinemaRepository cinemaRepository;

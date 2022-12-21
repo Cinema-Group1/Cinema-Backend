@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/SeatNumber")
+@RequestMapping("/seat_number")
 public class SeatNumberController {
     @Autowired
     SeatNumberRepository seatNumberRepository;

@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/Seat")
+@RequestMapping("/seat")
 public class SeatController {
     @Autowired
     private SeatRepository seatRepository;
-    @GetMapping
+    @GetMapping("/all")
     public @ResponseBody Iterable<Seat> getSeats(){
         return seatRepository.findAll();
     }

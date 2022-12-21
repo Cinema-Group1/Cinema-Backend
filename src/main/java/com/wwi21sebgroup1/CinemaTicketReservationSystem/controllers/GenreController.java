@@ -11,10 +11,18 @@ public class GenreController {
     @Autowired
     private GenreRepository genreRepository;
 
-    @GetMapping("/add")
-    public void addGenre(){
-        genreRepository.save(new Genre("Horror", "spooky"));
+    @PutMapping("/add")
+    //Adding a Genre specified via the RequestBody.
+    //Request Body takes in a JSON File and translates it to a Java Object.
+    public void addGenre(@RequestBody Genre genre){
+        genreRepository.save(genre);
     }
+
+    @DeleteMapping("/delete_id={id}")
+    public void deleteGenre(@PathVariable Integer id){
+        genreRepository.deleteById(id);
+    }
+
     @GetMapping("/all")
     public @ResponseBody Iterable<Genre> getGenres(){
         return genreRepository.findAll();
