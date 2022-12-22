@@ -62,14 +62,4 @@ public class Movie {
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
-
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", length=" + length +
-                ", releasedDate=" + releasedDate +
-                '}';
-    }
 }

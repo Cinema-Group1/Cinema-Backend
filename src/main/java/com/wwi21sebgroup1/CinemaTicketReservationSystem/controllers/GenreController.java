@@ -18,13 +18,21 @@ public class GenreController {
         genreRepository.save(genre);
     }
 
-    @DeleteMapping("/delete_id={id}")
-    public void deleteGenre(@PathVariable Integer id){
-        genreRepository.deleteById(id);
-    }
-
     @GetMapping("/all")
     public @ResponseBody Iterable<Genre> getGenres(){
         return genreRepository.findAll();
+    }
+
+    @PutMapping("/update:{oldGenreName}")
+    public void updateGenre(@PathVariable String oldGenreName, @RequestBody Genre updatedGenre){
+        Genre oldGenre = genreRepository.findByName(oldGenreName);
+        updatedGenre.setName(oldGenre.getName());
+        genreRepository.save(updatedGenre);
+    }
+
+    @DeleteMapping("/delete:{genreName}")
+    public void deleteGenre(@PathVariable String genreName){
+        Genre toBeDeleted = genreRepository.findByName(genreName);
+        genreRepository.delete(toBeDeleted);
     }
 }

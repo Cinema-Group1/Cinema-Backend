@@ -6,10 +6,6 @@ import java.util.List;
 @Entity
 public class Genre {
     @Id
-    @GeneratedValue(strategy
-            = GenerationType.AUTO)
-    private Integer id;
-
     private String name;
     private String description;
     @OneToMany
@@ -20,14 +16,6 @@ public class Genre {
     public Genre(String name, String description) {
         this.name = name;
         this.description = description;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {
