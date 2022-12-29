@@ -10,6 +10,7 @@ public class CinemaHall {
     private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "cinema_id", referencedColumnName = "id")
     private Cinema cinema;
     private String name;
     @OneToOne

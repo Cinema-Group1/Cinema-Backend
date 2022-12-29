@@ -1,5 +1,8 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,7 +14,8 @@ public class Movie {
     private String title;
     private int length;
     private java.sql.Date releasedDate;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_name", referencedColumnName = "name")
     private Genre genre;
 
     public Movie() {}
@@ -23,7 +27,7 @@ public class Movie {
         this.genre = genre;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 

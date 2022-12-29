@@ -1,15 +1,12 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Genre {
     @Id
     private String name;
     private String description;
-    @OneToMany
-    private List<Movie> currentMoviesListed;
 
     public Genre(){}
 
@@ -32,13 +29,5 @@ public class Genre {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Movie> getCurrentMoviesListed() {
-        return currentMoviesListed;
-    }
-
-    public void setCurrentMoviesListed(List<Movie> currentMoviesListed) {
-        this.currentMoviesListed = currentMoviesListed;
     }
 }

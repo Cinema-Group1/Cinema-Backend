@@ -11,9 +11,9 @@ public class GenreController {
     @Autowired
     private GenreRepository genreRepository;
 
-    @PutMapping("/add")
     //Adding a Genre specified via the RequestBody.
     //Request Body takes in a JSON File and translates it to a Java Object.
+    @PutMapping("/add")
     public void addGenre(@RequestBody Genre genre){
         genreRepository.save(genre);
     }
@@ -31,7 +31,7 @@ public class GenreController {
     }
 
     @DeleteMapping("/delete:{genreName}")
-    public void deleteGenre(@PathVariable String genreName){
+    public void deleteGenre(@PathVariable String genreName) {
         Genre toBeDeleted = genreRepository.findByName(genreName);
         genreRepository.delete(toBeDeleted);
     }
