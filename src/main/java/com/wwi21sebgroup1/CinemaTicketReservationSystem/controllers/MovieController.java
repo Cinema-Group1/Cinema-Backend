@@ -1,6 +1,8 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Genre;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Movie;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.MovieRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.GenreRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +18,24 @@ public class MovieController {
     @Autowired
     private GenreRepository genreRepository;
 
-    @PutMapping("/add")
-    public void addMovie(@RequestBody Movie movie){
-        //Genre genre = genreRepository.findByName(movie.getGenre().getName());
-        movieRepository.save(movie);
-        //movie.getGenre().getCurrentMoviesListed().add(movie);
-        //genreRepository.save(genre);
+    @PostMapping("/add")
+    public void addMovie(@RequestBody MovieRequest movieRequest){
+        Genre genre = genreRepository.findByName(movieRequest.getGenreName());
+        movieRepository.save(new Movie( movieRequest.getTitle(),
+                                        movieRequest.getLength(),
+                                        movieRequest.getReleasedDate(),
+                                        genre));
     }
 
-    @PutMapping("/update:{oldMovieId}")
-    public void updateMovie(@PathVariable Integer oldMovieId, @RequestBody Movie updatedMovie){
+    @PostMapping("/update:{oldMovieId}")
+    public void updateMovie(@PathVariable Integer oldMovieId, @RequestBody MovieRequest movieRequest){
         try{
             Movie oldMovie = movieRepository.findById(oldMovieId).get();
+            Genre genre = genreRepository.findByName(movieRequest.getGenreName());
+            Movie updatedMovie = new Movie( movieRequest.getTitle(),
+                                            movieRequest.getLength(),
+                                            movieRequest.getReleasedDate(),
+                                            genre);
             updatedMovie.setId(oldMovie.getId());
             movieRepository.save(updatedMovie);
         } catch(NoSuchElementException exception){

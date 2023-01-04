@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class SeatController {
     @Autowired
     private SeatRepository seatRepository;
+
+    public void addSeat(Seat seat){
+        seatRepository.save(seat);
+    }
     @GetMapping("/all")
     public @ResponseBody Iterable<Seat> getSeats(){
         return seatRepository.findAll();

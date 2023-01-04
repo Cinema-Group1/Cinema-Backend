@@ -1,5 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -14,13 +16,14 @@ public class Movie {
     private String title;
     private int length;
     private java.sql.Date releasedDate;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "genre_name", referencedColumnName = "name")
     private Genre genre;
 
     public Movie() {}
 
     public Movie(String title, int length, java.sql.Date releasedDate, Genre genre) {
+        super();
         this.title = title;
         this.length = length;
         this.releasedDate = releasedDate;

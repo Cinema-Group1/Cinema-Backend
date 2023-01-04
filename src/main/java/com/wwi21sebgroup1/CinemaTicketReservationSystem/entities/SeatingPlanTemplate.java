@@ -9,14 +9,11 @@ public class SeatingPlanTemplate {
     @GeneratedValue(strategy
             = GenerationType.AUTO)
     private Integer id;
-
     @OneToMany
-    private Set<SeatNumber> seats;
-
+    private Set<SeatNumber> seatNumbers;
     public SeatingPlanTemplate(){}
-
-    public SeatingPlanTemplate(Set<SeatNumber> seats) {
-        this.seats = seats;
+    public SeatingPlanTemplate(Set<SeatNumber> seatNumbers) {
+        this.seatNumbers = seatNumbers;
     }
 
     public Integer getId() {
@@ -27,11 +24,11 @@ public class SeatingPlanTemplate {
         this.id = id;
     }
 
-    public Set<SeatNumber> getSeats() {
-        return seats;
+    public Set<SeatNumber> getSeatNumbers() {
+        return seatNumbers;
     }
 
-    public void setSeats(Set<SeatNumber> seats) {
-        this.seats = seats;
+    public void setSeatNumbers(Set<Seat> seats) {
+        this.seatNumbers = seatNumbers;
     }
 }

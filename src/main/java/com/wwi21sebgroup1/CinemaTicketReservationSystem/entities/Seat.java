@@ -1,9 +1,6 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Seat {
@@ -12,14 +9,15 @@ public class Seat {
             = GenerationType.AUTO)
     private Integer id;
 
-    private String number;
+    @ManyToOne
+    private SeatNumber seatNumber;
     private int price;
     private boolean occupied;
 
     public Seat(){}
 
-    public Seat(String number, int price, boolean occupied) {
-        this.number = number;
+    public Seat(SeatNumber seatNumber, int price, boolean occupied) {
+        this.seatNumber = seatNumber;
         this.price = price;
         this.occupied = occupied;
     }
@@ -32,12 +30,12 @@ public class Seat {
         this.id = id;
     }
 
-    public String getNumber() {
-        return number;
+    public SeatNumber getSeatNumber() {
+        return seatNumber;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setSeatNumber(SeatNumber seatNumber) {
+        this.seatNumber = seatNumber;
     }
 
     public int getPrice() {

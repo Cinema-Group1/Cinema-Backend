@@ -14,4 +14,35 @@ public class SeatNumber {
 
     private char line;
     private byte number;
+
+    public SeatNumber() {}
+
+    public SeatNumber(char line, byte number) {
+        this.line = line;
+        this.number = number;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public char getLine() {
+        return line;
+    }
+
+    public void setLine(char line) {
+        this.line = line;
+    }
+
+    public byte getNumber() {
+        return number;
+    }
+
+    public void setNumber(byte number) {
+        this.number = number;
+    }
 }

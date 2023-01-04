@@ -1,7 +1,11 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.SeatRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class SeatingPlan {
@@ -10,17 +14,10 @@ public class SeatingPlan {
             = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne
-    private SeatingPlanTemplate seatingPlanTemplate;
     @OneToMany
-    private List<Seat> seats;
+    private Set<Seat> seats = new HashSet<Seat>();
 
     public SeatingPlan(){}
-
-    public SeatingPlan(SeatingPlanTemplate seatingPlanTemplate) {
-        this.seatingPlanTemplate = seatingPlanTemplate;
-        //TODO: create SeatingPlan based on template
-    }
 
     public Integer getId() {
         return id;
@@ -30,19 +27,15 @@ public class SeatingPlan {
         this.id = id;
     }
 
-    public SeatingPlanTemplate getSeatingPlanTemplate() {
-        return seatingPlanTemplate;
-    }
-
-    public void setSeatingPlanTemplate(SeatingPlanTemplate seatingPlanTemplate) {
-        this.seatingPlanTemplate = seatingPlanTemplate;
-    }
-
-    public List<Seat> getSeats() {
+    public Set<Seat> getSeats() {
         return seats;
     }
 
-    public void setSeats(List<Seat> seats) {
+    public void setSeats(Set<Seat> seats) {
         this.seats = seats;
+    }
+
+    public void addSeat(Seat seat){
+        this.seats.add(seat);
     }
 }
