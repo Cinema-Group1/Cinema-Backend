@@ -6,6 +6,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 
 @Entity
 public class Movie {
@@ -15,14 +16,15 @@ public class Movie {
     private Integer id;
     private String title;
     private int length;
-    private java.sql.Date releasedDate;
+    private SimpleDateFormat releasedDate;
     @ManyToOne
     @JoinColumn(name = "genre_name", referencedColumnName = "name")
     private Genre genre;
 
+
     public Movie() {}
 
-    public Movie(String title, int length, java.sql.Date releasedDate, Genre genre) {
+    public Movie(String title, int length, SimpleDateFormat releasedDate, Genre genre) {
         super();
         this.title = title;
         this.length = length;
@@ -54,11 +56,11 @@ public class Movie {
         this.length = length;
     }
 
-    public java.sql.Date getReleasedDate() {
+    public SimpleDateFormat getReleasedDate() {
         return releasedDate;
     }
 
-    public void setReleasedDate(java.sql.Date releasedDate) {
+    public void setReleasedDate(SimpleDateFormat releasedDate) {
         this.releasedDate = releasedDate;
     }
 

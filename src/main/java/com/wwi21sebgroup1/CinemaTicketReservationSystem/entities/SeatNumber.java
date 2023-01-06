@@ -11,7 +11,6 @@ public class SeatNumber {
     @GeneratedValue(strategy
             = GenerationType.AUTO)
     private Integer id;
-
     private char line;
     private byte number;
 

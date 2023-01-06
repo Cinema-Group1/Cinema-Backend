@@ -6,15 +6,22 @@ import javax.persistence.*;
 import java.util.List;
 
 public class BookingRequest {
-    private Integer userId;
-    private Integer showingId;
-    private List<Integer> seats;
+    private int userId;
+    private int showingId;
+    private List<Integer> seatIds;
+    private int price;
 
-    public Integer getUserId() {
-        return userId;
+    public BookingRequest(){}
+
+    public BookingRequest(int userId, int showingId, List<Integer> seatIds) {
+        this.userId = userId;
+        this.showingId = showingId;
+        this.seatIds = seatIds;
     }
 
-    public void setUserId(Integer userId) {
+    public int getUserId() {return userId;}
+
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -26,11 +33,19 @@ public class BookingRequest {
         this.showingId = showingId;
     }
 
-    public List<Integer> getSeats() {
-        return seats;
+    public List<Integer> getSeatIds() {
+        return seatIds;
     }
 
-    public void setSeats(List<Integer> seats) {
-        this.seats = seats;
+    public void setSeatIds(List<Integer> seatIds) {
+        this.seatIds = seatIds;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

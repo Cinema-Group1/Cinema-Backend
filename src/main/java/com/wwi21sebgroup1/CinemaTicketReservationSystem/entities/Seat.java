@@ -8,7 +8,6 @@ public class Seat {
     @GeneratedValue(strategy
             = GenerationType.AUTO)
     private Integer id;
-
     @ManyToOne
     private SeatNumber seatNumber;
     private int price;

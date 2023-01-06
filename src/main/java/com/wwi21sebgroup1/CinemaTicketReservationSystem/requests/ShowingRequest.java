@@ -8,14 +8,28 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class ShowingRequest {
-    private Integer id;
+    private int id;
     private String title;
-    private java.sql.Date startDate;
-    private java.sql.Date endDate;
-    private java.sql.Time startTime;
-    private java.sql.Time endTime;
-    private Integer movieId;
-    private Integer cinemaHallId;
+    private String startDate;
+    private String endDate;
+    private String startTime;
+    private String endTime;
+    private int movieId;
+    private int cinemaHallId;
+
+    public ShowingRequest(){}
+
+    public ShowingRequest(int id, String title, String startDate, String endDate, String startTime, String endTime, int movieId, int cinemaHallId) {
+        this.id = id;
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.movieId = movieId;
+        this.cinemaHallId = cinemaHallId;
+    }
+
     public Integer getMovieId() {
         return movieId;
     }
@@ -48,35 +62,35 @@ public class ShowingRequest {
         this.title = title;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
-    public Time getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 }

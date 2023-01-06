@@ -8,6 +8,7 @@ import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.MovieReposi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -21,27 +22,37 @@ public class MovieController {
     @PostMapping("/add")
     public void addMovie(@RequestBody MovieRequest movieRequest){
         Genre genre = genreRepository.findByName(movieRequest.getGenreName());
-        movieRepository.save(new Movie( movieRequest.getTitle(),
-                                        movieRequest.getLength(),
-                                        movieRequest.getReleasedDate(),
-                                        genre));
+        movieRepository.save(transformRequestToObject(movieRequest));
     }
 
     @PostMapping("/update:{oldMovieId}")
     public void updateMovie(@PathVariable Integer oldMovieId, @RequestBody MovieRequest movieRequest){
         try{
-            Movie oldMovie = movieRepository.findById(oldMovieId).get();
-            Genre genre = genreRepository.findByName(movieRequest.getGenreName());
-            Movie updatedMovie = new Movie( movieRequest.getTitle(),
-                                            movieRequest.getLength(),
-                                            movieRequest.getReleasedDate(),
-                                            genre);
-            updatedMovie.setId(oldMovie.getId());
+            Movie updatedMovie = transformRequestToObject(movieRequest);
+            updatedMovie.setId(oldMovieId);
             movieRepository.save(updatedMovie);
-        } catch(NoSuchElementException exception){
+        }catch(NoSuchElementException exception){
             exception.printStackTrace();
             System.out.println(exception.getMessage());
         }
+    }
+
+    @PostMapping("/delete:{oldMovieId}")
+    public void deleteMovie(@PathVariable Integer oldMovieId) {
+        try {
+            movieRepository.deleteById(oldMovieId);
+        } catch (NoSuchElementException exception) {
+            exception.printStackTrace();
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    public Movie transformRequestToObject(MovieRequest movieRequest){
+        Genre genre = genreRepository.findByName(movieRequest.getGenreName());
+        return new Movie( movieRequest.getTitle(),
+                movieRequest.getLength(),
+                new SimpleDateFormat(movieRequest.getReleasedDateString()),
+                genre);
     }
 
     //returns all movies

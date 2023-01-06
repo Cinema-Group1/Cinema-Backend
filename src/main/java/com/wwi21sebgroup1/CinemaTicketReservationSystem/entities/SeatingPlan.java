@@ -4,7 +4,9 @@ import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.SeatReposit
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,9 +17,13 @@ public class SeatingPlan {
     private Integer id;
 
     @OneToMany
-    private Set<Seat> seats = new HashSet<Seat>();
+    private List<Seat> seats = new ArrayList<>();
 
     public SeatingPlan(){}
+
+    public SeatingPlan(List<Seat> seats){
+        this.seats =seats;
+    }
 
     public Integer getId() {
         return id;
@@ -27,11 +33,11 @@ public class SeatingPlan {
         this.id = id;
     }
 
-    public Set<Seat> getSeats() {
+    public List<Seat> getSeats() {
         return seats;
     }
 
-    public void setSeats(Set<Seat> seats) {
+    public void setSeats(List<Seat> seats) {
         this.seats = seats;
     }
 

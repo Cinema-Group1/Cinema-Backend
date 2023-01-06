@@ -1,9 +1,17 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.requests;
 
 public class CinemaHallRequest {
-    private Integer cinemaId;
+    private int cinemaId;
     private String name;
-    private Integer seatingPlanTemplateId;
+    private int seatingPlanTemplateId;
+
+    public CinemaHallRequest(){}
+
+    public CinemaHallRequest(Integer cinemaId, String name, Integer seatingPlanTemplateId) {
+        this.cinemaId = cinemaId;
+        this.name = name;
+        this.seatingPlanTemplateId = seatingPlanTemplateId;
+    }
 
     public Integer getCinemaId() {
         return cinemaId;

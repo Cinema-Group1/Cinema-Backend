@@ -3,13 +3,21 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.requests;
 import java.sql.Date;
 
 public class MovieRequest {
-    private Integer id;
+    private int id;
     private String title;
     private int length;
-    private java.sql.Date releasedDate;
+    private String releasedDate;
     private String genreName;
 
-    public MovieRequest() {}
+    public MovieRequest(){}
+
+    public MovieRequest(Integer id, String title, int length, String releasedDate, String genreName) {
+        this.id = id;
+        this.title = title;
+        this.length = length;
+        this.releasedDate = releasedDate;
+        this.genreName = genreName;
+    }
 
     public Integer getId() {
         return id;
@@ -35,11 +43,11 @@ public class MovieRequest {
         this.length = length;
     }
 
-    public Date getReleasedDate() {
+    public String getReleasedDateString() {
         return releasedDate;
     }
 
-    public void setReleasedDate(Date releasedDate) {
+    public void setReleasedDateString(String releasedDate) {
         this.releasedDate = releasedDate;
     }
 
@@ -51,3 +59,4 @@ public class MovieRequest {
         this.genreName = genreName;
     }
 }
+

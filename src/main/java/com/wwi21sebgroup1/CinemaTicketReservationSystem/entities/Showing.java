@@ -1,8 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Time;
+import java.text.SimpleDateFormat;
 
 @Entity
 public class Showing {
@@ -12,10 +11,10 @@ public class Showing {
             = GenerationType.AUTO)
     private Integer id;
     private String title;
-    private java.sql.Date startDate;
-    private java.sql.Date endDate;
-    private java.sql.Time startTime;
-    private java.sql.Time endTime;
+    private SimpleDateFormat startDate;
+    private SimpleDateFormat endDate;
+    private SimpleDateFormat startTime;
+    private SimpleDateFormat endTime;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
@@ -26,7 +25,7 @@ public class Showing {
     private SeatingPlan seatingPlan;
 
     public Showing(){}
-    public Showing(String title, Date startDate, Date endDate, Time startTime, Time endTime, Movie movie, CinemaHall cinemaHall, SeatingPlan seatingPlan) {
+    public Showing(String title, SimpleDateFormat startDate, SimpleDateFormat endDate, SimpleDateFormat startTime, SimpleDateFormat endTime, Movie movie, CinemaHall cinemaHall, SeatingPlan seatingPlan) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -61,35 +60,35 @@ public class Showing {
         this.title = title;
     }
 
-    public Date getStartDate() {
+    public SimpleDateFormat getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(SimpleDateFormat startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public SimpleDateFormat getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(SimpleDateFormat endDate) {
         this.endDate = endDate;
     }
 
-    public Time getStartTime() {
+    public SimpleDateFormat getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(SimpleDateFormat startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
+    public SimpleDateFormat getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(SimpleDateFormat endTime) {
         this.endTime = endTime;
     }
 

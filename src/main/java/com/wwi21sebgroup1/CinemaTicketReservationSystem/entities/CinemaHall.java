@@ -8,13 +8,13 @@ public class CinemaHall {
     @GeneratedValue(strategy
             = GenerationType.AUTO)
     private Integer id;
-
     @ManyToOne
     @JoinColumn(name = "cinema_id", referencedColumnName = "id")
     private Cinema cinema;
     private String name;
     @OneToOne
     private SeatingPlanTemplate seatingPlanTemplate;
+
 
     public CinemaHall(){}
 

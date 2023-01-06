@@ -26,19 +26,23 @@ public class CinemaHallController {
         cinemaHallRepository.save(transformRequestToObject(cinemaHallRequest));
     }
 
-    @GetMapping("/all")
-    public @ResponseBody Iterable<CinemaHall> getCinemaHalls(){
-        return cinemaHallRepository.findAll();
+    @PutMapping("/update:{oldCinemaHallId}")
+    public void updateCinemaHall(@PathVariable Integer oldCinemaHallId, @RequestBody CinemaHallRequest cinemaHallRequest){
+        try{
+            CinemaHall updatedCinemaHall = transformRequestToObject(cinemaHallRequest);
+            updatedCinemaHall.setId(oldCinemaHallId);
+            cinemaHallRepository.save(updatedCinemaHall);
+        }catch(NoSuchElementException exception){
+            exception.printStackTrace();
+            System.out.println(exception.getMessage());
+        }
     }
 
-    @PutMapping("/update:{id}")
-    public void updateCinemaHall(@PathVariable Integer id, @RequestBody CinemaHallRequest cinemaHallRequest){
-        try{
-            CinemaHall oldCinemaHall = cinemaHallRepository.findById(id).get();
-            CinemaHall updatedCinemaHall = transformRequestToObject(cinemaHallRequest);
-            updatedCinemaHall.setId(oldCinemaHall.getId());
-            cinemaHallRepository.save(updatedCinemaHall);
-        } catch(NoSuchElementException exception){
+    @PutMapping("/delete:{oldCinemaHallId}")
+    public void deleteCinemaHall(@PathVariable Integer oldCinemaHallId){
+        try {
+            cinemaHallRepository.deleteById(oldCinemaHallId);
+        }catch(NoSuchElementException exception){
             exception.printStackTrace();
             System.out.println(exception.getMessage());
         }
@@ -48,7 +52,13 @@ public class CinemaHallController {
         Cinema cinema = cinemaRepository.findById(cinemaHallRequest.getCinemaId()).get();
         SeatingPlanTemplate seatingPlanTemplate = seatingPlanTemplateRepository.findById(cinemaHallRequest.getSeatingPlanTemplateId()).get();
         return new CinemaHall(  cinema,
-                                cinemaHallRequest.getName(),
-                                seatingPlanTemplate);
+                cinemaHallRequest.getName(),
+                seatingPlanTemplate);
     }
+
+    @GetMapping("/all")
+    public @ResponseBody Iterable<CinemaHall> getCinemaHalls(){
+        return cinemaHallRepository.findAll();
+    }
+
 }

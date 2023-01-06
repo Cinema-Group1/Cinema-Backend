@@ -3,7 +3,9 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.requests;
 public class SeatingPlanTemplateRequest {
     private int rows;
     private int seatsPerRow;
+
     public SeatingPlanTemplateRequest() {}
+
     public SeatingPlanTemplateRequest(int rows, int seatsPerRow) {
         this.rows = rows;
         this.seatsPerRow = seatsPerRow;

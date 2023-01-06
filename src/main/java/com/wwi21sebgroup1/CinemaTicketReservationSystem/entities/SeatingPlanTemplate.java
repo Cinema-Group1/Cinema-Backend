@@ -28,7 +28,6 @@ public class SeatingPlanTemplate {
         return seatNumbers;
     }
 
-    public void setSeatNumbers(Set<Seat> seats) {
-        this.seatNumbers = seatNumbers;
-    }
+    public void setSeatNumbers(Set<SeatNumber> seatNumbers) {this.seatNumbers = seatNumbers;}
 }
+

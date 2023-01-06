@@ -19,11 +19,6 @@ public class User {
         this.name = name;
     }
 
-    public User(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     public long getId() {
         return id;
     }
@@ -39,12 +34,4 @@ public class User {
     public void setName(String title) {
         this.name = title;
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name;
-    }
 }
-
