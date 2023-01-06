@@ -1,12 +1,14 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.SeatBookedException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.ShowingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,6 +24,10 @@ public class ShowingController {
     private SeatingPlanRepository seatingPlanRepository;
     @Autowired
     private SeatRepository seatRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @PutMapping("/add")
     //Adding a Showing specified via the RequestBody.
@@ -52,16 +58,33 @@ public class ShowingController {
     }
 
     @PutMapping("/book")
-    public void bookShowing(@RequestBody BookingRequest bookingRequest){
+    public void bookShowing(@RequestBody BookingRequest bookingRequest)throws SeatBookedException{
         Showing showing = showingRepository.findById(bookingRequest.getShowingId()).get();
+        User user = userRepository.findById(bookingRequest.getUserId()).get();
+        List<Seat> seats= new ArrayList<>();
         List<Integer> seatNumbers = bookingRequest.getSeats();
         for(int i = 0; i < seatNumbers.size(); i++){
             for(Seat toBook : showing.getSeatingPlan().getSeats()){
                 if(seatNumbers.get(i).equals(toBook.getId())){
-                    toBook.setOccupied(true);
-                    seatRepository.save(toBook);
+                    if(!toBook.isOccupied()){
+                        toBook.setOccupied(true);
+                        seatRepository.save(toBook);
+                        seats.add(toBook);
+                    } else{
+                        throw new SeatBookedException();
+                    }
                 }
             }
         }
+        int price = 0;
+        for(Seat seat : seats){
+            price += seat.getPrice();
+        }
+        bookingRepository.save(new Booking(user, showing, seats, price));
+    }
+
+    @DeleteMapping("/delete:{id}")
+    public void deleteMapping(@PathVariable Integer id){
+        showingRepository.delete(showingRepository.findById(id).get());
     }
 }

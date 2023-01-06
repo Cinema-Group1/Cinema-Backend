@@ -6,16 +6,16 @@ import javax.persistence.*;
 import java.util.List;
 
 public class BookingRequest {
-    private User user;
+    private Integer userId;
     private Integer showingId;
     private List<Integer> seats;
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getShowingId() {
