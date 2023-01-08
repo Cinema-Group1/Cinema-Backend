@@ -37,7 +37,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(Arrays.asList(
                         "https://localhost:4200", "http://localhost:4200",
                         "https://localhost:8000", "http://localhost:8000",
-                        "https://localhost:8082", "http://localhost:8082",
+                        "https://localhost:8080", "http://localhost:8080",
                         "https://cinema-frontend-group1.azurewebsites.net/"
                 )
         );

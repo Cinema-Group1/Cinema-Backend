@@ -2,6 +2,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 @Entity
 public class Movie {
@@ -11,7 +12,7 @@ public class Movie {
     private Integer id;
     private String title;
     private int length;
-    private SimpleDateFormat releasedDate;
+    private Date releasedDate;
     @ManyToOne
     @JoinColumn(name = "genre_name", referencedColumnName = "name")
     private Genre genre;
@@ -19,7 +20,7 @@ public class Movie {
 
     public Movie() {}
 
-    public Movie(String title, int length, SimpleDateFormat releasedDate, Genre genre) {
+    public Movie(String title, int length, Date releasedDate, Genre genre) {
         super();
         this.title = title;
         this.length = length;
@@ -51,11 +52,11 @@ public class Movie {
         this.length = length;
     }
 
-    public SimpleDateFormat getReleasedDate() {
+    public Date getReleasedDate() {
         return releasedDate;
     }
 
-    public void setReleasedDate(SimpleDateFormat releasedDate) {
+    public void setReleasedDate(Date releasedDate) {
         this.releasedDate = releasedDate;
     }
 

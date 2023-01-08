@@ -8,6 +8,7 @@ import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.MovieReposi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.NoSuchElementException;
 
@@ -24,7 +25,7 @@ public class MovieController {
         Genre genre = genreRepository.findByName(movieRequest.getGenreName());
         movieRepository.save(new Movie( movieRequest.getTitle(),
                                         movieRequest.getLength(),
-                                        new SimpleDateFormat(movieRequest.getReleasedDateString()),
+                                        new Date(1),
                                         genre));
     }
 
@@ -54,7 +55,7 @@ public class MovieController {
         Genre genre = genreRepository.findByName(movieRequest.getGenreName());
         return new Movie( movieRequest.getTitle(),
                 movieRequest.getLength(),
-                new SimpleDateFormat(movieRequest.getReleasedDateString()),
+                new Date(1),
                 genre);
     }
 
