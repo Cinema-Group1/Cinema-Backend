@@ -1,10 +1,5 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import net.minidev.json.annotate.JsonIgnore;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 

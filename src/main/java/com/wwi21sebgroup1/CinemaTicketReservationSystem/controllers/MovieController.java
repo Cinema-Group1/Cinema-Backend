@@ -19,10 +19,13 @@ public class MovieController {
     @Autowired
     private GenreRepository genreRepository;
 
-    @PostMapping("/add")
+    @PutMapping("/add")
     public void addMovie(@RequestBody MovieRequest movieRequest){
         Genre genre = genreRepository.findByName(movieRequest.getGenreName());
-        movieRepository.save(transformRequestToObject(movieRequest));
+        movieRepository.save(new Movie( movieRequest.getTitle(),
+                                        movieRequest.getLength(),
+                                        new SimpleDateFormat(movieRequest.getReleasedDateString()),
+                                        genre));
     }
 
     @PostMapping("/update:{oldMovieId}")

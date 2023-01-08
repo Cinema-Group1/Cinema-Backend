@@ -1,7 +1,5 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.requests;
 
-import java.sql.Date;
-
 public class MovieRequest {
     private int id;
     private String title;
