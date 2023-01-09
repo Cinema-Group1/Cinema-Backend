@@ -4,17 +4,37 @@ public class MovieRequest {
     private int id;
     private String title;
     private int length;
+    private String imagePath;
+    private String description;
     private String releasedDate;
     private String genreName;
 
-    public MovieRequest(){}
-
-    public MovieRequest(Integer id, String title, int length, String releasedDate, String genreName) {
+    public void setId(int id) {
         this.id = id;
-        this.title = title;
-        this.length = length;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getReleasedDate() {
+        return releasedDate;
+    }
+
+    public void setReleasedDate(String releasedDate) {
         this.releasedDate = releasedDate;
-        this.genreName = genreName;
     }
 
     public Integer getId() {

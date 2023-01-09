@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -23,10 +22,7 @@ public class MovieController {
     @PutMapping("/add")
     public void addMovie(@RequestBody MovieRequest movieRequest){
         Genre genre = genreRepository.findByName(movieRequest.getGenreName());
-        movieRepository.save(new Movie( movieRequest.getTitle(),
-                                        movieRequest.getLength(),
-                                        new Date(1),
-                                        genre));
+        movieRepository.save(transformRequestToObject(movieRequest));
     }
 
     @PostMapping("/update:{oldMovieId}")
@@ -53,10 +49,12 @@ public class MovieController {
 
     public Movie transformRequestToObject(MovieRequest movieRequest){
         Genre genre = genreRepository.findByName(movieRequest.getGenreName());
-        return new Movie( movieRequest.getTitle(),
-                movieRequest.getLength(),
-                new Date(1),
-                genre);
+        return new Movie(   movieRequest.getTitle(),
+                            movieRequest.getImagePath(),
+                            movieRequest.getDescription(),
+                            movieRequest.getLength(),
+                            Date.valueOf(movieRequest.getReleasedDateString()),
+                            genre);
     }
 
     //returns all movies

@@ -11,6 +11,8 @@ public class Movie {
             = GenerationType.AUTO)
     private Integer id;
     private String title;
+    private String imagePath;
+    private String description;
     private int length;
     private Date releasedDate;
     @ManyToOne
@@ -20,12 +22,29 @@ public class Movie {
 
     public Movie() {}
 
-    public Movie(String title, int length, Date releasedDate, Genre genre) {
-        super();
+    public Movie(String title, String imagePath, String description, int length, Date releasedDate, Genre genre) {
         this.title = title;
+        this.imagePath = imagePath;
+        this.description = description;
         this.length = length;
         this.releasedDate = releasedDate;
         this.genre = genre;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getId() {
