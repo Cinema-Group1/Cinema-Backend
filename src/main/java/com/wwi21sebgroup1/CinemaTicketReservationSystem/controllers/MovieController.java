@@ -23,7 +23,7 @@ public class MovieController {
     }
 
     //returns all movies from the specified genre
-    @GetMapping("/genre={genre}")
+    @GetMapping("/genre={genreName}")
     public @ResponseBody Iterable<Movie> getMoviesByGenre(@PathVariable String genreName){
         return movieService.getMoviesByGenre(genreName);
     }

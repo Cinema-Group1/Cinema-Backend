@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public class MovieServiceTest {
         id = 1;
         genre = new Genre("Test Genre", "Test description");
         movieRequest = new MovieRequest(title, imagePath, description, length, releasedDate, genreName);
-        movie = new Movie(title, imagePath, description, length, Date.valueOf(releasedDate), genre);
+        movie = new Movie(title, imagePath, description, length, LocalDate.parse(releasedDate), genre);
     }
 
     @Test

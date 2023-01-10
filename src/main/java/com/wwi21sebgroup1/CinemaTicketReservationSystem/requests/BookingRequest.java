@@ -1,8 +1,5 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.requests;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.User;
-
-import javax.persistence.*;
 import java.util.List;
 
 public class BookingRequest {
