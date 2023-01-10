@@ -46,7 +46,7 @@ public class CinemaController {
     }
 
     public Cinema transformRequestToObject(CinemaRequest cinemaRequest){
-        Address address = addressRepository.findById(cinemaRequest.getId()).get();
+        Address address = addressRepository.findById(cinemaRequest.getAddressId()).get();
         return new Cinema(address);
     }
 
