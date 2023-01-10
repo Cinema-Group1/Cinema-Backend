@@ -50,8 +50,8 @@ public class MovieService {
         }
     }
 
-    public Movie transformRequestToObject(MovieRequest movieRequest){
-        Genre genre = genreRepository.findByName(movieRequest.getGenreName());
+    public Movie transformRequestToObject(MovieRequest movieRequest) {
+        Genre genre = genreRepository.findByName(movieRequest.getGenreName()).get();
         return new Movie(   movieRequest.getTitle(),
                             movieRequest.getImagePath(),
                             movieRequest.getDescription(),

@@ -5,6 +5,7 @@ import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Movie;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.GenreRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.MovieRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.MovieRequest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import java.sql.Date;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 //Attaches the Mockito Extension to the test class. See also https://www.baeldung.com/mockito-junit-5-extension
 @ExtendWith(MockitoExtension.class)
@@ -44,14 +47,11 @@ public class MovieServiceTest {
         movie = new Movie(title, imagePath, description, length, Date.valueOf(releasedDate), genre);
     }
 
-    public void teardown(){
-
-    }
-
     @Test
-    public void testTransformRequestToObject(){
+    @DisplayName("Transformation works as expected")
+    public void t01TransformRequestToObject(){
         setup();
-        when(genreRepository.findByName(movieRequest.getGenreName())).thenReturn(genre);
+        when(genreRepository.findByName(movieRequest.getGenreName())).thenReturn(Optional.of(genre));
 
         Movie actualMovie = movieService.transformRequestToObject(movieRequest);
         actualMovie.setId(id);
@@ -60,5 +60,19 @@ public class MovieServiceTest {
         expectedMovie.setId(id);
 
         assertEquals(actualMovie, expectedMovie);
+    }
+
+    @Test
+    @DisplayName("Genre was not found")
+    public void t02TransformRequestToObject(){
+        assertThrows(NoSuchElementException.class, () -> {
+            setup();
+
+            Movie actualMovie = movieService.transformRequestToObject(movieRequest);
+            actualMovie.setId(id);
+
+            Movie expectedMovie = movie;
+            expectedMovie.setId(id);
+        });
     }
 }

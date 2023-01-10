@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -64,10 +65,8 @@ public class ShowingController {
         }
         seatingPlanRepository.save(seatingPlan);
         return new Showing( showingRequest.getTitle(),
-                            Date.valueOf(showingRequest.getStartDate()),
-                            Date.valueOf(showingRequest.getEndDate()),
-                            Date.valueOf(showingRequest.getStartTime()),
-                            Date.valueOf(showingRequest.getEndTime()),
+                            LocalDateTime.parse(showingRequest.getStartsAt()),
+                            LocalDateTime.parse(showingRequest.getEndsAt()),
                             movie,
                             cinemaHall,
                             seatingPlan);

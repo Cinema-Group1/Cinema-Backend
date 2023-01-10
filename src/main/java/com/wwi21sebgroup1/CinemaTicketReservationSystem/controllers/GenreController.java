@@ -36,7 +36,7 @@ public class GenreController {
     @DeleteMapping("/delete:{oldGenreName}")
     public void deleteGenre(@PathVariable String oldGenreName) {
         try {
-            genreRepository.delete(genreRepository.findByName(oldGenreName));
+            genreRepository.delete(genreRepository.findByName(oldGenreName).get());
         }catch(NoSuchElementException exception){
             exception.printStackTrace();
             System.out.println(exception.getMessage());

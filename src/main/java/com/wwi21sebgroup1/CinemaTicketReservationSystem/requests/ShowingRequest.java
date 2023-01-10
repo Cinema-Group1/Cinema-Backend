@@ -10,22 +10,17 @@ import java.sql.Time;
 public class ShowingRequest {
     private int id;
     private String title;
-    private String startDate;
-    private String endDate;
-    private String startTime;
-    private String endTime;
+    private String startsAt;
+    private String endsAt;
     private int movieId;
     private int cinemaHallId;
 
     public ShowingRequest(){}
 
-    public ShowingRequest(int id, String title, String startDate, String endDate, String startTime, String endTime, int movieId, int cinemaHallId) {
-        this.id = id;
+    public ShowingRequest(String title, String startsAt, String endsAt, int movieId, int cinemaHallId) {
         this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startsAt = startsAt;
+        this.endsAt = endsAt;
         this.movieId = movieId;
         this.cinemaHallId = cinemaHallId;
     }
@@ -62,35 +57,31 @@ public class ShowingRequest {
         this.title = title;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public String getStartsAt() {
+        return startsAt;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public void setStartsAt(String startsAt) {
+        this.startsAt = startsAt;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public String getEndsAt() {
+        return endsAt;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public void setEndsAt(String endsAt) {
+        this.endsAt = endsAt;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setCinemaHallId(int cinemaHallId) {
+        this.cinemaHallId = cinemaHallId;
     }
 }
