@@ -1,8 +1,8 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.util.Objects;
 
 @Entity
 public class Movie {
@@ -85,5 +85,24 @@ public class Movie {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return  length == movie.length &&
+                id.equals(movie.id) &&
+                title.equals(movie.title) &&
+                imagePath.equals(movie.imagePath) &&
+                description.equals(movie.description) &&
+                releasedDate.equals(movie.releasedDate) &&
+                genre.equals(movie.genre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, imagePath, description, length, releasedDate, genre);
     }
 }

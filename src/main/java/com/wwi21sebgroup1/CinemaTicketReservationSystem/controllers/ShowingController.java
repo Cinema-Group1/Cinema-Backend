@@ -7,7 +7,7 @@ import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.ShowingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -63,14 +63,14 @@ public class ShowingController {
             seatingPlan.addSeat(curr);
         }
         seatingPlanRepository.save(seatingPlan);
-        return new Showing(showingRequest.getTitle(),
-                new SimpleDateFormat(showingRequest.getStartDate()),
-                new SimpleDateFormat(showingRequest.getEndDate()),
-                new SimpleDateFormat(showingRequest.getStartTime()),
-                new SimpleDateFormat(showingRequest.getEndTime()),
-                movie,
-                cinemaHall,
-                seatingPlan);
+        return new Showing( showingRequest.getTitle(),
+                            Date.valueOf(showingRequest.getStartDate()),
+                            Date.valueOf(showingRequest.getEndDate()),
+                            Date.valueOf(showingRequest.getStartTime()),
+                            Date.valueOf(showingRequest.getEndTime()),
+                            movie,
+                            cinemaHall,
+                            seatingPlan);
     }
 
     @GetMapping("/all")

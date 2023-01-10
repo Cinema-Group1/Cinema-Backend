@@ -1,16 +1,28 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.requests;
 
 public class MovieRequest {
-    private int id;
     private String title;
-    private int length;
     private String imagePath;
     private String description;
+    private int length;
     private String releasedDate;
     private String genreName;
 
-    public void setId(int id) {
-        this.id = id;
+    public MovieRequest() {
+    }
+
+    public MovieRequest(String title,
+                        String imagePath,
+                        String description,
+                        int length,
+                        String releasedDate,
+                        String genreName) {
+        this.title = title;
+        this.length = length;
+        this.imagePath = imagePath;
+        this.description = description;
+        this.releasedDate = releasedDate;
+        this.genreName = genreName;
     }
 
     public String getImagePath() {
@@ -35,14 +47,6 @@ public class MovieRequest {
 
     public void setReleasedDate(String releasedDate) {
         this.releasedDate = releasedDate;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getTitle() {
