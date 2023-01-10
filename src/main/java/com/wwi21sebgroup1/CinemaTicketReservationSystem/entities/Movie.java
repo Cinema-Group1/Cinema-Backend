@@ -2,6 +2,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +15,7 @@ public class Movie {
     private String imagePath;
     private String description;
     private int length;
-    private Date releasedDate;
+    private LocalDate releasedDate;
     @ManyToOne
     @JoinColumn(name = "genre_name", referencedColumnName = "name")
     private Genre genre;
@@ -22,7 +23,7 @@ public class Movie {
 
     public Movie() {}
 
-    public Movie(String title, String imagePath, String description, int length, Date releasedDate, Genre genre) {
+    public Movie(String title, String imagePath, String description, int length, LocalDate releasedDate, Genre genre) {
         this.title = title;
         this.imagePath = imagePath;
         this.description = description;
@@ -71,11 +72,11 @@ public class Movie {
         this.length = length;
     }
 
-    public Date getReleasedDate() {
+    public LocalDate getReleasedDate() {
         return releasedDate;
     }
 
-    public void setReleasedDate(Date releasedDate) {
+    public void setReleasedDate(LocalDate releasedDate) {
         this.releasedDate = releasedDate;
     }
 

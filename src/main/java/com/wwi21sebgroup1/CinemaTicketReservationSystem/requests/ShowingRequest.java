@@ -10,6 +10,8 @@ import java.sql.Time;
 public class ShowingRequest {
     private int id;
     private String title;
+    //given String must be in format: yyyy-mm-ddThh:mm:ss
+    //i.e. 2015-08-04T10:11:30
     private String startsAt;
     private String endsAt;
     private int movieId;
