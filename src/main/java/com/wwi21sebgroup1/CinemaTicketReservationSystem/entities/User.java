@@ -14,13 +14,13 @@ public class User {
     private String lastName;
     private LocalDate dob;
     private String eMail;
-    private JPasswordField password;
+    private String password;
     @ManyToOne
     private Address address;
 
     public User() {}
 
-    public User(String firstName, String lastName, LocalDate dob, String eMail, JPasswordField password, Address address) {
+    public User(String firstName, String lastName, LocalDate dob, String eMail, String password, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
@@ -69,11 +69,11 @@ public class User {
         this.eMail = eMail;
     }
 
-    public JPasswordField getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(JPasswordField password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

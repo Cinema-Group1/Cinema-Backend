@@ -41,7 +41,7 @@ public class AddressController {
         }
     }
 
-    public Address transformRequestToObject(AddressRequest addressRequest){
+    public static Address transformRequestToObject(AddressRequest addressRequest){
         return new Address (addressRequest.getZipCode(),
                 addressRequest.getCity(),
                 addressRequest.getStreet(),
