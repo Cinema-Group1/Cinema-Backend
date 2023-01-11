@@ -1,9 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Address;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Movie;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.AddressRequest;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.MovieRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,10 +28,13 @@ public class AddressServiceServiceTest {
     @DisplayName("Transformation works as expected")
     public void t01TransformRequestToObject() {
         setup();
+
         Address actualAddress = AddressService.transformRequestToObject(addressRequest);
         actualAddress.setId(id);
+
         Address expectedAddress = address;
         expectedAddress.setId(id);
+
         assertEquals(actualAddress,expectedAddress);
     }
 }
