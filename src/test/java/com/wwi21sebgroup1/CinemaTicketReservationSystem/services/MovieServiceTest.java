@@ -14,8 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
 import java.util.Optional;

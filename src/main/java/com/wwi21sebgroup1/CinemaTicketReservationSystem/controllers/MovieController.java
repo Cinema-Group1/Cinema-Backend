@@ -17,17 +17,6 @@ public class MovieController {
         movieService.addMovie(movieRequest);
     }
 
-    @GetMapping("/all")
-    public @ResponseBody Iterable<Movie> getAllMovies() {
-        return movieService.getAllMovies();
-    }
-
-    //returns all movies from the specified genre
-    @GetMapping("/genre={genreName}")
-    public @ResponseBody Iterable<Movie> getMoviesByGenre(@PathVariable String genreName){
-        return movieService.getMoviesByGenre(genreName);
-    }
-
     @PostMapping("/update:{oldMovieId}")
     public void updateMovie(@PathVariable Integer oldMovieId, @RequestBody MovieRequest movieRequest){
         movieService.updateMovie(oldMovieId, movieRequest);
@@ -36,5 +25,15 @@ public class MovieController {
     @PostMapping("/delete:{movieId}")
     public void deleteMovie(@PathVariable Integer movieId) {
         movieService.deleteMovie(movieId);
+    }
+
+    @GetMapping("/all")
+    public @ResponseBody Iterable<Movie> getAllMovies() {
+        return movieService.getAllMovies();
+    }
+
+    @GetMapping("/genre={genreName}")
+    public @ResponseBody Iterable<Movie> getMoviesByGenre(@PathVariable String genreName){
+        return movieService.getMoviesByGenre(genreName);
     }
 }
