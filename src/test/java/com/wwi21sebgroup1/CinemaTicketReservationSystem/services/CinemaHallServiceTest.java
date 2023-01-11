@@ -41,7 +41,7 @@ public class CinemaHallServiceTest {
     }
 
     @Test
-    @DisplayName("Transformation works as expected")
+    @DisplayName("CinemaHallRequest to CinemaHall: Transformation works as expected")
     public void t01TransformRequestToObject(){
         setup();
         when(cinemaRepository.findById(cinemaHallRequest.getCinemaId())).thenReturn(Optional.of(cinema));
@@ -57,7 +57,7 @@ public class CinemaHallServiceTest {
     }
 
     @Test
-    @DisplayName("Cinema was not found")
+    @DisplayName("CinemaHallRequest to CinemaHall: Non-Existing Cinema throws correct Exception")
     public void t02TransformRequestToObject(){
         assertThrows(NoSuchElementException.class, () -> {
             setup();
@@ -72,7 +72,7 @@ public class CinemaHallServiceTest {
     }
 
     @Test
-    @DisplayName("SeatingPlanTemplate was not found")
+    @DisplayName("CinemaHallRequest to CinemaHall: Non-Existing SeatingPlanTemplate throws correct Exception")
     public void t03TransformRequestToObject(){
         assertThrows(NoSuchElementException.class, () -> {
             setup();

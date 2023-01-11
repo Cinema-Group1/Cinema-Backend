@@ -5,11 +5,15 @@ import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.AddressRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AddressServiceServiceTest {
+    @InjectMocks
+    AddressService addressService;
+
     AddressRequest addressRequest;
     Address address;
     int id;
@@ -25,11 +29,11 @@ public class AddressServiceServiceTest {
         address = new Address(zipCode, city, street, number,additionalInformation);
     }
     @Test
-    @DisplayName("Transformation works as expected")
+    @DisplayName("AddressRequest to Address: Transformation works as expected")
     public void t01TransformRequestToObject() {
         setup();
 
-        Address actualAddress = AddressService.transformRequestToObject(addressRequest);
+        Address actualAddress = addressService.transformRequestToObject(addressRequest);
         actualAddress.setId(id);
 
         Address expectedAddress = address;
