@@ -1,16 +1,10 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.CinemaHall;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.CinemaHallRepository;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.CinemaRepository;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.SeatingPlanTemplateRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.CinemaHallRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.CinemaHallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/cinema_hall")
