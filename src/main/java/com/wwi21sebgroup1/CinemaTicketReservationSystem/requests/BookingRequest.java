@@ -5,37 +5,40 @@ import java.util.List;
 public class BookingRequest {
     private int userId;
     private int showingId;
-    private List<Integer> seatIds;
+    private List<String> seatNumbers;
     private int price;
 
     public BookingRequest(){}
 
-    public BookingRequest(int userId, int showingId, List<Integer> seatIds) {
+    public BookingRequest(int userId, int showingId, List<String> seatNumbers, int price) {
         this.userId = userId;
         this.showingId = showingId;
-        this.seatIds = seatIds;
+        this.seatNumbers = seatNumbers;
+        this.price = price;
     }
 
-    public int getUserId() {return userId;}
+    public int getUserId() {
+        return userId;
+    }
 
     public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public Integer getShowingId() {
+    public int getShowingId() {
         return showingId;
     }
 
-    public void setShowingId(Integer showingId) {
+    public void setShowingId(int showingId) {
         this.showingId = showingId;
     }
 
-    public List<Integer> getSeatIds() {
-        return seatIds;
+    public List<String> getSeatNumbers() {
+        return seatNumbers;
     }
 
-    public void setSeatIds(List<Integer> seatIds) {
-        this.seatIds = seatIds;
+    public void setSeatNumbers(List<String> seatNumbers) {
+        this.seatNumbers = seatNumbers;
     }
 
     public int getPrice() {

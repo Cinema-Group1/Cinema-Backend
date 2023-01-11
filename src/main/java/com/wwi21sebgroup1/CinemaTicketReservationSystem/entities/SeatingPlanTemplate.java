@@ -1,7 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class SeatingPlanTemplate {
@@ -10,9 +10,9 @@ public class SeatingPlanTemplate {
             = GenerationType.AUTO)
     private Integer id;
     @OneToMany
-    private Set<SeatNumber> seatNumbers;
+    private List<SeatNumber> seatNumbers;
     public SeatingPlanTemplate(){}
-    public SeatingPlanTemplate(Set<SeatNumber> seatNumbers) {
+    public SeatingPlanTemplate(List<SeatNumber> seatNumbers) {
         this.seatNumbers = seatNumbers;
     }
 
@@ -24,10 +24,10 @@ public class SeatingPlanTemplate {
         this.id = id;
     }
 
-    public Set<SeatNumber> getSeatNumbers() {
+    public List<SeatNumber> getSeatNumbers() {
         return seatNumbers;
     }
 
-    public void setSeatNumbers(Set<SeatNumber> seatNumbers) {this.seatNumbers = seatNumbers;}
+    public void setSeatNumbers(List<SeatNumber> seatNumbers) {this.seatNumbers = seatNumbers;}
 }
 

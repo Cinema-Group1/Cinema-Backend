@@ -1,21 +1,17 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.requests;
 
 public class SeatNumberRequest {
-    private int id;
     private char line;
     private byte number;
+    private int seatingPlanTemplateId;
 
     public SeatNumberRequest(){}
 
-    public SeatNumberRequest(int id, char line, byte number) {
-        this.id = id;
+    public SeatNumberRequest(char line, byte number, int seatingPlanTemplateId) {
         this.line = line;
         this.number = number;
+        this.seatingPlanTemplateId = seatingPlanTemplateId;
     }
-
-    public int getId() {return id;}
-
-    public void setId(int id) {this.id = id;}
 
     public char getLine() {return line;}
 
@@ -24,4 +20,12 @@ public class SeatNumberRequest {
     public byte getNumber() {return number;}
 
     public void setNumber(byte number) {this.number = number;}
+
+    public int getSeatingPlanTemplateId() {
+        return seatingPlanTemplateId;
+    }
+
+    public void setSeatingPlanTemplateId(int seatingPlanTemplateId) {
+        this.seatingPlanTemplateId = seatingPlanTemplateId;
+    }
 }

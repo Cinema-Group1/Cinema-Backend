@@ -2,6 +2,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Booking {
@@ -13,15 +14,15 @@ public class Booking {
     @ManyToOne(cascade = CascadeType.ALL)
     private Showing showing;
     @OneToMany
-    private List<Seat> seats;
+    private List<Seat> Seats;
     private int price;
 
     public Booking() {}
 
-    public Booking(User user, Showing showing, List<Seat> seats, int price) {
+    public Booking(User user, Showing showing, List<Seat> Seats, int price) {
         this.user = user;
         this.showing = showing;
-        this.seats = seats;
+        this.Seats = Seats;
         this.price = price;
     }
 
@@ -50,11 +51,11 @@ public class Booking {
     }
 
     public List<Seat> getSeats() {
-        return seats;
+        return Seats;
     }
 
-    public void setSeats(List<Seat> seats) {
-        this.seats = seats;
+    public void setSeats(List<Seat> Seats) {
+        this.Seats = Seats;
     }
 
     public int getPrice() {
@@ -63,5 +64,18 @@ public class Booking {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Booking booking = (Booking) o;
+        return id == booking.id && price == booking.price && user.equals(booking.user) && showing.equals(booking.showing) && Seats.equals(booking.Seats);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user, showing, Seats, price);
     }
 }

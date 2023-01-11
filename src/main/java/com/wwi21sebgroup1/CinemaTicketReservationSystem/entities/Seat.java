@@ -8,17 +8,20 @@ public class Seat {
     @GeneratedValue(strategy
             = GenerationType.AUTO)
     private Integer id;
-    @ManyToOne
-    private SeatNumber seatNumber;
     private int price;
     private boolean occupied;
+    @ManyToOne
+    private SeatingPlan seatingPlan;
+    @ManyToOne
+    private SeatNumber seatNumber;
 
     public Seat(){}
 
-    public Seat(SeatNumber seatNumber, int price, boolean occupied) {
-        this.seatNumber = seatNumber;
+    public Seat(int price, boolean occupied, SeatingPlan seatingPlan, SeatNumber seatNumber) {
         this.price = price;
         this.occupied = occupied;
+        this.seatingPlan = seatingPlan;
+        this.seatNumber = seatNumber;
     }
 
     public Integer getId() {
@@ -27,14 +30,6 @@ public class Seat {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public SeatNumber getSeatNumber() {
-        return seatNumber;
-    }
-
-    public void setSeatNumber(SeatNumber seatNumber) {
-        this.seatNumber = seatNumber;
     }
 
     public int getPrice() {
@@ -51,5 +46,21 @@ public class Seat {
 
     public void setOccupied(boolean occupied) {
         this.occupied = occupied;
+    }
+
+    public SeatingPlan getSeatingPlan() {
+        return seatingPlan;
+    }
+
+    public void setSeatingPlan(SeatingPlan seatingPlan) {
+        this.seatingPlan = seatingPlan;
+    }
+
+    public SeatNumber getSeatNumber() {
+        return seatNumber;
+    }
+
+    public void setSeatNumber(SeatNumber seatNumber) {
+        this.seatNumber = seatNumber;
     }
 }
