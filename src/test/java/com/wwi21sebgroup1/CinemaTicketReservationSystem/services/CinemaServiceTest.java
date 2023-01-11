@@ -19,7 +19,7 @@ import java.util.Optional;
 public class CinemaServiceTest {
 
     @Mock
-    AddressRepository addressRepository;
+    private AddressRepository addressRepository;
     @InjectMocks
     CinemaService cinemaService;
 
