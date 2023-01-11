@@ -1,6 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Seat {
@@ -62,5 +63,18 @@ public class Seat {
 
     public void setSeatNumber(SeatNumber seatNumber) {
         this.seatNumber = seatNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seat seat = (Seat) o;
+        return price == seat.price && occupied == seat.occupied && seatingPlan.equals(seat.seatingPlan) && seatNumber.equals(seat.seatNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(price, occupied, seatingPlan, seatNumber);
     }
 }

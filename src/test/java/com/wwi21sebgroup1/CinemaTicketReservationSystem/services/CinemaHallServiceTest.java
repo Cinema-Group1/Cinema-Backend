@@ -32,8 +32,10 @@ public class CinemaHallServiceTest {
     public void setup(){
         String name = "Hall 1";
         cinema = new Cinema(new Address("01234","Beispielstadt","Beispielstraße","42","Keine Infos"));
+        cinema.setId(1);
         List<SeatNumber> seats = new ArrayList<>();
         seatingPlanTemplate = new SeatingPlanTemplate();
+        seatingPlanTemplate.setId(1);
         seats.add(new SeatNumber('A',(byte)1, seatingPlanTemplate));
         seats.add(new SeatNumber('B',(byte)2, seatingPlanTemplate));
         cinemaHall = new CinemaHall(cinema, name,seatingPlanTemplate);
@@ -61,7 +63,6 @@ public class CinemaHallServiceTest {
     public void t02TransformRequestToObject(){
         assertThrows(NoSuchElementException.class, () -> {
             setup();
-            when(seatingPlanTemplateRepository.findById(cinemaHallRequest.getSeatingPlanTemplateId())).thenReturn(Optional.of(seatingPlanTemplate));
 
             CinemaHall actualCinemaHall = cinemaHallService.transformRequestToObject(cinemaHallRequest);
             actualCinemaHall.setId(id);

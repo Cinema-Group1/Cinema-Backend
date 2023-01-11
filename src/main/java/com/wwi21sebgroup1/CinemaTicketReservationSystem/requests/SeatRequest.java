@@ -10,7 +10,8 @@ public class SeatRequest {
 
     public SeatRequest(){}
 
-    public SeatRequest(boolean occupied, int seatNumberId, int showingId) {
+    public SeatRequest(int price, boolean occupied, int seatNumberId, int showingId) {
+        this.price = price;
         this.occupied = occupied;
         this.seatNumberId = seatNumberId;
         this.showingId = showingId;
