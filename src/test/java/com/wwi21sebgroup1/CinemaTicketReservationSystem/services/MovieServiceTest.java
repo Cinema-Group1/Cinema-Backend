@@ -3,7 +3,6 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Genre;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Movie;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.GenreRepository;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.MovieRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.MovieRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,10 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -22,8 +19,6 @@ import java.util.Optional;
 //Attaches the Mockito Extension to the test class. See also https://www.baeldung.com/mockito-junit-5-extension
 @ExtendWith(MockitoExtension.class)
 public class MovieServiceTest {
-    @Mock
-    private MovieRepository movieRepository;
     @Mock
     private GenreRepository genreRepository;
     @InjectMocks

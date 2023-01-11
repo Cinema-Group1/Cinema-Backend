@@ -8,6 +8,7 @@ public class CinemaRequest {
     public CinemaRequest(int addressId) {
         this.addressId = addressId;
     }
+
     public int getAddressId() {return addressId;}
 
     public void setAddressId(int addressId) {this.addressId = addressId;}

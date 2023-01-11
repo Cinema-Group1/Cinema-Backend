@@ -1,8 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.requests;
 
 public class AddressRequest {
-    private int id;
-    private String zipCode; //Postleitzahl
+    private String zipCode;
     private String city;
     private String street;
     private String number;
@@ -10,18 +9,13 @@ public class AddressRequest {
 
     public AddressRequest(){}
 
-    public AddressRequest(Integer id, String zipCode, String city, String street, String number, String additionalInformation) {
-        this.id = id;
+    public AddressRequest(String zipCode, String city, String street, String number, String additionalInformation) {
         this.zipCode = zipCode;
         this.city = city;
         this.street = street;
         this.number = number;
         this.additionalInformation = additionalInformation;
     }
-
-    public Integer getId() {return id;}
-
-    public void setId(Integer id) {this.id = id;}
 
     public String getZipCode() {return zipCode;}
 
