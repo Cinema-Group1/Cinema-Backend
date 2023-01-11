@@ -25,17 +25,18 @@ public class CinemaServiceTest {
 
     Cinema cinema;
     CinemaRequest cinemaRequest;
-    int id;
     Address address;
+    int id;
 
     public void setup(){
         address = new Address("06069","Offenbach", "Taunusstraße", "1", "echt gefährlich da");
+        address.setId(1);
         cinema = new Cinema(address);
         cinemaRequest = new CinemaRequest(address.getId());
     }
 
     @Test
-    @DisplayName("Transformation works as expected")
+    @DisplayName("CinemaRequest to Cinema: Transformation works as expected")
     public void t01TransformRequestToObject() {
         setup();
         when(addressRepository.findById(cinemaRequest.getAddressId())).thenReturn(Optional.of(address));
@@ -49,7 +50,7 @@ public class CinemaServiceTest {
         assertEquals(actualCinema,expectedCinema);
     }
     @Test
-    @DisplayName("Address was not found")
+    @DisplayName("CinemaRequest to Cinema: Non-Existing Address throws correct Exception")
     public void t02TransformRequestToObject(){
         assertThrows(NoSuchElementException.class, () -> {
             setup();
