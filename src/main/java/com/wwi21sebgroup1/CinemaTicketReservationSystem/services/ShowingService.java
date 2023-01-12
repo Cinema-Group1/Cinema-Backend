@@ -4,11 +4,14 @@ import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.SeatBookedException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.SeatNumberRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.ShowingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -60,9 +63,7 @@ public class ShowingService {
 
     public void book(BookingRequest bookingRequest){
         Booking booking = bookingService.transformRequestToObject(bookingRequest);
-        Showing showing = booking.getShowing();
-        Iterable<Seat> allSeatsFromShowing = seatRepository.findAllBySeatingPlanId(showing.getSeatingPlan().getId());
-        for(Seat seat: allSeatsFromShowing){
+        for(Seat seat : booking.getSeats()){
             if(seat.isOccupied()){
                 //
             } else{
@@ -79,7 +80,8 @@ public class ShowingService {
         CinemaHall cinemaHall = cinemaHallRepository.findById(showingRequest.getCinemaHallId()).get();
         SeatingPlan seatingPlan = new SeatingPlan();
         seatingPlanRepository.save(seatingPlan);
-        for (SeatNumber seatNumber : cinemaHall.getSeatingPlanTemplate().getSeatNumbers()) {
+        Iterable<SeatNumber> seatNumbers = seatNumberRepository.findAllBySeatingPlanTemplateId(cinemaHall.getSeatingPlanTemplate().getId());
+        for (SeatNumber seatNumber : seatNumbers) {
             Seat curr = new Seat(10, false, seatingPlan, seatNumber);
             seatRepository.save(curr);
         }

@@ -1,10 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.BookingRepository;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.SeatNumberRepository;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.ShowingRepository;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.UserRepository;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +20,8 @@ public class BookingService {
     private UserRepository userRepository;
     @Autowired
     private SeatNumberRepository seatNumberRepository;
+    @Autowired
+    private SeatRepository seatRepository;
 
     public void addBooking(BookingRequest bookingRequest){
         bookingRepository.save(transformRequestToObject(bookingRequest));
@@ -55,6 +54,16 @@ public class BookingService {
     public Booking transformRequestToObject(BookingRequest bookingRequest){
         Showing showing = showingRepository.findById(bookingRequest.getShowingId()).get();
         User user = userRepository.findById(bookingRequest.getUserId()).get();
-        return new Booking(user, showing, new ArrayList<>(), bookingRequest.getPrice());
+        Iterable<Seat> allSeats = seatRepository.findAllBySeatingPlanId(showing.getSeatingPlan().getId());
+        List<Seat> seatsToBook = new ArrayList<>();
+        for(Seat seat : allSeats){
+            for(String seatNumberString : bookingRequest.getSeatNumbers()){
+                if(seat.getSeatNumber().getLine() == (char)(seatNumberString.charAt(0)) &&
+                    seat.getSeatNumber().getNumber() == Character.getNumericValue(seatNumberString.charAt(1))){
+                    seatsToBook.add(seat);
+                }
+            }
+        }
+        return new Booking(user, showing, seatsToBook, bookingRequest.getPrice());
     }
 }

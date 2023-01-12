@@ -12,7 +12,7 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
-    @PostMapping("/add")
+    @PutMapping("/add")
     public void addAddress(@RequestBody AddressRequest addressRequest){addressService.addAddress(addressRequest);}
 
     @PostMapping("/update:{oldAddressId}")

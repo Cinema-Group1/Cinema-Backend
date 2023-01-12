@@ -48,7 +48,7 @@ public class SeatingPlanTemplateService {
 
     public void deleteSeatingPlanTemplate(Integer id) {
         try {
-            seatNumberRepository.deleteById(id);
+            seatingPlanTemplateRepository.deleteById(id);
         } catch (NoSuchElementException exception) {
             exception.printStackTrace();
             System.out.println(exception.getMessage());
@@ -56,6 +56,15 @@ public class SeatingPlanTemplateService {
     }
 
     public SeatingPlanTemplate transformRequestToObject(SeatingPlanTemplateRequest seatingPlanTemplateRequest){
+        SeatingPlanTemplate seatingPlanTemplate = new SeatingPlanTemplate(new ArrayList<>());
+        seatingPlanTemplateRepository.save(seatingPlanTemplate);
+        for(int i = 1; i <= seatingPlanTemplateRequest.getRows(); i++){
+            for(int j = 1; j <= seatingPlanTemplateRequest.getSeatsPerRow(); j++){
+                SeatNumber seatNumber = new SeatNumber((char)(i + 64), (byte) j, seatingPlanTemplate);
+                seatNumberRepository.save(seatNumber);
+                seatingPlanTemplate.getSeatNumbers().add(seatNumber);
+            }
+        }
         return new SeatingPlanTemplate();
     }
 }
