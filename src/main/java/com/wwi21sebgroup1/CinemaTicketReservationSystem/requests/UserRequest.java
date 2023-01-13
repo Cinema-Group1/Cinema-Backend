@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.time.LocalDate;
 
 public class UserRequest {
-    private Integer id;
     private String firstName;
     private String lastName;
     private String dob;

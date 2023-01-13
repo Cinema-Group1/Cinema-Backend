@@ -7,7 +7,6 @@ import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.User;
 import java.util.List;
 
 public class TicketRequest {
-    private int id;
     private int showingId;
     private List<Integer> seatIds;
     private double price;
@@ -15,17 +14,12 @@ public class TicketRequest {
 
     public TicketRequest(){}
 
-    public TicketRequest(int id, int showingId, List<Integer> seatIds, double price, int userId) {
-        this.id = id;
+    public TicketRequest(int showingId, List<Integer> seatIds, double price, int userId) {
         this.showingId = showingId;
         this.seatIds = seatIds;
         this.price = price;
         this.userId = userId;
     }
-
-    public Integer getId() {return id;}
-
-    public void setId(Integer id) {this.id = id;}
 
     public int getShowingId() {return showingId;}
 
