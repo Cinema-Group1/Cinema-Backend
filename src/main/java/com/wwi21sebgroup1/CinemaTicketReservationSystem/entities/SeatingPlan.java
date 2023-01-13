@@ -11,14 +11,7 @@ public class SeatingPlan {
             = GenerationType.AUTO)
     private Integer id;
 
-    @OneToMany
-    private List<Seat> seats = new ArrayList<>();
-
     public SeatingPlan(){}
-
-    public SeatingPlan(List<Seat> seats){
-        this.seats =seats;
-    }
 
     public Integer getId() {
         return id;
@@ -26,17 +19,5 @@ public class SeatingPlan {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public List<Seat> getSeats() {
-        return seats;
-    }
-
-    public void setSeats(List<Seat> seats) {
-        this.seats = seats;
-    }
-
-    public void addSeat(Seat seat){
-        this.seats.add(seat);
     }
 }

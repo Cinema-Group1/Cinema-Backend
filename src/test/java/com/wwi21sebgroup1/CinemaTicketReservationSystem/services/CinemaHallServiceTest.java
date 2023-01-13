@@ -36,8 +36,8 @@ public class CinemaHallServiceTest {
         List<SeatNumber> seats = new ArrayList<>();
         seatingPlanTemplate = new SeatingPlanTemplate();
         seatingPlanTemplate.setId(1);
-        seats.add(new SeatNumber('A',(byte)1));
-        seats.add(new SeatNumber('B',(byte)2));
+        seats.add(new SeatNumber('A',(byte)1, seatingPlanTemplate));
+        seats.add(new SeatNumber('B',(byte)2, seatingPlanTemplate));
         cinemaHall = new CinemaHall(cinema, name,seatingPlanTemplate);
         cinemaHallRequest = new CinemaHallRequest(cinema.getId(), name, seatingPlanTemplate.getId());
     }

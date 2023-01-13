@@ -43,6 +43,6 @@ public class SeatNumberService {
     }
 
     public SeatNumber transformRequestToObject(SeatNumberRequest seatNumberRequest){
-        return new SeatNumber(seatNumberRequest.getLine(), seatNumberRequest.getNumber());
+        return new SeatNumber();
     }
 }

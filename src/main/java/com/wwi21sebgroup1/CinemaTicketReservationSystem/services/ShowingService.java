@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ShowingService {
@@ -34,12 +35,12 @@ public class ShowingService {
     private SeatNumberRepository seatNumberRepository;
 
     public void addShowing(ShowingRequest showingRequest){
-        showingRepository.save(transformRequestToObject(showingRequest));
+        showingRepository.save(processRequest(showingRequest));
     }
 
     public void updateShowing(Integer id, ShowingRequest showingRequest){
         try {
-            Showing updatedShowing = transformRequestToObject(showingRequest);
+            Showing updatedShowing = processRequest(showingRequest);
             updatedShowing.setId(id);
             showingRepository.save(updatedShowing);
         } catch (NoSuchElementException exception) {
@@ -50,7 +51,10 @@ public class ShowingService {
 
     public void deleteShowing(Integer id){
         try {
-            movieRepository.deleteById(id);
+            Showing showingToBeDeleted = showingRepository.findById(id).get();
+            seatRepository.deleteAllBySeatingPlanId(showingToBeDeleted.getSeatingPlan().getId());
+            seatingPlanRepository.deleteByShowingId(id);
+            showingRepository.deleteById(id);
         } catch (NoSuchElementException exception) {
             exception.printStackTrace();
             System.out.println(exception.getMessage());
@@ -75,7 +79,7 @@ public class ShowingService {
         bookingRepository.save(booking);
     }
 
-    public Showing transformRequestToObject(ShowingRequest showingRequest) {
+    public Showing processRequest(ShowingRequest showingRequest) {
         Movie movie = movieRepository.findById(showingRequest.getMovieId()).get();
         CinemaHall cinemaHall = cinemaHallRepository.findById(showingRequest.getCinemaHallId()).get();
         SeatingPlan seatingPlan = new SeatingPlan();

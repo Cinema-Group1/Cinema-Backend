@@ -11,12 +11,15 @@ public class SeatNumber {
     private Integer id;
     private char line;
     private byte number;
+    @ManyToOne
+    private SeatingPlanTemplate seatingPlanTemplate;
 
     public SeatNumber() {}
 
-    public SeatNumber(char line, byte number) {
+    public SeatNumber(char line, byte number, SeatingPlanTemplate seatingPlanTemplate) {
         this.line = line;
         this.number = number;
+        this.seatingPlanTemplate = seatingPlanTemplate;
     }
 
     public Integer getId() {
@@ -43,17 +46,24 @@ public class SeatNumber {
         this.number = number;
     }
 
+    public SeatingPlanTemplate getSeatingPlanTemplate() {
+        return seatingPlanTemplate;
+    }
+
+    public void setSeatingPlanTemplate(SeatingPlanTemplate seatingPlanTemplate) {
+        this.seatingPlanTemplate = seatingPlanTemplate;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SeatNumber that = (SeatNumber) o;
-        return line == that.line && number == that.number;
+        return line == that.line && number == that.number && seatingPlanTemplate.equals(that.seatingPlanTemplate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(line, number);
+        return Objects.hash(line, number, seatingPlanTemplate);
     }
 }

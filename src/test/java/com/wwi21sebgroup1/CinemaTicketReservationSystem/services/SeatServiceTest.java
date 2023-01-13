@@ -1,9 +1,6 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Seat;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.SeatNumber;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.SeatingPlan;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Showing;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.SeatNumberRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.SeatingPlanRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.ShowingRepository;
@@ -40,7 +37,8 @@ public class SeatServiceTest {
     int id;
 
     public void setup(){
-        seatNumber = new SeatNumber('Z',(byte)1);
+        SeatingPlanTemplate seatingPlanTemplate = new SeatingPlanTemplate();
+        seatNumber = new SeatNumber('Z',(byte)1, seatingPlanTemplate);
         seatNumber.setId(1);
         showing = new Showing();
         showing.setId(1);

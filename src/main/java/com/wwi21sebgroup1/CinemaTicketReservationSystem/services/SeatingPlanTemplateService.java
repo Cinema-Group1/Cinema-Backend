@@ -40,12 +40,6 @@ public class SeatingPlanTemplateService {
         }
     }
 
-    public void addSeatNumber(Integer seatingPlanTemplateId, SeatNumber seatNumber){
-        SeatingPlanTemplate seatingPlanTemplate = seatingPlanTemplateRepository.findById(seatingPlanTemplateId).get();
-        seatingPlanTemplate.getSeatNumbers().add(seatNumber);
-        seatingPlanTemplateRepository.save(seatingPlanTemplate);
-    }
-
     public void deleteSeatingPlanTemplate(Integer id) {
         try {
             seatingPlanTemplateRepository.deleteById(id);
@@ -56,11 +50,10 @@ public class SeatingPlanTemplateService {
     }
 
     public SeatingPlanTemplate transformRequestToObject(SeatingPlanTemplateRequest seatingPlanTemplateRequest){
-        SeatingPlanTemplate seatingPlanTemplate = new SeatingPlanTemplate(new ArrayList<>());
+        SeatingPlanTemplate seatingPlanTemplate = new SeatingPlanTemplate();
         for(int i = 1; i <= seatingPlanTemplateRequest.getRows(); i++){
             for(int j = 1; j <= seatingPlanTemplateRequest.getSeatsPerRow(); j++){
-                SeatNumber seatNumber = new SeatNumber((char)(i + 64), (byte) j);
-                seatingPlanTemplate.getSeatNumbers().add(seatNumber);
+                SeatNumber seatNumber = new SeatNumber((char)(i + 64), (byte) j, seatingPlanTemplate);
                 seatNumberRepository.save(seatNumber);
             }
         }
