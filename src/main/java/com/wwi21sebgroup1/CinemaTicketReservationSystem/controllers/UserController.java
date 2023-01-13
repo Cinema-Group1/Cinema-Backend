@@ -5,6 +5,7 @@ import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.User;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.AddressRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.UserRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.UserRequest;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,55 +18,26 @@ import java.util.NoSuchElementException;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AddressRepository addressRepository;
+    UserService userService;
 
     @PutMapping("/add")
     public void addUser(@RequestBody UserRequest userRequest) {
-        userRepository.save(transformRequestToObject(userRequest));
+        userService.addUser(userRequest);
     }
 
     @PutMapping("/update:{oldUserId}")
     public void updateUser(@PathVariable Integer oldUserId, @RequestBody UserRequest userRequest){
-        try{
-            User updatedUser = transformRequestToObject(userRequest);
-            updatedUser.setId(oldUserId);
-            userRepository.save(updatedUser);
-        }catch(NoSuchElementException exception){
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
-        }
+        userService.updateUser(oldUserId, userRequest);
     }
 
     @PostMapping("/delete:{oldUserId}")
     public void deleteUser(@PathVariable Integer oldUserId) {
-        try {
-            userRepository.deleteById(oldUserId);
-        } catch (NoSuchElementException exception) {
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
-        }
-    }
-
-    public User transformRequestToObject(UserRequest userRequest){
-        Address address = new Address(  userRequest.getZipCode(),
-                                        userRequest.getCity(),
-                                        userRequest.getStreet(),
-                                        userRequest.getNumber(),
-                                        userRequest.getAdditionalInformation());
-        addressRepository.save(address);
-        return new User(userRequest.getFirstName(),
-                        userRequest.getLastName(),
-                        LocalDate.parse(userRequest.getDob()),
-                        userRequest.geteMail(),
-                        userRequest.getPassword(),
-                        address);
+        userService.deleteUser(oldUserId);
     }
 
     @GetMapping("/all")
     public @ResponseBody Iterable<User> getUsers() {
-        return userRepository.findAll();
+        return userService.getUsers();
     }
 
 }
