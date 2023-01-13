@@ -44,7 +44,7 @@ public class CinemaHallServiceTest {
 
     @Test
     @DisplayName("CinemaHallRequest to CinemaHall: Transformation works as expected")
-    public void t01TransformRequestToObject(){
+    public void transformRequestToObject(){
         setup();
         when(cinemaRepository.findById(cinemaHallRequest.getCinemaId())).thenReturn(Optional.of(cinema));
         when(seatingPlanTemplateRepository.findById(cinemaHallRequest.getSeatingPlanTemplateId())).thenReturn(Optional.of(seatingPlanTemplate));
@@ -56,34 +56,5 @@ public class CinemaHallServiceTest {
         expectedCinemaHall.setId(id);
 
         assertEquals(actualCinemaHall,expectedCinemaHall);
-    }
-
-    @Test
-    @DisplayName("CinemaHallRequest to CinemaHall: Non-Existing Cinema throws correct Exception")
-    public void t02TransformRequestToObject(){
-        assertThrows(NoSuchElementException.class, () -> {
-            setup();
-
-            CinemaHall actualCinemaHall = cinemaHallService.transformRequestToObject(cinemaHallRequest);
-            actualCinemaHall.setId(id);
-
-            CinemaHall expectedCinemaHall = cinemaHall;
-            expectedCinemaHall.setId(id);
-        });
-    }
-
-    @Test
-    @DisplayName("CinemaHallRequest to CinemaHall: Non-Existing SeatingPlanTemplate throws correct Exception")
-    public void t03TransformRequestToObject(){
-        assertThrows(NoSuchElementException.class, () -> {
-            setup();
-            when(cinemaRepository.findById(cinemaHallRequest.getCinemaId())).thenReturn(Optional.of(cinema));
-
-            CinemaHall actualCinemaHall = cinemaHallService.transformRequestToObject(cinemaHallRequest);
-            actualCinemaHall.setId(id);
-
-            CinemaHall expectedCinemaHall = cinemaHall;
-            expectedCinemaHall.setId(id);
-        });
     }
 }

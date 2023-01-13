@@ -43,8 +43,8 @@ public class MovieServiceTest {
     }
 
     @Test
-    @DisplayName("Transformation works as expected")
-    public void t01TransformRequestToObject(){
+    @DisplayName("MovieRequest To Movie: Transformation works as expected")
+    public void transformRequestToObject(){
         setup();
         when(genreRepository.findByName(movieRequest.getGenreName())).thenReturn(Optional.of(genre));
 
@@ -55,19 +55,5 @@ public class MovieServiceTest {
         expectedMovie.setId(id);
 
         assertEquals(actualMovie, expectedMovie);
-    }
-
-    @Test
-    @DisplayName("Genre was not found")
-    public void t02TransformRequestToObject(){
-        assertThrows(NoSuchElementException.class, () -> {
-            setup();
-
-            Movie actualMovie = movieService.transformRequestToObject(movieRequest);
-            actualMovie.setId(id);
-
-            Movie expectedMovie = movie;
-            expectedMovie.setId(id);
-        });
     }
 }

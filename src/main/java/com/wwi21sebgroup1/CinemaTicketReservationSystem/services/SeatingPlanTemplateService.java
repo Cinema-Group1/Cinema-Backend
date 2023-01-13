@@ -57,14 +57,13 @@ public class SeatingPlanTemplateService {
 
     public SeatingPlanTemplate transformRequestToObject(SeatingPlanTemplateRequest seatingPlanTemplateRequest){
         SeatingPlanTemplate seatingPlanTemplate = new SeatingPlanTemplate(new ArrayList<>());
-        seatingPlanTemplateRepository.save(seatingPlanTemplate);
         for(int i = 1; i <= seatingPlanTemplateRequest.getRows(); i++){
             for(int j = 1; j <= seatingPlanTemplateRequest.getSeatsPerRow(); j++){
                 SeatNumber seatNumber = new SeatNumber((char)(i + 64), (byte) j);
-                seatNumberRepository.save(seatNumber);
                 seatingPlanTemplate.getSeatNumbers().add(seatNumber);
+                seatNumberRepository.save(seatNumber);
             }
         }
-        return new SeatingPlanTemplate();
+        return seatingPlanTemplate;
     }
 }

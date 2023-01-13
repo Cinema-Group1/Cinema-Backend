@@ -27,7 +27,7 @@ public class GenreServiceTest {
 
     @Test
     @DisplayName("Transformation works as expected")
-    public void t01TransformRequestToObject(){
+    public void transformRequestToObject(){
         setup();
 
         Genre actualGenre = genreService.transformRequestToObject(genreRequest);

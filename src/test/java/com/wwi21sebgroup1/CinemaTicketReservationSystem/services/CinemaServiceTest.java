@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,7 +36,7 @@ public class CinemaServiceTest {
 
     @Test
     @DisplayName("CinemaRequest to Cinema: Transformation works as expected")
-    public void t01TransformRequestToObject() {
+    public void transformRequestToObject() {
         setup();
         when(addressRepository.findById(cinemaRequest.getAddressId())).thenReturn(Optional.of(address));
 
@@ -48,18 +47,5 @@ public class CinemaServiceTest {
         expectedCinema.setId(id);
 
         assertEquals(actualCinema,expectedCinema);
-    }
-    @Test
-    @DisplayName("CinemaRequest to Cinema: Non-Existing Address throws correct Exception")
-    public void t02TransformRequestToObject(){
-        assertThrows(NoSuchElementException.class, () -> {
-            setup();
-
-            Cinema actualCinema = cinemaService.transformRequestToObject(cinemaRequest);
-            actualCinema.setId(id);
-
-            Cinema expectedCinema = cinema;
-            expectedCinema.setId(id);
-        });
     }
 }

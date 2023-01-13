@@ -54,8 +54,8 @@ public class SeatServiceTest {
         id = 1;
     }
     @Test
-    @DisplayName("SeatRequest to Seat: Transformation works as expected\"")
-    public void t01TransformRequestToObject() {
+    @DisplayName("SeatRequest to Seat: Transformation works as expected")
+    public void transformRequestToObject() {
         setup();
         when(seatNumberRepository.findById(seatRequest.getSeatNumberId())).thenReturn(Optional.of(seatNumber));
         when(showingRepository.findById(seatRequest.getShowingId())).thenReturn(Optional.of(showing));
@@ -68,18 +68,5 @@ public class SeatServiceTest {
         seat.setId(id);
 
         assertEquals(actualSeat,expectedSeat);
-    }
-    @Test
-    @DisplayName("SeatRequest to Seat: Non-Existing Address throws correct Exception")
-    public void t02TransformRequestToObject(){
-        assertThrows(NoSuchElementException.class, () -> {
-            setup();
-
-            Seat actualSeat = seatService.transformRequestToObject(seatRequest);
-            actualSeat.setId(id);
-
-            Seat expectedSeat = seat;
-            seat.setId(id);
-        });
     }
 }

@@ -32,8 +32,8 @@ public class BookingServiceTest {
     private BookingService bookingService;
 
     @Test
-    @DisplayName("Transformation works")
-    public void t01TransformRequestToObject(){
+    @DisplayName("BookingRequest to Booking: Transformation works as expected")
+    public void transformRequestToObject(){
         /*Integer userId = 1;
         User user = new User();
         user.setId(userId);
