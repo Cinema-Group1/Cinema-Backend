@@ -25,7 +25,6 @@ public class SeatNumberService {
 
     public void addSeatNumber(SeatNumber seatNumber){
         seatNumberRepository.save(seatNumber);
-        seatingPlanTemplateService.addSeatNumber(seatNumber.getSeatingPlanTemplate().getId(), seatNumber);
     }
 
     public Iterable<SeatNumber> getAllSeatNumbers(){
@@ -44,7 +43,6 @@ public class SeatNumberService {
     }
 
     public SeatNumber transformRequestToObject(SeatNumberRequest seatNumberRequest){
-        SeatingPlanTemplate seatingPlanTemplate = seatingPlanTemplateRepository.findById(seatNumberRequest.getSeatingPlanTemplateId()).get();
-        return new SeatNumber(seatNumberRequest.getLine(), seatNumberRequest.getNumber(), seatingPlanTemplate);
+        return new SeatNumber(seatNumberRequest.getLine(), seatNumberRequest.getNumber());
     }
 }

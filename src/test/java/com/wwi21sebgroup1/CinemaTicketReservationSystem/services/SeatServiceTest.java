@@ -40,7 +40,7 @@ public class SeatServiceTest {
     int id;
 
     public void setup(){
-        seatNumber = new SeatNumber('Z',(byte)1, null);
+        seatNumber = new SeatNumber('Z',(byte)1);
         seatNumber.setId(1);
         showing = new Showing();
         showing.setId(1);
