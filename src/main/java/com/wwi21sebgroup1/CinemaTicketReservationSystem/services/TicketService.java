@@ -57,11 +57,7 @@ public class TicketService {
 
     public Ticket transformRequestToObject(TicketRequest ticketRequest){
         Showing showing = showingRepository.findById(ticketRequest.getShowingId()).get();
-        List<Seat> seats = new ArrayList<>();
-        for(int seatId: ticketRequest.getSeatIds()){
-            seats.add(seatRepository.findById(seatId).get());
-        }
-        User user = userRepository.findById(ticketRequest.getUserId()).get();
-        return new Ticket(showing, seats, ticketRequest.getPrice(), user);
+        Seat seat = seatRepository.findById(ticketRequest.getSeatId()).get();
+        return new Ticket(showing, seat);
     }
 }

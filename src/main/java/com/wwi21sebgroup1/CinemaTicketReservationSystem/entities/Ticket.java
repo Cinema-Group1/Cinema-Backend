@@ -11,39 +11,38 @@ public class Ticket {
     private Integer id;
 
     @ManyToOne
-    private Showing show;
-    @OneToMany
-    private List<Seat> seats;
-    private double price;
-    @ManyToOne
-    private User user;
+    private Showing showing;
+    @OneToOne
+    private Seat seat;
 
     public Ticket(){}
 
-    public Ticket(Showing show, List<Seat> seats, double price, User user) {
-        this.show = show;
-        this.seats = seats;
-        this.price = price;
-        this.user = user;
+    public Ticket(Showing showing, Seat seat) {
+        this.showing = showing;
+        this.seat = seat;
     }
 
-    public Integer getId() {return id;}
+    public Integer getId() {
+        return id;
+    }
 
-    public void setId(Integer id) {this.id = id;}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public Showing getShow() {return show;}
+    public Showing getShowing() {
+        return showing;
+    }
 
-    public void setShow(Showing show) {this.show = show;}
+    public void setShowing(Showing showing) {
+        this.showing = showing;
+    }
 
-    public List<Seat> getSeats() {return seats;}
+    public Seat getSeat() {
+        return seat;
+    }
 
-    public void setSeats(List<Seat> seats) {this.seats = seats;}
-
-    public double getPrice() {return price;}
-
-    public void setPrice(double price) {this.price = price;}
-
-    public User getUser() {return user;}
-
-    public void setUser(User user) {this.user = user;}
+    public void setSeat(Seat seat) {
+        this.seat = seat;
+    }
 }
