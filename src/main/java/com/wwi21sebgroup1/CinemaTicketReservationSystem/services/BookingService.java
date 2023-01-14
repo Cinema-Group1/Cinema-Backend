@@ -24,7 +24,7 @@ public class BookingService {
     private SeatRepository seatRepository;
 
     public void addBooking(BookingRequest bookingRequest){
-        bookingRepository.save(transformRequestToObject(bookingRequest));
+        bookingRepository.save(processRequest(bookingRequest));
     }
 
     public Iterable<Booking> getAllBookings(){
@@ -33,7 +33,7 @@ public class BookingService {
 
     public void updateBooking(Integer id, BookingRequest bookingRequest){
         try {
-            Booking updatedBooking = transformRequestToObject(bookingRequest);
+            Booking updatedBooking = processRequest(bookingRequest);
             updatedBooking.setId(id);
             bookingRepository.save(updatedBooking);
         } catch (NoSuchElementException exception) {
@@ -51,14 +51,14 @@ public class BookingService {
         }
     }
 
-    public Booking transformRequestToObject(BookingRequest bookingRequest){
+    public Booking processRequest(BookingRequest bookingRequest){
         Showing showing = showingRepository.findById(bookingRequest.getShowingId()).get();
         User user = userRepository.findById(bookingRequest.getUserId()).get();
         Iterable<Seat> allSeats = seatRepository.findAllBySeatingPlanId(showing.getSeatingPlan().getId());
         List<Seat> seatsToBook = new ArrayList<>();
         for(Seat seat : allSeats){
             for(String seatNumberString : bookingRequest.getSeatNumbers()){
-                if(seat.getSeatNumber().getLine() == (char)(seatNumberString.charAt(0)) &&
+                if(seat.getSeatNumber().getLine() == (seatNumberString.charAt(0)) &&
                     seat.getSeatNumber().getNumber() == Character.getNumericValue(seatNumberString.charAt(1))){
                     seatsToBook.add(seat);
                 }

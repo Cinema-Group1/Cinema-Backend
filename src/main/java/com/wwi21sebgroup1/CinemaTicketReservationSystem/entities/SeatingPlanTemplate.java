@@ -8,7 +8,13 @@ public class SeatingPlanTemplate {
     @GeneratedValue(strategy
             = GenerationType.AUTO)
     private Integer id;
+    @OneToOne
+    CinemaHall cinemaHall;
     public SeatingPlanTemplate(){}
+
+    public SeatingPlanTemplate(CinemaHall cinemaHall) {
+        this.cinemaHall = cinemaHall;
+    }
 
     public Integer getId() {
         return id;
@@ -16,6 +22,14 @@ public class SeatingPlanTemplate {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public CinemaHall getCinemaHall() {
+        return cinemaHall;
+    }
+
+    public void setCinemaHall(CinemaHall cinemaHall) {
+        this.cinemaHall = cinemaHall;
     }
 }
 

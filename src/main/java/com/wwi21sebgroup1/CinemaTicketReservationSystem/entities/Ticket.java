@@ -1,7 +1,6 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Ticket {

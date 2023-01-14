@@ -6,6 +6,7 @@ import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.SeatNumberRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.ShowingRequest;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.TicketRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,10 @@ public class ShowingService {
     private BookingRepository bookingRepository;
     @Autowired
     private SeatNumberRepository seatNumberRepository;
+    @Autowired
+    private TicketRepository ticketRepository;
+    @Autowired
+    private SeatingPlanTemplateRepository seatingPlanTemplateRepository;
 
     public void addShowing(ShowingRequest showingRequest){
         showingRepository.save(processRequest(showingRequest));
@@ -65,26 +70,29 @@ public class ShowingService {
         return showingRepository.findAll();
     }
 
-    public void book(BookingRequest bookingRequest){
-        Booking booking = bookingService.transformRequestToObject(bookingRequest);
+    public void book(BookingRequest bookingRequest) throws SeatBookedException{
+        Booking booking = bookingService.processRequest(bookingRequest);
         for(Seat seat : booking.getSeats()){
             if(seat.isOccupied()){
-                //
+                throw new SeatBookedException();
             } else{
                 seat.setOccupied(true);
                 seatRepository.save(seat);
-                booking.getSeats().add(seat);
             }
         }
         bookingRepository.save(booking);
+        for(Seat seat : booking.getSeats()){
+            ticketRepository.save(new Ticket(booking.getShowing(), seat));
+        }
     }
 
     public Showing processRequest(ShowingRequest showingRequest) {
         Movie movie = movieRepository.findById(showingRequest.getMovieId()).get();
         CinemaHall cinemaHall = cinemaHallRepository.findById(showingRequest.getCinemaHallId()).get();
+        SeatingPlanTemplate seatingPlanTemplate = seatingPlanTemplateRepository.findByCinemaHallId(cinemaHall.getId()).get();
         SeatingPlan seatingPlan = new SeatingPlan();
         seatingPlanRepository.save(seatingPlan);
-        Iterable<SeatNumber> seatNumbers = seatNumberRepository.findAllBySeatingPlanTemplateId(cinemaHall.getSeatingPlanTemplate().getId());
+        Iterable<SeatNumber> seatNumbers = seatNumberRepository.findAllBySeatingPlanTemplateId(seatingPlanTemplate.getId());
         for (SeatNumber seatNumber : seatNumbers) {
             Seat curr = new Seat(10, false, seatingPlan, seatNumber);
             seatRepository.save(curr);

@@ -47,9 +47,7 @@ public class CinemaHallService {
 
     public CinemaHall transformRequestToObject(CinemaHallRequest cinemaHallRequest){
         Cinema cinema = cinemaRepository.findById(cinemaHallRequest.getCinemaId()).get();
-        SeatingPlanTemplate seatingPlanTemplate = seatingPlanTemplateRepository.findById(cinemaHallRequest.getSeatingPlanTemplateId()).get();
         return new CinemaHall(  cinema,
-                cinemaHallRequest.getName(),
-                seatingPlanTemplate);
+                                cinemaHallRequest.getName());
     }
 }

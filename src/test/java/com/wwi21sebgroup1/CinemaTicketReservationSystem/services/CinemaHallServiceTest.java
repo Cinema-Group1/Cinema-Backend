@@ -38,8 +38,8 @@ public class CinemaHallServiceTest {
         seatingPlanTemplate.setId(1);
         seats.add(new SeatNumber('A',(byte)1, seatingPlanTemplate));
         seats.add(new SeatNumber('B',(byte)2, seatingPlanTemplate));
-        cinemaHall = new CinemaHall(cinema, name,seatingPlanTemplate);
-        cinemaHallRequest = new CinemaHallRequest(cinema.getId(), name, seatingPlanTemplate.getId());
+        cinemaHall = new CinemaHall(cinema, name);
+        cinemaHallRequest = new CinemaHallRequest(cinema.getId(), name);
     }
 
     @Test
@@ -47,7 +47,6 @@ public class CinemaHallServiceTest {
     public void transformRequestToObject(){
         setup();
         when(cinemaRepository.findById(cinemaHallRequest.getCinemaId())).thenReturn(Optional.of(cinema));
-        when(seatingPlanTemplateRepository.findById(cinemaHallRequest.getSeatingPlanTemplateId())).thenReturn(Optional.of(seatingPlanTemplate));
 
         CinemaHall actualCinemaHall = cinemaHallService.transformRequestToObject(cinemaHallRequest);
         actualCinemaHall.setId(id);
