@@ -16,15 +16,17 @@ public class ShowingRequest {
     private String endsAt;
     private int movieId;
     private int cinemaHallId;
+    private int pricePerSeat;
 
     public ShowingRequest(){}
 
-    public ShowingRequest(String title, String startsAt, String endsAt, int movieId, int cinemaHallId) {
+    public ShowingRequest(String title, String startsAt, String endsAt, int movieId, int cinemaHallId, int pricePerSeat) {
         this.title = title;
         this.startsAt = startsAt;
         this.endsAt = endsAt;
         this.movieId = movieId;
         this.cinemaHallId = cinemaHallId;
+        this.pricePerSeat = pricePerSeat;
     }
 
     public Integer getMovieId() {
@@ -85,5 +87,13 @@ public class ShowingRequest {
 
     public void setCinemaHallId(int cinemaHallId) {
         this.cinemaHallId = cinemaHallId;
+    }
+
+    public int getPricePerSeat() {
+        return pricePerSeat;
+    }
+
+    public void setPricePerSeat(int pricePerSeat) {
+        this.pricePerSeat = pricePerSeat;
     }
 }

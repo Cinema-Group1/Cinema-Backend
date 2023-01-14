@@ -94,14 +94,14 @@ public class ShowingService {
         seatingPlanRepository.save(seatingPlan);
         Iterable<SeatNumber> seatNumbers = seatNumberRepository.findAllBySeatingPlanTemplateId(seatingPlanTemplate.getId());
         for (SeatNumber seatNumber : seatNumbers) {
-            Seat curr = new Seat(10, false, seatingPlan, seatNumber);
+            Seat curr = new Seat(showingRequest.getPricePerSeat(), false, seatingPlan, seatNumber);
             seatRepository.save(curr);
         }
         return new Showing( showingRequest.getTitle(),
-                LocalDateTime.parse(showingRequest.getStartsAt()),
-                LocalDateTime.parse(showingRequest.getEndsAt()),
-                movie,
-                cinemaHall,
-                seatingPlan);
+                            LocalDateTime.parse(showingRequest.getStartsAt()),
+                            LocalDateTime.parse(showingRequest.getEndsAt()),
+                            movie,
+                            cinemaHall,
+                            seatingPlan);
     }
 }

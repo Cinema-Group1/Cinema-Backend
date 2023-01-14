@@ -6,15 +6,13 @@ public class BookingRequest {
     private int userId;
     private int showingId;
     private List<String> seatNumbers;
-    private int price;
 
     public BookingRequest(){}
 
-    public BookingRequest(int userId, int showingId, List<String> seatNumbers, int price) {
+    public BookingRequest(int userId, int showingId, List<String> seatNumbers) {
         this.userId = userId;
         this.showingId = showingId;
         this.seatNumbers = seatNumbers;
-        this.price = price;
     }
 
     public int getUserId() {
@@ -39,13 +37,5 @@ public class BookingRequest {
 
     public void setSeatNumbers(List<String> seatNumbers) {
         this.seatNumbers = seatNumbers;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 }

@@ -2,6 +2,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.BookingRepository;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.SeatRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.ShowingRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.UserRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
@@ -25,6 +26,8 @@ public class BookingServiceTest {
     @Mock
     private BookingRepository bookingRepository;
     @Mock
+    private SeatRepository seatRepository;
+    @Mock
     private ShowingRepository showingRepository;
     @Mock
     private UserRepository userRepository;
@@ -34,23 +37,26 @@ public class BookingServiceTest {
     @Test
     @DisplayName("BookingRequest to Booking: Transformation works as expected")
     public void transformRequestToObject(){
-        /*Integer userId = 1;
+        Integer userId = 1;
         User user = new User();
         user.setId(userId);
         Integer showingId = 1;
         Showing showing = new Showing();
         showing.setId(showingId);
+        SeatingPlan seatingPlan = new SeatingPlan();
+        seatingPlan.setId(1);
+        showing.setSeatingPlan(seatingPlan);
         List<String> seatNumbersString = new ArrayList<>(Arrays.asList("A1", "A2", "A3"));
-        List<Seat> seats = new ArrayList<>(Arrays.asList(   new Seat('A', (byte)1, showing.getCinemaHall().getSeatingPlanTemplate()),
-                                                            new Seat('A', (byte)2, showing.getCinemaHall().getSeatingPlanTemplate()),
-                                                            new Seat('A', (byte)3, showing.getCinemaHall().getSeatingPlanTemplate())));
-        int price = 50;
-        BookingRequest bookingRequest = new BookingRequest(userId, showingId, seatNumbersString, price);
+        List<Seat> seats = new ArrayList<>(Arrays.asList(   new Seat(10,false, seatingPlan, new SeatNumber('A', (byte)1, null)),
+                                                            new Seat(10,false, seatingPlan, new SeatNumber('A', (byte)2, null)),
+                                                            new Seat(10,false, seatingPlan, new SeatNumber('A', (byte)3, null))));
+        BookingRequest bookingRequest = new BookingRequest(userId, showingId, seatNumbersString);
         when(showingRepository.findById(showingId)).thenReturn(Optional.of(showing));
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-        Booking actualBooking = bookingService.transformRequestToObject(bookingRequest);
-        Booking expectedBooking = new Booking(user, showing, seatNumbers, price);
+        when(seatRepository.findAllBySeatingPlanId(1)).thenReturn(seats);
+        Booking actualBooking = bookingService.processRequest(bookingRequest);
+        Booking expectedBooking = new Booking(user, showing, seats, 30);
 
-        assertEquals(actualBooking, expectedBooking);*/
+        assertEquals(actualBooking, expectedBooking);
     }
 }

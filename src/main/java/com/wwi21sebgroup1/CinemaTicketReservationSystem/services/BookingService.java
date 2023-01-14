@@ -56,14 +56,16 @@ public class BookingService {
         User user = userRepository.findById(bookingRequest.getUserId()).get();
         Iterable<Seat> allSeats = seatRepository.findAllBySeatingPlanId(showing.getSeatingPlan().getId());
         List<Seat> seatsToBook = new ArrayList<>();
+        int totalPrice = 0;
         for(Seat seat : allSeats){
             for(String seatNumberString : bookingRequest.getSeatNumbers()){
                 if(seat.getSeatNumber().getLine() == (seatNumberString.charAt(0)) &&
                     seat.getSeatNumber().getNumber() == Character.getNumericValue(seatNumberString.charAt(1))){
                     seatsToBook.add(seat);
+                    totalPrice += seat.getPrice();
                 }
             }
         }
-        return new Booking(user, showing, seatsToBook, bookingRequest.getPrice());
+        return new Booking(user, showing, seatsToBook, totalPrice);
     }
 }
