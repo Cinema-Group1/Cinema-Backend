@@ -19,9 +19,14 @@ public class SeatingPlanTemplateController {
         seatingPlanTemplateService.addSeatingPlanTemplate(seatingPlanTemplateRequest);
     }
 
-    @GetMapping("/showing:{showingId}")
-    public @ResponseBody Iterable<SeatingPlanTemplate> getByShowingId(@PathVariable Integer showingId){
+    @GetMapping("/all")
+    public @ResponseBody Iterable<SeatingPlanTemplate> getAllSeatingPlanTemplates(){
         return seatingPlanTemplateService.getAllSeatingPlanTemplates();
+    }
+
+    @GetMapping("/cinemaHall:{cinemaHallId}")
+    public @ResponseBody SeatingPlanTemplate getSeatingPlanTemplateByCinemaHallId(@PathVariable Integer cinemaHallId){
+        return seatingPlanTemplateService.getByCinemaHallId(cinemaHallId);
     }
 
     @PutMapping("/update:{id}")

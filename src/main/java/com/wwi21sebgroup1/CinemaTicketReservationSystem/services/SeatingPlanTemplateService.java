@@ -30,6 +30,10 @@ public class SeatingPlanTemplateService {
         return seatingPlanTemplateRepository.findAll();
     }
 
+    public SeatingPlanTemplate getByCinemaHallId(Integer cinemaHallId){
+        return seatingPlanTemplateRepository.findByCinemaHallId(cinemaHallId).get();
+    }
+
     public void updateSeatingPlanTemplate(Integer id, SeatingPlanTemplateRequest seatingPlantemplateRequest){
         try{
             SeatingPlanTemplate updatedSeatingPlanTemplate = processRequest(seatingPlantemplateRequest);
