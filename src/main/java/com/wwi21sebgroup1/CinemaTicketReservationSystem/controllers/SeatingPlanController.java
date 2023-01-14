@@ -16,7 +16,7 @@ public class SeatingPlanController {
         return seatingPlanService.getAllSeatingPlans();
     }
 
-    @GetMapping("showing:{showingId")
+    @GetMapping("showing:{showingId}")
     public @ResponseBody SeatingPlan getSeatsBySeatingPlan(@PathVariable Integer showingId){
         return seatingPlanService.getSeatingPlanByShowing(showingId);
     }
