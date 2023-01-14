@@ -49,6 +49,10 @@ public class SeatService {
 
     public Iterable<Seat> getSeats(){return seatRepository.findAll();}
 
+    public Iterable<Seat> getSeatsBySeatingPlan(Integer seatingPlanId){
+        return seatRepository.findAllBySeatingPlanId(seatingPlanId);
+    }
+
     public Seat transformRequestToObject(SeatRequest seatRequest){
         SeatNumber seatNumber = seatNumberRepository.findById(seatRequest.getSeatNumberId()).get();
         Showing showing = showingRepository.findById(seatRequest.getShowingId()).get();
