@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface SeatingPlanRepository extends CrudRepository<SeatingPlan, Integer> {
     void deleteByShowingId(Integer showingId);
+
+    SeatingPlan findByShowingId(Integer showingId);
 }

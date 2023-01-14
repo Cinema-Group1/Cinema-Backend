@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface SeatingPlanTemplateRepository extends CrudRepository<SeatingPlanTemplate, Integer> {
     Optional<SeatingPlanTemplate> findByCinemaHallId(Integer id);
+
 }

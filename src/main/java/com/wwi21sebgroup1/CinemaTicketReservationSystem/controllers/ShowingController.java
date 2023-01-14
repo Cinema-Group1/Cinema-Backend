@@ -43,7 +43,7 @@ public class ShowingController {
         try{
             showingService.book(bookingRequest);
         }catch(SeatBookedException seatBookedException){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Seat was already booked!", seatBookedException);
+            throw new ResponseStatusException(HttpStatus.MULTI_STATUS, "Seat was already booked!", seatBookedException);
         }
     }
 }
