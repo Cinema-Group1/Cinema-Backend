@@ -28,8 +28,8 @@ public class SeatController {
         return seatService.getSeats();
     }
 
-    @GetMapping("seating_plan_template:{seatingPlanTemplateId}")
-    public @ResponseBody Iterable<Seat> getSeatsBySeatingPlan(@PathVariable Integer seatingPlanTemplateId){
-        return seatService.getSeatsBySeatingPlan(seatingPlanTemplateId);
+    @GetMapping("seating_plan:{seatingPlanId}")
+    public @ResponseBody Iterable<Seat> getSeatsBySeatingPlan(@PathVariable Integer seatingPlanId){
+        return seatService.getSeatsBySeatingPlan(seatingPlanId);
     }
 }
