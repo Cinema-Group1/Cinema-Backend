@@ -1,11 +1,14 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Address;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.AddressRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/address")
@@ -14,22 +17,33 @@ public class AddressController {
     private AddressService addressService;
 
     @PutMapping("/add")
-    public void addAddress(@RequestBody AddressRequest addressRequest) throws InvalidRequestException {
-        if( addressRequest.getZipCode() == null || addressRequest.getCity() == null ||
-            addressRequest.getStreet() == null || addressRequest.getNumber() == null){
-            throw new InvalidRequestException("AddressRequest");
+    public ResponseEntity<Object> addAddress(@RequestBody AddressRequest addressRequest){
+        try{
+            return new ResponseEntity<>(addressService.addAddress(addressRequest), HttpStatus.ACCEPTED);
+        }catch (InvalidRequestException invalidRequestException){
+            return new ResponseEntity<>(invalidRequestException.toString(), HttpStatus.BAD_REQUEST);
         }
-        addressService.addAddress(addressRequest);
     }
 
     @PostMapping("/update:{oldAddressId}")
-    public void updateAddress(@PathVariable Integer oldAddressId, @RequestBody AddressRequest addressRequest){
-        addressService.updateAddress(oldAddressId, addressRequest);
+    public ResponseEntity<Object> updateAddress(@PathVariable Integer oldAddressId, @RequestBody AddressRequest addressRequest){
+        try {
+            return new ResponseEntity<>(addressService.updateAddress(oldAddressId, addressRequest), HttpStatus.ACCEPTED);
+        }catch(NoSuchElementException noSuchElementException){
+            return new ResponseEntity<>(noSuchElementException.toString(), HttpStatus.NOT_FOUND);
+        }
+        catch (InvalidRequestException invalidRequestException){
+            return new ResponseEntity<>(invalidRequestException.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/delete:{oldAddressId}")
-    public void deleteAddress(@PathVariable Integer oldAddressId){addressService.deleteAddress(oldAddressId);}
-
-    @GetMapping("/all")
-    public @ResponseBody Iterable<Address> getAddresses(){return addressService.getAllAddresses();}
+    public ResponseEntity<Object> deleteAddress(@PathVariable Integer oldAddressId){
+        try {
+            addressService.deleteAddress(oldAddressId);
+            return new ResponseEntity<>("Successfully deleted Address with Id: " + oldAddressId, HttpStatus.ACCEPTED);
+        }catch (NoSuchElementException noSuchElementException){
+            return new ResponseEntity<>(noSuchElementException.toString(), HttpStatus.NOT_FOUND);
+        }
+    }
 }

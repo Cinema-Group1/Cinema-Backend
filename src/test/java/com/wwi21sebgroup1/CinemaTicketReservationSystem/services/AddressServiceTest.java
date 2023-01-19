@@ -1,6 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Address;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.AddressRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.AddressRequest;
 import org.junit.jupiter.api.*;
@@ -34,7 +35,7 @@ public class AddressServiceTest {
     static Iterable<Address> addresses = new ArrayList<>();
 
     @BeforeAll
-    public static void setup(){
+    public static void beforeAll(){
         request1 = new AddressRequest("12345", "Ludwigshafen", "Hauptstrasse", "123");
         request2 = new AddressRequest("12345", "Ludwigshafen", "Hauptstrasse", "456");
         request3 = new AddressRequest("12345", "Ludwigshafen", "Hauptstrasse", "789", "Info");
@@ -57,26 +58,6 @@ public class AddressServiceTest {
             }
         }
     }
-
-    @Nested
-    class GetAllAddresses{
-        @Test
-        public void t01MultipleAddressesFound(){
-            when(addressRepository.findAll()).thenReturn(addresses);
-
-            assertEquals(addresses, addressService.getAllAddresses());
-        }
-
-        @Test
-        public void t02NoAddressesFound(){
-            Iterable<Address> addresses = new ArrayList<>();
-
-            when(addressRepository.findAll()).thenReturn(addresses);
-
-            assertEquals(addresses, addressService.getAllAddresses());
-        }
-    }
-
     @Nested
     class UpdateAddress{
         @Test
@@ -131,26 +112,41 @@ public class AddressServiceTest {
 
     @Nested
     class ProcessRequest{
+        static AddressRequest invalidRequest = new AddressRequest("", "Mannheim", "", "34c");
         @Test
         public void t01WithAdditionalInfo() {
-            Address actualAddress = addressService.processRequest(request1);
-            actualAddress.setId(1);
+            try{
+                Address actualAddress = addressService.processRequest(request1);
+                actualAddress.setId(1);
 
-            Address expectedAddress = address1;
-            expectedAddress.setId(1);
+                Address expectedAddress = address1;
+                expectedAddress.setId(1);
 
-            assertEquals(actualAddress,expectedAddress);
+                assertEquals(actualAddress,expectedAddress);
+            }catch (InvalidRequestException invalidRequestException){
+                fail();
+            }
         }
         @Test
         public void t02WithoutAdditionalInfo() {
-            Address actualAddress = addressService.processRequest(request3);
-            actualAddress.setId(3);
+            try{
+                Address actualAddress = addressService.processRequest(request3);
+                actualAddress.setId(3);
 
-            Address expectedAddress = address3;
-            expectedAddress.setId(3);
+                Address expectedAddress = address3;
+                expectedAddress.setId(3);
 
-            assertEquals(actualAddress,expectedAddress);
+                assertEquals(actualAddress,expectedAddress);
+            }catch (InvalidRequestException invalidRequestException){
+                fail();
+            }
         }
-
+        @Test
+        public void t03InvalidRequest(){
+            try{
+                addressService.processRequest(invalidRequest);
+                fail();
+            }catch(InvalidRequestException invalidRequestException){}
+        }
     }
 }
