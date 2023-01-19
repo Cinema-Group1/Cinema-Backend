@@ -5,11 +5,8 @@ public class MovieRequest {
     private String imagePath;
     private String description;
     private int length;
-    private String releasedDate;
+    private String releaseDate;
     private String genreName;
-
-    public MovieRequest() {
-    }
 
     public MovieRequest(String title,
                         String imagePath,
@@ -21,7 +18,7 @@ public class MovieRequest {
         this.length = length;
         this.imagePath = imagePath;
         this.description = description;
-        this.releasedDate = releasedDate;
+        this.releaseDate = releasedDate;
         this.genreName = genreName;
     }
 
@@ -41,12 +38,12 @@ public class MovieRequest {
         this.description = description;
     }
 
-    public String getReleasedDate() {
-        return releasedDate;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
     public void setReleasedDate(String releasedDate) {
-        this.releasedDate = releasedDate;
+        this.releaseDate = releasedDate;
     }
 
     public String getTitle() {
@@ -66,11 +63,11 @@ public class MovieRequest {
     }
 
     public String getReleasedDateString() {
-        return releasedDate;
+        return releaseDate;
     }
 
     public void setReleasedDateString(String releasedDate) {
-        this.releasedDate = releasedDate;
+        this.releaseDate = releasedDate;
     }
 
     public String getGenreName() {

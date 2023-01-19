@@ -14,7 +14,7 @@ public class Movie {
     private String imagePath;
     private String description;
     private int length;
-    private LocalDate releasedDate;
+    private LocalDate releaseDate;
     @ManyToOne
     @JoinColumn(name = "genre_name", referencedColumnName = "name")
     private Genre genre;
@@ -27,7 +27,7 @@ public class Movie {
         this.imagePath = imagePath;
         this.description = description;
         this.length = length;
-        this.releasedDate = releasedDate;
+        this.releaseDate = releasedDate;
         this.genre = genre;
     }
 
@@ -69,12 +69,12 @@ public class Movie {
         this.length = length;
     }
 
-    public LocalDate getReleasedDate() {
-        return releasedDate;
+    public LocalDate getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setReleasedDate(LocalDate releasedDate) {
-        this.releasedDate = releasedDate;
+    public void setReleaseDate(LocalDate releasedDate) {
+        this.releaseDate = releasedDate;
     }
 
     public Genre getGenre() {
@@ -90,17 +90,11 @@ public class Movie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return  length == movie.length &&
-                id.equals(movie.id) &&
-                title.equals(movie.title) &&
-                imagePath.equals(movie.imagePath) &&
-                description.equals(movie.description) &&
-                releasedDate.equals(movie.releasedDate) &&
-                genre.equals(movie.genre);
+        return length == movie.length && title.equals(movie.title) && imagePath.equals(movie.imagePath) && description.equals(movie.description) && releaseDate.equals(movie.releaseDate) && genre.equals(movie.genre);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, imagePath, description, length, releasedDate, genre);
+        return Objects.hash(title, imagePath, description, length, releaseDate, genre);
     }
 }
