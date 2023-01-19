@@ -12,36 +12,30 @@ public class AddressService {
     private AddressRepository addressRepository;
 
     public void addAddress(AddressRequest addressRequest){
-        addressRepository.save(transformRequestToObject(addressRequest));
+        addressRepository.save(processRequest(addressRequest));
     }
 
-    public void updateAddress(Integer oldAddressId, AddressRequest addressRequest) {
-        try {
-            Address updatedAddress = transformRequestToObject(addressRequest);
-            updatedAddress.setId(oldAddressId);
-            addressRepository.save(updatedAddress);
-        } catch (NoSuchElementException exception) {
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
-        }
+    public Iterable<Address> getAllAddresses(){
+        return addressRepository.findAll();
     }
 
-    public void deleteAddress(Integer oldAddressId){
-        try{
-            addressRepository.deleteById(oldAddressId);
-        }catch(NoSuchElementException exception){
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
-        }
+    public void updateAddress(Integer oldAddressId, AddressRequest addressRequest) throws NoSuchElementException{
+        //Checks if there is an address with the specified Id and throws NoSuchElementException instead
+        addressRepository.findById(oldAddressId);
+        Address updatedAddress = processRequest(addressRequest);
+        updatedAddress.setId(oldAddressId);
+        addressRepository.save(updatedAddress);
     }
 
-    public Iterable<Address> getAddresses(){return addressRepository.findAll();}
+    public void deleteAddress(Integer oldAddressId) throws NoSuchElementException{
+        addressRepository.deleteById(oldAddressId);
+    }
 
-    public Address transformRequestToObject(AddressRequest addressRequest){
-        return new Address (addressRequest.getZipCode(),
-                addressRequest.getCity(),
-                addressRequest.getStreet(),
-                addressRequest.getNumber(),
-                addressRequest.getAdditionalInformation());
+    public Address processRequest(AddressRequest addressRequest){
+        return new Address( addressRequest.getZipCode(),
+                            addressRequest.getCity(),
+                            addressRequest.getStreet(),
+                            addressRequest.getNumber(),
+                            addressRequest.getAdditionalInformation());
     }
 }
