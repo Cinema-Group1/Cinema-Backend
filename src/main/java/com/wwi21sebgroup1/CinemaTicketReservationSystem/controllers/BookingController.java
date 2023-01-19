@@ -23,6 +23,11 @@ BookingController {
         return bookingService.getAllBookings();
     }
 
+    @GetMapping("/user:{userId}")
+    public @ResponseBody Iterable<Booking> getBookingsByUserId(@PathVariable Integer userId){
+        return bookingService.getBookingsByUserId(userId);
+    }
+
     @PostMapping("/update:{id}")
     public void updateBooking(@PathVariable Integer id, @RequestBody BookingRequest bookingRequest) {
         bookingService.updateBooking(id, bookingRequest);

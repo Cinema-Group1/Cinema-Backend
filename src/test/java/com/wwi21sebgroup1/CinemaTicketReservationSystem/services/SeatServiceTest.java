@@ -44,7 +44,6 @@ public class SeatServiceTest {
         showing.setId(1);
         seatingPlan = new SeatingPlan();
         seatingPlan.setId(1);
-        showing.setSeatingPlan(seatingPlan);
         int price = 15;
         boolean occupied = false;
         seat = new Seat(price, occupied, seatingPlan, seatNumber);
@@ -56,8 +55,7 @@ public class SeatServiceTest {
     public void transformRequestToObject() {
         setup();
         when(seatNumberRepository.findById(seatRequest.getSeatNumberId())).thenReturn(Optional.of(seatNumber));
-        when(showingRepository.findById(seatRequest.getShowingId())).thenReturn(Optional.of(showing));
-        when(seatingPlanRepository.findById(showing.getSeatingPlan().getId())).thenReturn(Optional.of(seatingPlan));
+        when(seatingPlanRepository.findById(seatingPlan.getId())).thenReturn(Optional.of(seatingPlan));
 
         Seat actualSeat = seatService.transformRequestToObject(seatRequest);
         actualSeat.setId(id);

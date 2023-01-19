@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
+
 @RestController
 @RequestMapping(path="/showing")
 public class ShowingController {
@@ -28,7 +30,8 @@ public class ShowingController {
         showingService.updateShowing(id, showingRequest);
     }
 
-    @PostMapping("/delete:{id}")
+    @Transactional
+    @DeleteMapping("/delete:{id}")
     public void deleteShowing(@PathVariable Integer id) {
         showingService.deleteShowing(id);
     }
@@ -36,6 +39,16 @@ public class ShowingController {
     @GetMapping("/all")
     public @ResponseBody Iterable<Showing> getShowings() {
         return showingService.getAllShowings();
+    }
+
+    @GetMapping("/movie:{movieId}")
+    public @ResponseBody Iterable<Showing> getShowingsByMovieId(@PathVariable Integer movieId){
+        return showingService.getShowingsByMovieId(movieId);
+    }
+
+    @GetMapping("/movie:{date}")
+    public @ResponseBody Iterable<Showing> getShowingsByDate(@PathVariable String date){
+        return showingService.getShowingsByDate(date);
     }
 
     @PutMapping("/book")

@@ -1,28 +1,26 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.requests;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.SeatNumber;
-
 public class SeatRequest {
     private int price;
     private boolean occupied;
     private int seatNumberId;
-    private int showingId;
+    private int seatingPlanId;
 
     public SeatRequest(){}
 
-    public SeatRequest(int price, boolean occupied, int seatNumberId, int showingId) {
+    public SeatRequest(int price, boolean occupied, int seatNumberId, int seatingPlanId) {
         this.price = price;
         this.occupied = occupied;
         this.seatNumberId = seatNumberId;
-        this.showingId = showingId;
+        this.seatingPlanId = seatingPlanId;
     }
 
-    public int getShowingId() {
-        return showingId;
+    public int getSeatingPlanId() {
+        return seatingPlanId;
     }
 
-    public void setShowingId(int showingId) {
-        this.showingId = showingId;
+    public void setSeatingPlanId(int showingId) {
+        this.seatingPlanId = seatingPlanId;
     }
 
     public int getSeatNumberId() {return seatNumberId;}

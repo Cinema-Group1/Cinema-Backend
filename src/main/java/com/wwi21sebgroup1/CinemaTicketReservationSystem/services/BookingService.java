@@ -19,7 +19,7 @@ public class BookingService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private SeatNumberRepository seatNumberRepository;
+    private SeatingPlanRepository seatingPlanRepository;
     @Autowired
     private SeatRepository seatRepository;
 
@@ -29,6 +29,10 @@ public class BookingService {
 
     public Iterable<Booking> getAllBookings(){
         return bookingRepository.findAll();
+    }
+
+    public Iterable<Booking> getBookingsByUserId(Integer userId){
+        return bookingRepository.getBookingByUserId(userId);
     }
 
     public void updateBooking(Integer id, BookingRequest bookingRequest){
@@ -54,7 +58,8 @@ public class BookingService {
     public Booking processRequest(BookingRequest bookingRequest){
         Showing showing = showingRepository.findById(bookingRequest.getShowingId()).get();
         User user = userRepository.findById(bookingRequest.getUserId()).get();
-        Iterable<Seat> allSeats = seatRepository.findAllBySeatingPlanId(showing.getSeatingPlan().getId());
+        SeatingPlan seatingPlan = seatingPlanRepository.findByShowingId(showing.getId());
+        Iterable<Seat> allSeats = seatRepository.findAllBySeatingPlanId(seatingPlan.getId());
         List<Seat> seatsToBook = new ArrayList<>();
         int totalPrice = 0;
         for(Seat seat : allSeats){

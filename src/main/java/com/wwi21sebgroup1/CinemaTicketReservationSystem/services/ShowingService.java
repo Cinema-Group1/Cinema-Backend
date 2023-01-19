@@ -10,6 +10,7 @@ import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.TicketRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,10 +57,11 @@ public class ShowingService {
 
     public void deleteShowing(Integer id){
         try {
-            Showing showingToBeDeleted = showingRepository.findById(id).get();
-            seatRepository.deleteAllBySeatingPlanId(showingToBeDeleted.getSeatingPlan().getId());
-            seatingPlanRepository.deleteByShowingId(id);
+            SeatingPlan seatingPlanToBeDeleted = seatingPlanRepository.findByShowingId(id);
+            bookingRepository.deleteByShowingId(id);
+            seatRepository.deleteAllBySeatingPlanId(seatingPlanToBeDeleted.getId());
             showingRepository.deleteById(id);
+            seatingPlanRepository.deleteByShowingId(id);
         } catch (NoSuchElementException exception) {
             exception.printStackTrace();
             System.out.println(exception.getMessage());
@@ -68,6 +70,14 @@ public class ShowingService {
 
     public Iterable<Showing> getAllShowings(){
         return showingRepository.findAll();
+    }
+
+    public Iterable<Showing> getShowingsByMovieId(Integer movieId){
+        return showingRepository.findByMovieId(movieId);
+    }
+
+    public Iterable<Showing> getShowingsByDate(String dateString){
+        return showingRepository.findByStartsAt(LocalDateTime.parse(dateString));
     }
 
     public void book(BookingRequest bookingRequest) throws SeatBookedException{
@@ -94,8 +104,7 @@ public class ShowingService {
         seatingPlanRepository.save(seatingPlan);
         Iterable<SeatNumber> seatNumbers = seatNumberRepository.findAllBySeatingPlanTemplateId(seatingPlanTemplate.getId());
         for (SeatNumber seatNumber : seatNumbers) {
-            Seat curr = new Seat(showingRequest.getPricePerSeat(), false, seatingPlan, seatNumber);
-            seatRepository.save(curr);
+            seatRepository.save(new Seat(showingRequest.getPricePerSeat(), false, seatingPlan, seatNumber));
         }
         return new Showing( showingRequest.getTitle(),
                             LocalDateTime.parse(showingRequest.getStartsAt()),

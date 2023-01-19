@@ -19,8 +19,6 @@ public class Showing {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cinema_hall_id", referencedColumnName = "id")
     private CinemaHall cinemaHall;
-    @OneToOne
-    private SeatingPlan seatingPlan;
 
     public Showing(){}
 
@@ -30,15 +28,6 @@ public class Showing {
         this.endsAt = endsAt;
         this.movie = movie;
         this.cinemaHall = cinemaHall;
-        this.seatingPlan = seatingPlan;
-    }
-
-    public SeatingPlan getSeatingPlan() {
-        return seatingPlan;
-    }
-
-    public void setSeatingPlan(SeatingPlan seatingPlan) {
-        this.seatingPlan = seatingPlan;
     }
 
     public Integer getId() {

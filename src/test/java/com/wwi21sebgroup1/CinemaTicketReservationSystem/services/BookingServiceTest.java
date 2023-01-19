@@ -1,10 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.BookingRepository;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.SeatRepository;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.ShowingRepository;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.UserRepository;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +21,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class BookingServiceTest {
     @Mock
-    private BookingRepository bookingRepository;
+    private SeatingPlanRepository seatingPlanRepository;
     @Mock
     private SeatRepository seatRepository;
     @Mock
@@ -45,7 +42,6 @@ public class BookingServiceTest {
         showing.setId(showingId);
         SeatingPlan seatingPlan = new SeatingPlan();
         seatingPlan.setId(1);
-        showing.setSeatingPlan(seatingPlan);
         List<String> seatNumbersString = new ArrayList<>(Arrays.asList("A1", "A2", "A3"));
         List<Seat> seats = new ArrayList<>(Arrays.asList(   new Seat(10,false, seatingPlan, new SeatNumber('A', (byte)1, null)),
                                                             new Seat(10,false, seatingPlan, new SeatNumber('A', (byte)2, null)),
@@ -54,6 +50,7 @@ public class BookingServiceTest {
         when(showingRepository.findById(showingId)).thenReturn(Optional.of(showing));
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(seatRepository.findAllBySeatingPlanId(1)).thenReturn(seats);
+        when(seatingPlanRepository.findByShowingId(showingId)).thenReturn(seatingPlan);
         Booking actualBooking = bookingService.processRequest(bookingRequest);
         Booking expectedBooking = new Booking(user, showing, seats, 30);
 

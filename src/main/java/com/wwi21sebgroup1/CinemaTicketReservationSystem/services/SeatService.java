@@ -55,8 +55,7 @@ public class SeatService {
 
     public Seat transformRequestToObject(SeatRequest seatRequest){
         SeatNumber seatNumber = seatNumberRepository.findById(seatRequest.getSeatNumberId()).get();
-        Showing showing = showingRepository.findById(seatRequest.getShowingId()).get();
-        SeatingPlan seatingPlan = seatingPlanRepository.findById(showing.getSeatingPlan().getId()).get();
+        SeatingPlan seatingPlan = seatingPlanRepository.findById(seatRequest.getSeatingPlanId()).get();
         return new Seat(seatRequest.getPrice(), seatRequest.isOccupied(), seatingPlan, seatNumber);
     }
 }
