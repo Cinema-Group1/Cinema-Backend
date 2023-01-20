@@ -4,18 +4,12 @@ import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.SeatBookedException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.SeatNumberRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.ShowingRequest;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.TicketRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class ShowingService {
@@ -80,7 +74,7 @@ public class ShowingService {
         return showingRepository.findByStartsAt(LocalDateTime.parse(dateString));
     }
 
-    public void book(BookingRequest bookingRequest) throws SeatBookedException{
+    public Booking book(BookingRequest bookingRequest) throws SeatBookedException{
         Booking booking = bookingService.processRequest(bookingRequest);
         for(Seat seat : booking.getSeats()){
             if(seat.isOccupied()){
@@ -94,6 +88,7 @@ public class ShowingService {
         for(Seat seat : booking.getSeats()){
             ticketRepository.save(new Ticket(booking.getShowing(), seat));
         }
+        return booking;
     }
 
     public Showing processRequest(ShowingRequest showingRequest) {
@@ -110,7 +105,6 @@ public class ShowingService {
                             LocalDateTime.parse(showingRequest.getStartsAt()),
                             LocalDateTime.parse(showingRequest.getEndsAt()),
                             movie,
-                            cinemaHall,
-                            seatingPlan);
+                            cinemaHall);
     }
 }

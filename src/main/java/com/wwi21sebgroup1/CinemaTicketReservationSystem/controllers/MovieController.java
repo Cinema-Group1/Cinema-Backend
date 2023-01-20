@@ -2,6 +2,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Movie;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.NoSuchGenreException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.MovieRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,21 @@ public class MovieController {
             return new ResponseEntity<>(invalidRequestException.toString(), HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/all")
+    public @ResponseBody Iterable<Movie> getAllMovies() {
+        return movieService.getAllMovies();
+    }
 
-    @PostMapping("/update:{oldMovieId}")
+    @GetMapping("/genre={genreName}")
+    public @ResponseBody Iterable<Movie> getMoviesByGenre(@PathVariable String genreName){
+        try {
+            return movieService.getMoviesByGenre(genreName);
+        } catch (NoSuchGenreException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PutMapping("/update:{oldMovieId}")
     public ResponseEntity<Object> updateMovie(@PathVariable Integer oldMovieId, @RequestBody MovieRequest movieRequest){
         try {
             return new ResponseEntity<>(movieService.updateMovie(oldMovieId, movieRequest), HttpStatus.ACCEPTED);
@@ -39,18 +53,13 @@ public class MovieController {
         }
     }
 
-    @PostMapping("/delete:{movieId}")
-    public void deleteMovie(@PathVariable Integer movieId) {
-        movieService.deleteMovie(movieId);
-    }
-
-    @GetMapping("/all")
-    public @ResponseBody Iterable<Movie> getAllMovies() {
-        return movieService.getAllMovies();
-    }
-
-    @GetMapping("/genre={genreName}")
-    public @ResponseBody Iterable<Movie> getMoviesByGenre(@PathVariable String genreName){
-        return movieService.getMoviesByGenre(genreName);
+    @DeleteMapping("/delete:{id}")
+    public ResponseEntity<Object> deleteMovie(@PathVariable Integer id) {
+        try {
+            movieService.deleteMovie(id);
+            return new ResponseEntity<>("Successfully deleted Movie with Id: " + id, HttpStatus.ACCEPTED);
+        }catch (NoSuchElementException noSuchElementException){
+            return new ResponseEntity<>(noSuchElementException.toString(), HttpStatus.NOT_FOUND);
+        }
     }
 }

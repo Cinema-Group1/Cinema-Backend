@@ -46,8 +46,6 @@ public class AddressControllerTest {
 
     @Nested
     class AddAddress{
-
-
         @Test
         public void t01ValidRequestWithoutAdditionalInfo() throws InvalidRequestException {
             expected = new ResponseEntity<>(addressWithoutAdditionalInfo, HttpStatus.ACCEPTED);

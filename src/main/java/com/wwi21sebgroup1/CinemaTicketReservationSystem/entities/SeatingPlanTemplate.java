@@ -10,10 +10,14 @@ public class SeatingPlanTemplate {
     private Integer id;
     @OneToOne
     CinemaHall cinemaHall;
+    private int rows;
+    private int seatsPerRow;
     public SeatingPlanTemplate(){}
 
-    public SeatingPlanTemplate(CinemaHall cinemaHall) {
+    public SeatingPlanTemplate(CinemaHall cinemaHall, int rows, int seatsPerRow) {
         this.cinemaHall = cinemaHall;
+        this.rows = rows;
+        this.seatsPerRow = seatsPerRow;
     }
 
     public Integer getId() {
@@ -30,6 +34,22 @@ public class SeatingPlanTemplate {
 
     public void setCinemaHall(CinemaHall cinemaHall) {
         this.cinemaHall = cinemaHall;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    public int getSeatsPerRow() {
+        return seatsPerRow;
+    }
+
+    public void setSeatsPerRow(int seatsPerRow) {
+        this.seatsPerRow = seatsPerRow;
     }
 }
 

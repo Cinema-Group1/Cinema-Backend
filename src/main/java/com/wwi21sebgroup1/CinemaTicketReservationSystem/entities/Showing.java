@@ -22,7 +22,7 @@ public class Showing {
 
     public Showing(){}
 
-    public Showing(String title, LocalDateTime startsAt, LocalDateTime endsAt, Movie movie, CinemaHall cinemaHall, SeatingPlan seatingPlan) {
+    public Showing(String title, LocalDateTime startsAt, LocalDateTime endsAt, Movie movie, CinemaHall cinemaHall) {
         this.title = title;
         this.startsAt = startsAt;
         this.endsAt = endsAt;

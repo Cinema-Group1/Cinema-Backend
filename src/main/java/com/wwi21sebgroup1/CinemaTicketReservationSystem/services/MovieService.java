@@ -3,6 +3,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Genre;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Movie;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.NoSuchGenreException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.GenreRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.MovieRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.MovieRequest;
@@ -23,28 +24,27 @@ public class MovieService {
         return movieRepository.save(processRequest(movieRequest));
     }
 
-    public Movie updateMovie(Integer oldMovieId, MovieRequest movieRequest) throws InvalidRequestException, NoSuchElementException {
-            Movie updatedMovie = processRequest(movieRequest);
-            updatedMovie.setId(oldMovieId);
-            movieRepository.save(updatedMovie);
-            return updatedMovie;
-    }
-
-    public void deleteMovie(Integer movieId){
-        try {
-            movieRepository.deleteById(movieId);
-        } catch (NoSuchElementException exception) {
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
-        }
-    }
-
     public Iterable<Movie> getAllMovies(){
         return movieRepository.findAll();
     }
 
-    public Iterable<Movie> getMoviesByGenre(String genreName){
+    public Iterable<Movie> getMoviesByGenre(String genreName) throws NoSuchGenreException{
+        if(genreRepository.findByName(genreName).isEmpty()){
+            throw new NoSuchGenreException(genreName);
+        }
         return movieRepository.findByGenreName(genreName);
+    }
+
+    public Movie updateMovie(Integer id, MovieRequest movieRequest) throws InvalidRequestException, NoSuchElementException {
+        movieRepository.findById(id);
+        Movie updatedMovie = processRequest(movieRequest);
+        updatedMovie.setId(id);
+        movieRepository.save(updatedMovie);
+        return updatedMovie;
+    }
+
+    public void deleteMovie(Integer movieId) throws NoSuchElementException{
+        movieRepository.deleteById(movieId);
     }
 
     public Movie processRequest(MovieRequest movieRequest) throws InvalidRequestException, NoSuchElementException{

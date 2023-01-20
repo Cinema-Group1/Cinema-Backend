@@ -56,7 +56,7 @@ public class SeatingPlanTemplateService {
 
     public SeatingPlanTemplate processRequest(SeatingPlanTemplateRequest seatingPlanTemplateRequest){
         CinemaHall cinemaHall = cinemaHallRepository.findById(seatingPlanTemplateRequest.getCinemaHallId()).get();
-        SeatingPlanTemplate seatingPlanTemplate = new SeatingPlanTemplate(cinemaHall);
+        SeatingPlanTemplate seatingPlanTemplate = new SeatingPlanTemplate(cinemaHall, seatingPlanTemplateRequest.getRows(), seatingPlanTemplateRequest.getSeatsPerRow());
         seatingPlanTemplateRepository.save(seatingPlanTemplate);
         for(int i = 1; i <= seatingPlanTemplateRequest.getRows(); i++){
             for(int j = 1; j <= seatingPlanTemplateRequest.getSeatsPerRow(); j++){

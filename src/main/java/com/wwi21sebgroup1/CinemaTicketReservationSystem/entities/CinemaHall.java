@@ -14,7 +14,6 @@ public class CinemaHall {
     private Cinema cinema;
     private String name;
 
-
     public CinemaHall(){}
 
     public CinemaHall(Cinema cinema, String name) {
