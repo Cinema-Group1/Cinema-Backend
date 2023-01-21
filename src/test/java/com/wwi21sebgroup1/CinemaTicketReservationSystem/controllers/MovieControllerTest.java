@@ -3,6 +3,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Genre;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Movie;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.NoSuchGenreException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.MovieRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.MovieService;
 import org.junit.jupiter.api.Nested;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -55,6 +57,50 @@ public class MovieControllerTest {
                     HttpStatus.BAD_REQUEST);
             when(movieService.addMovie(invalidRequest)).thenThrow(new InvalidRequestException("MovieRequest"));
             actual = movieController.addMovie(invalidRequest);
+            assertEquals(expected, actual);
+        }
+    }
+    @Nested
+    class GetAllMovies{
+        Iterable<Movie> expected;
+        Iterable<Movie> actual;
+        @Test
+        public void t01NoMoviesFound(){
+            expected = List.of();
+            when(movieService.getAllMovies()).thenReturn(List.of());
+            actual = movieController.getAllMovies();
+            assertEquals(expected, actual);
+        }
+        @Test
+        public void t02MovieFound(){
+            expected = List.of(movie);
+            when(movieController.getAllMovies()).thenReturn(List.of(movie));
+            actual = movieController.getAllMovies();
+            assertEquals(expected, actual);
+        }
+    }
+    @Nested
+    class getMoviesByGenre{
+        ResponseEntity<Object> expected;
+        ResponseEntity<Object> actual;
+        @Test
+        public void t01NoSuchGenre() throws NoSuchGenreException {
+            expected = new ResponseEntity<>(new NoSuchGenreException(genreName), HttpStatus.NOT_FOUND);
+            when(movieService.getMoviesByGenre(genreName)).thenThrow(new NoSuchGenreException(genreName));
+            actual = movieController.getMoviesByGenre(genreName);
+        }
+        @Test
+        public void t02NoMoviesFound() throws NoSuchGenreException {
+            expected = new ResponseEntity<>(List.of(), HttpStatus.ACCEPTED);
+            when(movieService.getMoviesByGenre(genreName)).thenReturn(List.of());
+            actual = movieController.getMoviesByGenre(genreName);
+            assertEquals(expected, actual);
+        }
+        @Test
+        public void t03MovieFound() throws NoSuchGenreException {
+            expected = new ResponseEntity<>(List.of(movie), HttpStatus.ACCEPTED);
+            when(movieService.getMoviesByGenre(genreName)).thenReturn(List.of(movie));
+            actual = new ResponseEntity<>(movieService.getMoviesByGenre(genreName), HttpStatus.ACCEPTED);
             assertEquals(expected, actual);
         }
     }

@@ -32,11 +32,11 @@ public class MovieController {
     }
 
     @GetMapping("/genre={genreName}")
-    public @ResponseBody Iterable<Movie> getMoviesByGenre(@PathVariable String genreName){
+    public ResponseEntity<Object> getMoviesByGenre(@PathVariable String genreName){
         try {
-            return movieService.getMoviesByGenre(genreName);
-        } catch (NoSuchGenreException e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(movieService.getMoviesByGenre(genreName), HttpStatus.ACCEPTED);
+        } catch (NoSuchGenreException noSuchGenreException) {
+            return new ResponseEntity<>(noSuchGenreException.toString(), HttpStatus.NOT_FOUND);
         }
     }
 
