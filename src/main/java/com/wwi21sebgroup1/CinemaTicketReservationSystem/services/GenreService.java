@@ -1,6 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Genre;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.GenreRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.GenreRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +14,24 @@ public class GenreService {
     @Autowired
     private GenreRepository genreRepository;
 
-    public void addGenre(GenreRequest genreRequest){genreRepository.save(transformRequestToObject(genreRequest));}
+    public Genre addGenre(GenreRequest genreRequest) throws InvalidRequestException {
+        Genre genre = processRequest(genreRequest);
+        genreRepository.save(genre);
+        return genre;
+    }
 
-    public void updateGenre(String oldGenreName, GenreRequest genreRequest){
-        try {
-            Genre updatedGenre = transformRequestToObject(genreRequest);
-            updatedGenre.setName(oldGenreName);
-            genreRepository.save(updatedGenre);
-        }catch(NoSuchElementException exception){
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
+    public Iterable<Genre> getAllGenres(){
+        return genreRepository.findAll();
+    }
+
+    public Genre updateGenre(String genreName, GenreRequest genreRequest) throws NoSuchElementException, InvalidRequestException {
+        if(genreRepository.findByName(genreName).isEmpty()){
+            throw new NoSuchElementException();
         }
+        Genre updatedGenre = processRequest(genreRequest);
+        updatedGenre.setName(genreName);
+        genreRepository.save(updatedGenre);
+        return updatedGenre;
     }
 
     public void deleteGenre(String oldGenreName) {
@@ -35,9 +43,10 @@ public class GenreService {
         }
     }
 
-    public Genre transformRequestToObject(GenreRequest genreRequest){
+    public Genre processRequest(GenreRequest genreRequest) throws InvalidRequestException {
+        if(genreRequest.getName().isBlank() || genreRequest.getDescription().isBlank()){
+            throw new InvalidRequestException("genreRequest");
+        }
         return new Genre(genreRequest.getName(),genreRequest.getDescription());
     }
-
-    public Iterable<Genre> getGenres(){return genreRepository.findAll();}
 }
