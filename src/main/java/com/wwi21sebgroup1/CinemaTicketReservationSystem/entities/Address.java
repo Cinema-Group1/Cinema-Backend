@@ -51,8 +51,7 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return id.equals(address.id) &&
-               zipCode.equals(address.zipCode) &&
+        return zipCode.equals(address.zipCode) &&
                city.equals(address.city) &&
                street.equals(address.street) &&
                number.equals(address.number) &&

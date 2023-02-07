@@ -2,6 +2,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 public class User {
@@ -12,18 +13,19 @@ public class User {
     private String firstName;
     private String lastName;
     private LocalDate dob;
-    private String eMail;
+    @Column(unique = true)
+    private String email;
     private String password;
     @ManyToOne
     private Address address;
 
     public User() {}
 
-    public User(String firstName, String lastName, LocalDate dob, String eMail, String password, Address address) {
+    public User(String firstName, String lastName, LocalDate dob, String email, String password, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
-        this.eMail = eMail;
+        this.email = email;
         this.password = password;
         this.address = address;
     }
@@ -60,12 +62,12 @@ public class User {
         this.dob = dob;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String geteEmail() {
+        return email;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void seteEmail(String eMail) {
+        this.email = eMail;
     }
 
     public String getPassword() {
@@ -82,5 +84,18 @@ public class User {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(dob, user.dob) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(address, user.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, dob, email, password, address);
     }
 }

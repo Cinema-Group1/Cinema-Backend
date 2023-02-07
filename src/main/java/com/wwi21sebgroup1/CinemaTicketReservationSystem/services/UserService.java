@@ -2,6 +2,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Address;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.User;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.AddressRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.UserRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.UserRequest;
@@ -19,36 +20,44 @@ public class UserService {
     @Autowired
     private AddressRepository addressRepository;
 
-    public void addUser(UserRequest userRequest) {
-        userRepository.save(transformRequestToObject(userRequest));
+    public User addUser(UserRequest userRequest) throws InvalidRequestException {
+        User user = processRequest(userRequest);
+        userRepository.save(user);
+        return user;
     }
 
-    public void updateUser(Integer oldUserId, UserRequest userRequest){
-        try{
-            User updatedUser = transformRequestToObject(userRequest);
-            updatedUser.setId(oldUserId);
-            userRepository.save(updatedUser);
-        }catch(NoSuchElementException exception){
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
-        }
-    }
-
-    public void deleteUser(Integer oldUserId) {
-        try {
-            userRepository.deleteById(oldUserId);
-        } catch (NoSuchElementException exception) {
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
-        }
-    }
-
-    public @ResponseBody Iterable<User> getUsers() {
+    public @ResponseBody Iterable<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public User transformRequestToObject(UserRequest userRequest){
-        Address address = new Address(  userRequest.getZipCode(),
+    public @ResponseBody User getUserByEmail(String eMail) throws NoSuchElementException{
+        return userRepository.findByEmail(eMail).get();
+    }
+
+    public boolean validateLogin(String eMail, String pwd) throws NoSuchElementException{
+        User user = getUserByEmail(eMail);
+        return user.getPassword().equals(pwd);
+    }
+
+    public User updateUser(Integer userId, UserRequest userRequest) throws InvalidRequestException, NoSuchElementException{
+        userRepository.findById(userId);
+        User updatedUser = processRequest(userRequest);
+        updatedUser.setId(userId);
+        userRepository.save(updatedUser);
+        return updatedUser;
+    }
+
+    public void deleteUser(Integer userId) throws NoSuchElementException{
+        userRepository.deleteById(userId);
+    }
+
+    public User processRequest(UserRequest userRequest) throws InvalidRequestException {
+        if(userRequest.getFirstName() == null || userRequest.getLastName() == null || userRequest.getZipCode() == null ||
+           userRequest.getStreet() == null || userRequest.getCity() == null || userRequest.getNumber() == null ||
+           userRequest.getDob() == null || userRequest.getPassword() == null || userRequest.geteMail() == null){
+            throw new InvalidRequestException("UserRequest");
+        }
+        Address address = new Address(userRequest.getZipCode(),
                 userRequest.getCity(),
                 userRequest.getStreet(),
                 userRequest.getNumber(),

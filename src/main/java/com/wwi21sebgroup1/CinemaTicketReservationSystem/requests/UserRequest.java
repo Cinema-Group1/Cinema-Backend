@@ -15,6 +15,9 @@ public class UserRequest {
     private String number;
     private String additionalInformation;
 
+    public UserRequest() {
+    }
+
     public UserRequest(String firstName, String lastName, String dob, String eMail, String password, String zipCode, String city, String street, String number, String additionalInformation) {
         this.firstName = firstName;
         this.lastName = lastName;
