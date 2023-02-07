@@ -1,16 +1,19 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.SeatBookedException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.ShowingRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.ShowingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(path="/showing")
@@ -19,44 +22,62 @@ public class ShowingController {
     private ShowingService showingService;
 
     @PutMapping("/add")
-    //Adding a Showing specified via the RequestBody.
-    //Request Body takes in a JSON File and translates it to a Java Object.
-    public void addShowing(@RequestBody ShowingRequest showingRequest) {
-        showingService.addShowing(showingRequest);
-    }
-
-    @PostMapping("/update:{id}")
-    public void updateShowing(@PathVariable Integer id, @RequestBody ShowingRequest showingRequest) {
-        showingService.updateShowing(id, showingRequest);
-    }
-
-    @Transactional
-    @DeleteMapping("/delete:{id}")
-    public void deleteShowing(@PathVariable Integer id) {
-        showingService.deleteShowing(id);
+    public ResponseEntity<Object> addShowing(@RequestBody ShowingRequest showingRequest) {
+        try{
+            return new ResponseEntity<>(showingService.addShowing(showingRequest), HttpStatus.ACCEPTED);
+        }catch (InvalidRequestException invalidRequestException){
+            return new ResponseEntity<>(invalidRequestException.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/all")
-    public @ResponseBody Iterable<Showing> getShowings() {
+    public @ResponseBody Iterable<Showing> getAllShowings() {
         return showingService.getAllShowings();
     }
 
-    @GetMapping("/movie:{movieId}")
+    @GetMapping("/allInFuture")
+    public @ResponseBody Iterable<Showing> getAllShowingsInFuture(){
+        return showingService.getAllShowingsInFuture();
+    }
+
+    @GetMapping("/movieId:{movieId}")
     public @ResponseBody Iterable<Showing> getShowingsByMovieId(@PathVariable Integer movieId){
         return showingService.getShowingsByMovieId(movieId);
     }
 
-    @GetMapping("/movie:{date}")
+    @GetMapping("/date:{date}")
     public @ResponseBody Iterable<Showing> getShowingsByDate(@PathVariable String date){
         return showingService.getShowingsByDate(date);
     }
 
-    @PutMapping("/book")
-    public void bookShowing(@RequestBody BookingRequest bookingRequest){
+    @PostMapping("/update:{id}")
+    public ResponseEntity<Object> updateShowing(@PathVariable Integer id, @RequestBody ShowingRequest showingRequest) {
+        try {
+            return new ResponseEntity<>(showingService.updateShowing(id, showingRequest), HttpStatus.ACCEPTED);
+        } catch (InvalidRequestException invalidRequestException) {
+            return new ResponseEntity<>(invalidRequestException.toString(), HttpStatus.BAD_REQUEST);
+        } catch (NoSuchElementException noSuchElementException){
+            return new ResponseEntity<>(noSuchElementException.toString(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Transactional
+    @DeleteMapping("/delete:{id}")
+    public ResponseEntity<Object> deleteShowing(@PathVariable Integer id) {
         try{
-            showingService.book(bookingRequest);
+            showingService.deleteShowing(id);
+            return new ResponseEntity<>("Successfully deleted showing with Id: " + id, HttpStatus.ACCEPTED);
+        }catch (NoSuchElementException noSuchElementException){
+            return new ResponseEntity<>(noSuchElementException.toString(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/book")
+    public ResponseEntity<Object> bookShowing(@RequestBody BookingRequest bookingRequest){
+        try{
+            return new ResponseEntity<>(showingService.book(bookingRequest), HttpStatus.ACCEPTED);
         }catch(SeatBookedException seatBookedException){
-            throw new ResponseStatusException(HttpStatus.MULTI_STATUS, "Seat was already booked!", seatBookedException);
+            return new ResponseEntity<>(seatBookedException.toString(), HttpStatus.FORBIDDEN);
         }
     }
 }

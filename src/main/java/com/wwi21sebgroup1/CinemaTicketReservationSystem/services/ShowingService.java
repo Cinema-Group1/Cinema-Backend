@@ -1,6 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.SeatBookedException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 @Service
@@ -34,19 +37,42 @@ public class ShowingService {
     @Autowired
     private SeatingPlanTemplateRepository seatingPlanTemplateRepository;
 
-    public void addShowing(ShowingRequest showingRequest){
+    public Showing addShowing(ShowingRequest showingRequest) throws InvalidRequestException {
+        Showing showing = processRequest(showingRequest);
         showingRepository.save(processRequest(showingRequest));
+        return showing;
+    }
+    public Iterable<Showing> getAllShowings(){
+        return showingRepository.findAll();
     }
 
-    public void updateShowing(Integer id, ShowingRequest showingRequest){
-        try {
-            Showing updatedShowing = processRequest(showingRequest);
-            updatedShowing.setId(id);
-            showingRepository.save(updatedShowing);
-        } catch (NoSuchElementException exception) {
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
+    public Iterable<Showing> getAllShowingsInFuture(){
+        ArrayList<Showing> showingsInFuture = new ArrayList<>();
+        Iterator<Showing> iterator = showingRepository.findAll().iterator();
+        Showing curr;
+        while (iterator.hasNext()){
+            curr = iterator.next();
+            if(curr.getStartsAt().isAfter(LocalDateTime.now())){
+                showingsInFuture.add(curr);
+            }
         }
+        return showingsInFuture;
+    }
+
+    public Iterable<Showing> getShowingsByMovieId(Integer movieId){
+        return showingRepository.findByMovieId(movieId);
+    }
+
+    public Iterable<Showing> getShowingsByDate(String dateString){
+        return showingRepository.findByStartsAt(LocalDateTime.parse(dateString));
+    }
+
+    public Showing updateShowing(Integer id, ShowingRequest showingRequest) throws InvalidRequestException, NoSuchElementException{
+        showingRepository.findById(id);
+        Showing updatedShowing = processRequest(showingRequest);
+        updatedShowing.setId(id);
+        showingRepository.save(updatedShowing);
+        return updatedShowing;
     }
 
     public void deleteShowing(Integer id){
@@ -60,18 +86,6 @@ public class ShowingService {
             exception.printStackTrace();
             System.out.println(exception.getMessage());
         }
-    }
-
-    public Iterable<Showing> getAllShowings(){
-        return showingRepository.findAll();
-    }
-
-    public Iterable<Showing> getShowingsByMovieId(Integer movieId){
-        return showingRepository.findByMovieId(movieId);
-    }
-
-    public Iterable<Showing> getShowingsByDate(String dateString){
-        return showingRepository.findByStartsAt(LocalDateTime.parse(dateString));
     }
 
     public Booking book(BookingRequest bookingRequest) throws SeatBookedException{
@@ -91,7 +105,12 @@ public class ShowingService {
         return booking;
     }
 
-    public Showing processRequest(ShowingRequest showingRequest) {
+    public Showing processRequest(ShowingRequest showingRequest) throws InvalidRequestException, NoSuchElementException{
+        if(showingRequest.getTitle() == null || showingRequest.getCinemaHallId() == null ||
+           showingRequest.getStartsAt() == null || showingRequest.getEndsAt() == null ||
+           showingRequest.getCinemaHallId() == null){
+            throw new InvalidRequestException("ShowingRequest");
+        }
         Movie movie = movieRepository.findById(showingRequest.getMovieId()).get();
         CinemaHall cinemaHall = cinemaHallRepository.findById(showingRequest.getCinemaHallId()).get();
         SeatingPlanTemplate seatingPlanTemplate = seatingPlanTemplateRepository.findByCinemaHallId(cinemaHall.getId()).get();
