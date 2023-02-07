@@ -72,16 +72,10 @@ public class AddressServiceTest {
 
         @Test
         public void t02AddressNotFound(){
-            try {
+            assertThrows(NoSuchElementException.class, () -> {
                 when(addressRepository.findById(3)).thenThrow(new NoSuchElementException());
                 addressService.updateAddress(3, request3);
-                fail();
-            }catch(NoSuchElementException noSuchElementException){
-
-            }
-            catch(Exception exception){
-                fail();
-            }
+            });
         }
     }
 
@@ -97,17 +91,12 @@ public class AddressServiceTest {
         }
         @Test
         public void t02AddressNotFound(){
-            try {
+            assertThrows(NoSuchElementException.class, () -> {
                 //doThrow syntax is required because deleteById has return type void
                 doThrow(new NoSuchElementException()).when(addressRepository).deleteById(1);
                 addressService.deleteAddress(1);
-                fail();
-            }catch(NoSuchElementException noSuchElementException){}
-            catch(Exception exception){
-                fail();
-            }
+            });
         }
-
     }
 
     @Nested
@@ -142,11 +131,8 @@ public class AddressServiceTest {
             }
         }
         @Test
-        public void t03InvalidRequest(){
-            try{
-                addressService.processRequest(invalidRequest);
-                fail();
-            }catch(InvalidRequestException invalidRequestException){}
+        public void t03InvalidRequest() {
+            assertThrows(InvalidRequestException.class, () -> addressService.processRequest(invalidRequest));
         }
     }
 }

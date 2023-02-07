@@ -39,6 +39,7 @@ public class MovieServiceTest {
     String genreName = "Action";
     Genre genre = new Genre("Action", "Boom!");
     MovieRequest request = new MovieRequest(title, imagePath, description, length, releasedDate, genreName);
+    MovieRequest invalidRequest = new MovieRequest("", "", "", 0, "", "");
     Movie movie = new Movie(title, imagePath, description, length, LocalDate.parse(releasedDate), genre);
 
 
@@ -52,21 +53,16 @@ public class MovieServiceTest {
         }
         @Test
         public void t02InvalidRequest(){
-            request = new MovieRequest("", "", "", 0, "", "");
-            try{
-                movieService.addMovie(request);
-                fail();
-            }catch (InvalidRequestException invalidRequestException){}
+            assertThrows(InvalidRequestException.class, () -> movieService.addMovie(invalidRequest));
         }
 
         @Test
-        public void t03GenreNotFound() throws InvalidRequestException{
-            try{
+        public void t03GenreNotFound(){
+            assertThrows(NoSuchElementException.class, () -> {
                 MovieRequest request = new MovieRequest(title, imagePath, description, length, releasedDate, genreName);
                 when(genreRepository.findByName(genreName)).thenThrow(new NoSuchElementException());
                 movieService.addMovie(request);
-                fail();
-            }catch (NoSuchElementException noSuchElementException){}
+            });
         }
     }
 
@@ -96,11 +92,10 @@ public class MovieServiceTest {
         Iterable<Movie> actual;
         @Test
         public void t01NoSuchGenre(){
-            when(genreRepository.findByName(genreName)).thenReturn(Optional.empty());
-            try{
+            assertThrows(NoSuchGenreException.class, () -> {
+                when(genreRepository.findByName(genreName)).thenReturn(Optional.empty());
                 movieService.getMoviesByGenre(genreName);
-                fail();
-            }catch(NoSuchGenreException noSuchGenreException){}
+            });
         }
         @Test
         public void t02NoMoviesFound() throws NoSuchGenreException {
@@ -133,14 +128,10 @@ public class MovieServiceTest {
         }
         @Test
         public void t02MovieNotFound(){
-            try {
+            assertThrows(NoSuchElementException.class, () -> {
                 when(movieRepository.findById(3)).thenThrow(new NoSuchElementException());
                 movieService.updateMovie(3, request);
-                fail();
-            }catch(NoSuchElementException noSuchElementException){}
-            catch(Exception exception){
-                fail();
-            }
+            });
         }
         @Test
         public void t03ValidRequest() throws InvalidRequestException {
@@ -150,11 +141,7 @@ public class MovieServiceTest {
         }
         @Test
         public void t04InvalidRequest(){
-            request = new MovieRequest("", "", "", 0, "", "");
-            try{
-                movieService.updateMovie(1, request);
-                fail();
-            }catch (InvalidRequestException invalidRequestException){}
+            assertThrows(InvalidRequestException.class, () -> movieService.updateMovie(1, invalidRequest));
         }
     }
 
@@ -166,15 +153,11 @@ public class MovieServiceTest {
         }
         @Test
         public void t02MovieNotFound(){
-            try {
+            assertThrows(NoSuchElementException.class, () -> {
                 //doThrow syntax is required because deleteById has return type void
                 doThrow(new NoSuchElementException()).when(movieRepository).deleteById(1);
                 movieService.deleteMovie(1);
-                fail();
-            }catch(NoSuchElementException noSuchElementException){}
-            catch(Exception exception){
-                fail();
-            }
+            });
         }
     }
 
@@ -190,21 +173,15 @@ public class MovieServiceTest {
         }
         @Test
         public void t02InvalidRequest(){
-            try{
-                MovieRequest request = new MovieRequest("", imagePath, description, length, "", genreName);
-                movieService.processRequest(request);
-                fail();
-            }catch(InvalidRequestException invalidRequestException){}
+            assertThrows(InvalidRequestException.class, () -> movieService.processRequest(invalidRequest));
         }
 
         @Test
-        public void t03GenreNotFound() throws InvalidRequestException{
-            try{
-                MovieRequest request = new MovieRequest(title, imagePath, description, length, releasedDate, genreName);
+        public void t03GenreNotFound(){
+            assertThrows(NoSuchElementException.class, () -> {
                 when(genreRepository.findByName(genreName)).thenThrow(new NoSuchElementException());
                 movieService.processRequest(request);
-                fail();
-            }catch (NoSuchElementException noSuchElementException){}
+            });
         }
     }
 }
