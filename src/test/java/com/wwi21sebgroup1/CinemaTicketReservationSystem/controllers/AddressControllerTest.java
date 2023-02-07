@@ -93,6 +93,14 @@ public class AddressControllerTest {
             actual = addressController.updateAddress(1, invalidRequest);
             assertEquals(expected, actual);
         }
+
+        @Test
+        public void t04AddressNotFound() throws InvalidRequestException {
+            expected = new ResponseEntity<>(new NoSuchElementException().toString(), HttpStatus.NOT_FOUND);
+            when(addressService.updateAddress(1, validRequestWithAdditionalInfo)).thenThrow(new NoSuchElementException());
+            actual = addressController.updateAddress(1, validRequestWithAdditionalInfo);
+            assertEquals(expected, actual);
+        }
     }
 
     @Nested

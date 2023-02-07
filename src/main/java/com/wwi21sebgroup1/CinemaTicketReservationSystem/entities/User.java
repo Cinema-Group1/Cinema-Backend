@@ -1,7 +1,6 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
-import javax.swing.*;
 import java.time.LocalDate;
 
 @Entity

@@ -34,16 +34,14 @@ public class GenreService {
         return updatedGenre;
     }
 
-    public void deleteGenre(String oldGenreName) {
-        try {
-            genreRepository.delete(genreRepository.findByName(oldGenreName).get());
-        }catch(NoSuchElementException exception){
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
-        }
+    public void deleteGenre(String genreName) throws NoSuchElementException{
+        genreRepository.delete(genreRepository.findByName(genreName).get());
     }
 
     public Genre processRequest(GenreRequest genreRequest) throws InvalidRequestException {
+        if(genreRequest.getName() == null || genreRequest.getDescription() == null){
+            throw new InvalidRequestException("genreRequest");
+        }
         if(genreRequest.getName().isBlank() || genreRequest.getDescription().isBlank()){
             throw new InvalidRequestException("genreRequest");
         }

@@ -29,11 +29,11 @@ public class AddressController {
     public ResponseEntity<Object> updateAddress(@PathVariable Integer oldAddressId, @RequestBody AddressRequest addressRequest){
         try {
             return new ResponseEntity<>(addressService.updateAddress(oldAddressId, addressRequest), HttpStatus.ACCEPTED);
-        }catch(NoSuchElementException noSuchElementException){
-            return new ResponseEntity<>(noSuchElementException.toString(), HttpStatus.NOT_FOUND);
-        }
-        catch (InvalidRequestException invalidRequestException){
+        }catch (InvalidRequestException invalidRequestException){
             return new ResponseEntity<>(invalidRequestException.toString(), HttpStatus.BAD_REQUEST);
+        }
+        catch(NoSuchElementException noSuchElementException){
+            return new ResponseEntity<>(noSuchElementException.toString(), HttpStatus.NOT_FOUND);
         }
     }
 

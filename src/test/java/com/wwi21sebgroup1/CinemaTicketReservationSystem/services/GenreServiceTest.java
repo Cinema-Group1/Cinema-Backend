@@ -1,7 +1,6 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Genre;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Movie;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.GenreRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.GenreRequest;
@@ -11,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -25,26 +23,21 @@ public class GenreServiceTest {
     GenreRepository genreRepository;
     @InjectMocks
     GenreService genreService;
-    Genre expected;
-    Genre actual;
-    static String genreName1 = "Action";
-    static String genreDescription1 = "Boom!";
-    static String genreName2 = "Horror";
-    static String genreDescription2 = "Scary!";
-    static GenreRequest validRequest = new GenreRequest(genreName1, genreDescription1);
-    static GenreRequest invalidRequest = new GenreRequest(" ", "  ");
-    static Genre genre1 = new Genre(genreName1, genreDescription1);
-    static Genre genre2 = new Genre(genreName2, genreDescription2);
-    static Iterable<Genre> genres = new ArrayList<>();
-
+    String genreName = "Action";
+    Genre genre = new Genre(genreName, "Boom!");
+    GenreRequest validRequest = new GenreRequest(genreName, "Boom!");
+    GenreRequest invalidRequest1 = new GenreRequest();
+    GenreRequest invalidRequest2 = new GenreRequest(genreName, "");
     @Nested
     class AddGenre{
+        Genre expected;
+        Genre actual;
         @Test
         public void t01ValidRequest(){
             try{
-                expected = genre1;
+                expected = genre;
                 GenreService genreServiceSpy = spy(genreService);
-                doReturn(genre1).when(genreServiceSpy).processRequest(validRequest);
+                doReturn(genre).when(genreServiceSpy).processRequest(validRequest);
                 actual = genreServiceSpy.addGenre(validRequest);
                 assertEquals(expected, actual);
             }catch(InvalidRequestException invalidRequestException){
@@ -53,25 +46,45 @@ public class GenreServiceTest {
         }
         @Test
         public void t02InvalidRequest(){
-            try{
+            assertThrows(InvalidRequestException.class, () -> {
                 GenreService genreServiceSpy = spy(genreService);
-                doThrow(new InvalidRequestException("GenreRequest")).when(genreServiceSpy).processRequest(invalidRequest);
-                genreServiceSpy.addGenre(invalidRequest);
-                fail("InvalidRequestException was not thrown!");
-            }catch(InvalidRequestException invalidRequestException){}
+                doThrow(new InvalidRequestException("GenreRequest")).when(genreServiceSpy).processRequest(invalidRequest1);
+                genreServiceSpy.addGenre(invalidRequest1);});
+        }
+    }
+
+    @Nested
+    class GetAllGenres{
+        Iterable<Genre> expected;
+        Iterable<Genre> actual;
+        @Test
+        public void t01NoGenresFound(){
+            expected = List.of();
+            when(genreRepository.findAll()).thenReturn(List.of());
+            actual = genreService.getAllGenres();
+            assertEquals(expected, actual);
+        }
+        @Test
+        public void t02GenreFound(){
+            expected = List.of(genre);
+            when(genreRepository.findAll()).thenReturn(List.of(genre));
+            actual = genreService.getAllGenres();
+            assertEquals(expected, actual);
         }
     }
 
     @Nested
     class UpdateGenre{
+        Genre expected;
+        Genre actual;
         @Test
         public void t01ValidRequest(){
             try{
-                expected = genre1;
-                when(genreRepository.findByName(genreName1)).thenReturn(Optional.of(genre1));
+                expected = genre;
+                when(genreRepository.findByName(genreName)).thenReturn(Optional.of(genre));
                 GenreService genreServiceSpy = spy(genreService);
-                doReturn(genre1).when(genreServiceSpy).processRequest(validRequest);
-                actual = genreServiceSpy.updateGenre(genreName1, validRequest);
+                doReturn(genre).when(genreServiceSpy).processRequest(validRequest);
+                actual = genreServiceSpy.updateGenre(genreName, validRequest);
                 assertEquals(expected, actual);
             }catch(InvalidRequestException invalidRequestException){
                 fail(invalidRequestException);
@@ -79,19 +92,18 @@ public class GenreServiceTest {
         }
         @Test
         public void t02InvalidRequest(){
-            try{
-                when(genreRepository.findByName(genreName1)).thenReturn(Optional.of(genre1));
+            assertThrows(InvalidRequestException.class, () ->{
+                when(genreRepository.findByName(genreName)).thenReturn(Optional.of(genre));
                 GenreService genreServiceSpy = spy(genreService);
-                doThrow(new InvalidRequestException("GenreRequest")).when(genreServiceSpy).processRequest(invalidRequest);
-                genreServiceSpy.updateGenre("Action", invalidRequest);
-                fail("InvalidRequestException was not thrown!");
-            }catch(InvalidRequestException invalidRequestException){}
+                doThrow(new InvalidRequestException("GenreRequest")).when(genreServiceSpy).processRequest(invalidRequest1);
+                genreServiceSpy.updateGenre("Action", invalidRequest1);
+            });
         }
         @Test
         public void t03GenreFound(){
             try{
-                expected = genre1;
-                when(genreRepository.findByName("Action")).thenReturn(Optional.of(genre1));
+                expected = genre;
+                when(genreRepository.findByName("Action")).thenReturn(Optional.of(genre));
                 actual = genreService.updateGenre("Action", validRequest);
                 assertEquals(expected, actual);
             }catch (InvalidRequestException invalidRequestException){
@@ -100,14 +112,55 @@ public class GenreServiceTest {
         }
         @Test
         public void t04GenreNotFound(){
-            try {
+            assertThrows(NoSuchElementException.class, () -> {
                 when(genreRepository.findByName("Action")).thenReturn(Optional.empty());
                 genreService.updateGenre("Action", validRequest);
-                fail("NoSuchElementException was not thrown!");
-            }catch(NoSuchElementException noSuchElementException){}
-            catch (Exception exception){
-                fail(exception);
-            }
+            });
+        }
+    }
+
+    @Nested
+    class DeleteGenre{
+        @Test
+        public void t01GenreFound(){
+            when(genreRepository.findByName("Action")).thenReturn(Optional.of(genre));
+            genreService.deleteGenre("Action");
+        }
+        @Test
+        public void t02GenreNotFound(){
+            assertThrows(NoSuchElementException.class, () -> {
+                doThrow(new NoSuchElementException()).when(genreRepository).findByName(genreName);
+                genreService.deleteGenre(genreName);
+            });
+        }
+    }
+
+    @Nested
+    class ProcessRequest{
+        Genre expected;
+        Genre actual;
+        GenreRequest request;
+        @Test
+        public void t01ValidRequest() throws InvalidRequestException {
+            expected = genre;
+            request = validRequest;
+            actual = genreService.processRequest(request);
+            assertEquals(expected, actual);
+        }
+        @Test
+        public void t02InvalidRequest(){
+            assertThrows(InvalidRequestException.class, () -> {
+                request = invalidRequest1;
+                genreService.processRequest(invalidRequest1);
+            });
+        }
+        @Test
+
+        public void t03InvalidRequest(){
+            assertThrows(InvalidRequestException.class, () -> {
+                request = invalidRequest2;
+                genreService.processRequest(invalidRequest2);
+            });
         }
     }
 }
