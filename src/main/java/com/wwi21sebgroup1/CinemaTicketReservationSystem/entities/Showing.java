@@ -14,21 +14,24 @@ public class Showing {
     private String title;
     private LocalDateTime startsAt;
     private LocalDateTime endsAt;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "cinema_hall_id", referencedColumnName = "id")
     private CinemaHall cinemaHall;
 
+    private int pricePerSeat;
+
     public Showing(){}
 
-    public Showing(String title, LocalDateTime startsAt, LocalDateTime endsAt, Movie movie, CinemaHall cinemaHall) {
+    public Showing(String title, LocalDateTime startsAt, LocalDateTime endsAt, Movie movie, CinemaHall cinemaHall, int pricePerSeat) {
         this.title = title;
         this.startsAt = startsAt;
         this.endsAt = endsAt;
         this.movie = movie;
         this.cinemaHall = cinemaHall;
+        this.pricePerSeat = pricePerSeat;
     }
 
     public Integer getId() {
@@ -77,6 +80,14 @@ public class Showing {
 
     public void setCinemaHall(CinemaHall cinemaHall) {
         this.cinemaHall = cinemaHall;
+    }
+
+    public int getPricePerSeat() {
+        return pricePerSeat;
+    }
+
+    public void setPricePerSeat(int pricePerSeat) {
+        this.pricePerSeat = pricePerSeat;
     }
 
     @Override

@@ -31,6 +31,8 @@ public class ShowingServiceTest {
     private SeatingPlanRepository seatingPlanRepository;
     @Mock
     private SeatRepository seatRepository;
+    @Mock
+    private SeatingPlanService seatingPlanService;
     @InjectMocks
     private ShowingService showingService;
 
@@ -39,14 +41,13 @@ public class ShowingServiceTest {
     private String endsAt = "2023-02-07T22:00";
     private int movieId = 1;
     private int cinemaHallId = 2;
-    private int pricePerSeat = 6;
 
     Movie movie = new Movie();
     CinemaHall cinemaHall = new CinemaHall();
 
-    private ShowingRequest validRequest = new ShowingRequest(title, startsAt, endsAt, movieId, cinemaHallId, pricePerSeat);
+    private ShowingRequest validRequest = new ShowingRequest(title, startsAt, endsAt, movieId, cinemaHallId, 6);
     private ShowingRequest invalidRequest = new ShowingRequest();
-    private Showing showing = new Showing(title, LocalDateTime.parse(startsAt), LocalDateTime.parse(endsAt), movie, cinemaHall);
+    private Showing showing = new Showing(title, LocalDateTime.parse(startsAt), LocalDateTime.parse(endsAt), movie, cinemaHall, 6);
 
     @Nested
     class AddShowing{

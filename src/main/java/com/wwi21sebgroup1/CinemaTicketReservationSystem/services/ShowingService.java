@@ -36,10 +36,13 @@ public class ShowingService {
     private TicketRepository ticketRepository;
     @Autowired
     private SeatingPlanTemplateRepository seatingPlanTemplateRepository;
+    @Autowired
+    private SeatingPlanService seatingPlanService;
 
     public Showing addShowing(ShowingRequest showingRequest) throws InvalidRequestException {
         Showing showing = processRequest(showingRequest);
-        showingRepository.save(processRequest(showingRequest));
+        showingRepository.save(showing);
+        seatingPlanService.addSeatingPlan(showing);
         return showing;
     }
     public Iterable<Showing> getAllShowings(){
@@ -108,22 +111,17 @@ public class ShowingService {
     public Showing processRequest(ShowingRequest showingRequest) throws InvalidRequestException, NoSuchElementException{
         if(showingRequest.getTitle() == null || showingRequest.getCinemaHallId() == null ||
            showingRequest.getStartsAt() == null || showingRequest.getEndsAt() == null ||
-           showingRequest.getCinemaHallId() == null){
+           showingRequest.getCinemaHallId() == null || showingRequest.getMovieId() == null){
             throw new InvalidRequestException("ShowingRequest");
         }
         Movie movie = movieRepository.findById(showingRequest.getMovieId()).get();
         CinemaHall cinemaHall = cinemaHallRepository.findById(showingRequest.getCinemaHallId()).get();
-        SeatingPlanTemplate seatingPlanTemplate = seatingPlanTemplateRepository.findByCinemaHallId(cinemaHall.getId()).get();
-        SeatingPlan seatingPlan = new SeatingPlan();
-        seatingPlanRepository.save(seatingPlan);
-        Iterable<SeatNumber> seatNumbers = seatNumberRepository.findAllBySeatingPlanTemplateId(seatingPlanTemplate.getId());
-        for (SeatNumber seatNumber : seatNumbers) {
-            seatRepository.save(new Seat(showingRequest.getPricePerSeat(), false, seatingPlan, seatNumber));
-        }
-        return new Showing( showingRequest.getTitle(),
-                            LocalDateTime.parse(showingRequest.getStartsAt()),
-                            LocalDateTime.parse(showingRequest.getEndsAt()),
-                            movie,
-                            cinemaHall);
+        Showing showing = new Showing( showingRequest.getTitle(),
+                LocalDateTime.parse(showingRequest.getStartsAt()),
+                LocalDateTime.parse(showingRequest.getEndsAt()),
+                movie,
+                cinemaHall,
+                showingRequest.getPricePerSeat());
+        return showing;
     }
 }

@@ -25,8 +25,8 @@ VALUES (102, 'B', 1, 25);
 INSERT INTO seat_number(id, line, number, seating_plan_template_id)
 VALUES (103, 'B', 2, 25);
 
-INSERT INTO showing(id, title, starts_at, ends_at, cinema_hall_id, movie_id)
-VALUES (30, 'Trigger Point Showing', '2023-02-07T20:00', '2023-02-07T22:00', 20, 5);
+INSERT INTO showing(id, title, starts_at, ends_at, cinema_hall_id, movie_id, price_per_seat)
+VALUES (30, 'Trigger Point Showing', '2023-02-07T20:00', '2023-02-07T22:00', 20, 5, 6);
 
 INSERT INTO seating_plan(id, showing_id)
 VALUES (35, 30);
