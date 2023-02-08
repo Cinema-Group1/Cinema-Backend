@@ -2,6 +2,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Showing {
@@ -76,5 +77,18 @@ public class Showing {
 
     public void setCinemaHall(CinemaHall cinemaHall) {
         this.cinemaHall = cinemaHall;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Showing showing = (Showing) o;
+        return Objects.equals(title, showing.title) && Objects.equals(startsAt, showing.startsAt) && Objects.equals(endsAt, showing.endsAt) && Objects.equals(movie, showing.movie) && Objects.equals(cinemaHall, showing.cinemaHall);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, startsAt, endsAt, movie, cinemaHall);
     }
 }

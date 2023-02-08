@@ -1,5 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -11,10 +13,10 @@ public class Booking {
     private int id;
     @ManyToOne
     private User user;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Showing showing;
-    @OneToMany
-    private List<Seat> Seats;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Seat> seats;
     private int price;
 
     public Booking() {}
@@ -22,7 +24,7 @@ public class Booking {
     public Booking(User user, Showing showing, List<Seat> Seats, int price) {
         this.user = user;
         this.showing = showing;
-        this.Seats = Seats;
+        this.seats = Seats;
         this.price = price;
     }
 
@@ -51,11 +53,11 @@ public class Booking {
     }
 
     public List<Seat> getSeats() {
-        return Seats;
+        return seats;
     }
 
     public void setSeats(List<Seat> Seats) {
-        this.Seats = Seats;
+        this.seats = Seats;
     }
 
     public int getPrice() {
@@ -71,11 +73,11 @@ public class Booking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return id == booking.id && price == booking.price && user.equals(booking.user) && showing.equals(booking.showing) && Seats.equals(booking.Seats);
+        return price == booking.price && user.equals(booking.user) && showing.equals(booking.showing) && seats.equals(booking.seats);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, showing, Seats, price);
+        return Objects.hash(id, user, showing, seats, price);
     }
 }

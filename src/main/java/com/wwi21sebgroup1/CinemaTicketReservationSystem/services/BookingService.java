@@ -62,6 +62,7 @@ public class BookingService {
         Iterable<Seat> allSeats = seatRepository.findAllBySeatingPlanId(seatingPlan.getId());
         List<Seat> seatsToBook = new ArrayList<>();
         int totalPrice = 0;
+
         for(Seat seat : allSeats){
             for(String seatNumberString : bookingRequest.getSeatNumbers()){
                 if(seat.getSeatNumber().getLine() == (seatNumberString.charAt(0)) &&

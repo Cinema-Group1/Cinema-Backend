@@ -1,9 +1,6 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Seat;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Showing;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Ticket;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.User;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.SeatRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.ShowingRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.TicketRepository;
@@ -55,9 +52,13 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
+    public Iterable<Ticket> getTicketsByBookingId(int bookingId){
+        return ticketRepository.findByBookingId(bookingId);
+    }
+
     public Ticket transformRequestToObject(TicketRequest ticketRequest){
         Showing showing = showingRepository.findById(ticketRequest.getShowingId()).get();
         Seat seat = seatRepository.findById(ticketRequest.getSeatId()).get();
-        return new Ticket(showing, seat);
+        return new Ticket(showing, seat.getSeatNumber(), new Booking());
     }
 }

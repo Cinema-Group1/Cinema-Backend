@@ -55,7 +55,7 @@ public class Address {
                city.equals(address.city) &&
                street.equals(address.street) &&
                number.equals(address.number) &&
-               Objects.equals(additionalInformation, address.additionalInformation);
+               additionalInformation.equals(address.additionalInformation);
     }
 
     @Override

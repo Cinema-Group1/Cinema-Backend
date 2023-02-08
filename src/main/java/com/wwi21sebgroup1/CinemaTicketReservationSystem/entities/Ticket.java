@@ -1,8 +1,11 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.util.QRCodeGenerator;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
+import java.util.Objects;
 
 @Entity
 public class Ticket {
@@ -12,19 +15,26 @@ public class Ticket {
     private Integer id;
 
     @ManyToOne
+    private Booking booking;
+
+    @ManyToOne
     private Showing showing;
-    @OneToOne
-    private Seat seat;
+    @ManyToOne
+    private SeatNumber seatNumber;
 
     private byte[] qrCode;
 
     public Ticket(){}
 
-    public Ticket(Showing showing, Seat seat) {
+    public Ticket(Showing showing, SeatNumber seatNumber, Booking booking) {
         this.showing = showing;
-        this.seat = seat;
+        this.seatNumber = seatNumber;
+        this.booking = booking;
         try {
-            qrCode = QRCodeGenerator.generateQRCode(showing.getId().toString() + "," + seat.getSeatNumber().toString());
+            qrCode = QRCodeGenerator.generateQRCode(id.toString() + "," +
+                                                        booking.getId() + "," +
+                                                        showing.getId().toString() + "," +
+                                                        seatNumber.toString());
         }catch (Exception e){
             System.err.println(e);
         }
@@ -46,12 +56,12 @@ public class Ticket {
         this.showing = showing;
     }
 
-    public Seat getSeat() {
-        return seat;
+    public SeatNumber getSeat() {
+        return seatNumber;
     }
 
-    public void setSeat(Seat seat) {
-        this.seat = seat;
+    public void setSeat(SeatNumber seat) {
+        this.seatNumber = seat;
     }
 
     public byte[] getQrCode() {
@@ -60,5 +70,18 @@ public class Ticket {
 
     public void setQrCode(byte[] qrCode) {
         this.qrCode = qrCode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ticket ticket = (Ticket) o;
+        return Objects.equals(booking, ticket.booking) && Objects.equals(showing, ticket.showing) && Objects.equals(seatNumber, ticket.seatNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(booking, showing, seatNumber);
     }
 }

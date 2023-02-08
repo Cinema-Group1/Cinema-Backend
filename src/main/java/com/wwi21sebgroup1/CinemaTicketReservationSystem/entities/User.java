@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "User")
+@javax.persistence.Table(name = "\"User\"")
 public class User {
     @Id
     @GeneratedValue(strategy

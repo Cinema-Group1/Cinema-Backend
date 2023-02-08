@@ -17,7 +17,6 @@ public class Seat {
     private SeatNumber seatNumber;
 
     public Seat(){}
-
     public Seat(int price, boolean occupied, SeatingPlan seatingPlan, SeatNumber seatNumber) {
         this.price = price;
         this.occupied = occupied;

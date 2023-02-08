@@ -31,4 +31,8 @@ public class TicketController {
     public @ResponseBody Iterable<Ticket> getTickets(){
         return ticketService.getTickets();
     }
+    @GetMapping("/bookingId:{bookingId}")
+    public @ResponseBody Iterable<Ticket> getTicketsByBookingId(@PathVariable int bookingId){
+        return ticketService.getTicketsByBookingId(bookingId);
+    }
 }

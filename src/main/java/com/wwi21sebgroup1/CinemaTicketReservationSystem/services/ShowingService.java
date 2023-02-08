@@ -100,7 +100,7 @@ public class ShowingService {
         }
         bookingRepository.save(booking);
         for(Seat seat : booking.getSeats()){
-            ticketRepository.save(new Ticket(booking.getShowing(), seat));
+            ticketRepository.save(new Ticket(booking.getShowing(), seat.getSeatNumber(), booking));
         }
         return booking;
     }
