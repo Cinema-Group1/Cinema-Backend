@@ -3,6 +3,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.integration;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers.ShowingController;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers.TicketController;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.SeatBookedException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -65,5 +67,14 @@ public class BookingProcessTest {
 
         assertEquals(expectedBooking, actualBooking);
         assertEquals(expectedTickets, actualTickets);
+    }
+
+    @Test
+    public void t02SeatsAlreadyBooked(){
+        ResponseEntity<Object> expected = new ResponseEntity<>(new SeatBookedException().toString(), HttpStatus.FORBIDDEN);
+        ResponseEntity<Object> actual =
+                showingController.bookShowing(new BookingRequest(40, 30, List.of("B1", "B2")));
+
+        assertEquals(expected, actual);
     }
 }

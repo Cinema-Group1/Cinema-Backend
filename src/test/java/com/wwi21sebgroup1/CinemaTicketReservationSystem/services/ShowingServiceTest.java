@@ -3,7 +3,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.CinemaHall;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Movie;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Showing;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.ShowingRequest;
 import org.junit.jupiter.api.Nested;
@@ -15,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;

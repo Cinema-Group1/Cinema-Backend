@@ -1,12 +1,12 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.requests;
 
 public class MovieRequest {
-    private String title;
-    private String imagePath;
-    private String description;
-    private int length;
-    private String releaseDate;
-    private String genreName;
+    private final String title;
+    private final String imagePath;
+    private final String description;
+    private final int length;
+    private final String releaseDate;
+    private final String genreName;
 
     public MovieRequest(String title,
                         String imagePath,

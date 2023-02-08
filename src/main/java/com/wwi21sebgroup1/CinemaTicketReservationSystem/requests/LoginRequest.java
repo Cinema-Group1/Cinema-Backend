@@ -1,8 +1,8 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.requests;
 
 public class LoginRequest {
-    private String eMail;
-    private String pwd;
+    private final String eMail;
+    private final String pwd;
 
     public LoginRequest(String eMail, String pwd) {
         this.eMail = eMail;
@@ -13,15 +13,7 @@ public class LoginRequest {
         return eMail;
     }
 
-    public void setEMail(String eMail) {
-        this.eMail = eMail;
-    }
-
     public String getPwd() {
         return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
     }
 }

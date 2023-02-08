@@ -1,4 +1,4 @@
-package com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions;
+package com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions;
 
 public class NoSuchGenreException extends Exception{
     public NoSuchGenreException(String genreName){

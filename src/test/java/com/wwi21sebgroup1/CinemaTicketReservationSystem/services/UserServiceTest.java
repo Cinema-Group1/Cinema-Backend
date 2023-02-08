@@ -2,7 +2,7 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Address;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.User;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.AddressRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.UserRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.UserRequest;

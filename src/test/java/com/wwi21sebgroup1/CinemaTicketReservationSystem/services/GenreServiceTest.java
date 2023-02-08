@@ -1,7 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Genre;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.GenreRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.GenreRequest;
 import org.junit.jupiter.api.*;

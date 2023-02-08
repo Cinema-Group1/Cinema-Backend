@@ -1,8 +1,8 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.SeatBookedException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.SeatBookedException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.ShowingRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.ShowingService;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.NoSuchElementException;

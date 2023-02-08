@@ -36,9 +36,9 @@ VALUES (200, 0, 10, 100, 35);
 INSERT INTO seat(id, occupied, price, seat_number_id, seating_plan_id)
 VALUES (201, 0, 10, 101, 35);
 INSERT INTO seat(id, occupied, price, seat_number_id, seating_plan_id)
-VALUES (202, 0, 10, 102, 35);
+VALUES (202, 1, 10, 102, 35);
 INSERT INTO seat(id, occupied, price, seat_number_id, seating_plan_id)
-VALUES (203, 0, 10, 103, 35);
+VALUES (203, 1, 10, 103, 35);
 
 INSERT INTO "user"(id, first_name, last_name, dob, email, password, address_id)
 VALUES (40, 'Hans', 'Meier', '1959-04-23', 'hans@meier.de', 'hans123', 10);

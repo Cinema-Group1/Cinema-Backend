@@ -1,11 +1,9 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.requests;
 
 public class SeatingPlanTemplateRequest {
-    private int rows;
-    private int seatsPerRow;
-    private int cinemaHallId;
-
-    public SeatingPlanTemplateRequest() {}
+    private final int rows;
+    private final int seatsPerRow;
+    private final int cinemaHallId;
 
     public SeatingPlanTemplateRequest(int rows, int seatsPerRow, int cinemaHallId) {
         this.rows = rows;
@@ -17,23 +15,11 @@ public class SeatingPlanTemplateRequest {
         return rows;
     }
 
-    public void setRows(int rows) {
-        this.rows = rows;
-    }
-
     public int getSeatsPerRow() {
         return seatsPerRow;
     }
 
-    public void setSeatsPerRow(int seatsPerRow) {
-        this.seatsPerRow = seatsPerRow;
-    }
-
     public int getCinemaHallId() {
         return cinemaHallId;
-    }
-
-    public void setCinemaHallId(int cinemaHallId) {
-        this.cinemaHallId = cinemaHallId;
     }
 }

@@ -1,10 +1,8 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.entities;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.util.QRCodeGenerator;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.util.Objects;
 
 @Entity
@@ -31,12 +29,12 @@ public class Ticket {
         this.seatNumber = seatNumber;
         this.booking = booking;
         try {
-            qrCode = QRCodeGenerator.generateQRCode(id.toString() + "," +
-                                                        booking.getId() + "," +
+            QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
+            qrCode = qrCodeGenerator.generateQRCode(    booking.getId() + "," +
                                                         showing.getId().toString() + "," +
                                                         seatNumber.toString());
         }catch (Exception e){
-            System.err.println(e);
+            System.out.println(e);
         }
     }
 
