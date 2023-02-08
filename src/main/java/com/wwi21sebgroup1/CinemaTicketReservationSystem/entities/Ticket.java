@@ -20,6 +20,7 @@ public class Ticket {
     @ManyToOne
     private SeatNumber seatNumber;
 
+    @Lob
     private byte[] qrCode;
 
     public Ticket(){}
