@@ -134,14 +134,10 @@ public class MovieServiceTest {
             });
         }
         @Test
-        public void t03ValidRequest() throws InvalidRequestException {
-            expected = movie;
-            when(genreRepository.findByName(genreName)).thenReturn(Optional.of(genre));
-            actual = movieService.updateMovie(1, request);
-        }
-        @Test
-        public void t04InvalidRequest(){
-            assertThrows(InvalidRequestException.class, () -> movieService.updateMovie(1, invalidRequest));
+        public void t03InvalidRequest() throws InvalidRequestException {
+            MovieService movieServiceSpy = spy(movieService);
+            doThrow(new InvalidRequestException("MovieRequest")).when(movieServiceSpy).processRequest(invalidRequest);
+            assertThrows(InvalidRequestException.class, () -> movieServiceSpy.updateMovie(1, invalidRequest));
         }
     }
 

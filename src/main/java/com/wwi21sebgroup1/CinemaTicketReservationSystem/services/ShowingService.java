@@ -40,10 +40,7 @@ public class ShowingService {
     private SeatingPlanService seatingPlanService;
 
     public Showing addShowing(ShowingRequest showingRequest) throws InvalidRequestException {
-        Showing showing = processRequest(showingRequest);
-        showingRepository.save(showing);
-        seatingPlanService.addSeatingPlan(showing);
-        return showing;
+        return processRequest(showingRequest);
     }
     public Iterable<Showing> getAllShowings(){
         return showingRepository.findAll();
@@ -64,10 +61,6 @@ public class ShowingService {
 
     public Iterable<Showing> getShowingsByMovieId(Integer movieId){
         return showingRepository.findByMovieId(movieId);
-    }
-
-    public Iterable<Showing> getShowingsByDate(String dateString){
-        return showingRepository.findByStartsAt(LocalDateTime.parse(dateString));
     }
 
     public Showing updateShowing(Integer id, ShowingRequest showingRequest) throws InvalidRequestException, NoSuchElementException{
@@ -122,6 +115,8 @@ public class ShowingService {
                 movie,
                 cinemaHall,
                 showingRequest.getPricePerSeat());
+        showingRepository.save(showing);
+        seatingPlanService.addSeatingPlan(showing);
         return showing;
     }
 }

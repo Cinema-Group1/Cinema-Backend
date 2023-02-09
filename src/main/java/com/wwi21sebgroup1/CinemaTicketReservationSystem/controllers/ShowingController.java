@@ -43,11 +43,6 @@ public class ShowingController {
         return showingService.getShowingsByMovieId(movieId);
     }
 
-    @GetMapping("/date:{date}")
-    public @ResponseBody Iterable<Showing> getShowingsByDate(@PathVariable String date){
-        return showingService.getShowingsByDate(date);
-    }
-
     @PostMapping("/update:{id}")
     public ResponseEntity<Object> updateShowing(@PathVariable Integer id, @RequestBody ShowingRequest showingRequest) {
         try {
