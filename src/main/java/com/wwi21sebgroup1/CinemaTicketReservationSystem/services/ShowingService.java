@@ -84,7 +84,7 @@ public class ShowingService {
         }
     }
 
-    public Booking book(BookingRequest bookingRequest) throws SeatBookedException{
+    public Booking book(BookingRequest bookingRequest) throws SeatBookedException, InvalidRequestException {
         Booking booking = bookingService.processRequest(bookingRequest);
         for(Seat seat : booking.getSeats()){
             if(seat.isOccupied()){

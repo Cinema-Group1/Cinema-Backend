@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface BookingRepository extends CrudRepository<Booking, Integer> {
     void deleteByShowingId(Integer showingId);
-    Iterable<Booking> getBookingByUserId(Integer userId);
+    Iterable<Booking> findByUserId(Integer userId);
 }

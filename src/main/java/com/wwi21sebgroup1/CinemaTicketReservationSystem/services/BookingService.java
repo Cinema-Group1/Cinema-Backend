@@ -1,5 +1,6 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
@@ -23,8 +24,10 @@ public class BookingService {
     @Autowired
     private SeatRepository seatRepository;
 
-    public void addBooking(BookingRequest bookingRequest){
+    public Booking addBooking(BookingRequest bookingRequest) throws InvalidRequestException {
+        Booking booking = processRequest(bookingRequest);
         bookingRepository.save(processRequest(bookingRequest));
+        return booking;
     }
 
     public Iterable<Booking> getAllBookings(){
@@ -32,30 +35,22 @@ public class BookingService {
     }
 
     public Iterable<Booking> getBookingsByUserId(Integer userId){
-        return bookingRepository.getBookingByUserId(userId);
+        return bookingRepository.findByUserId(userId);
     }
 
-    public void updateBooking(Integer id, BookingRequest bookingRequest){
-        try {
-            Booking updatedBooking = processRequest(bookingRequest);
-            updatedBooking.setId(id);
-            bookingRepository.save(updatedBooking);
-        } catch (NoSuchElementException exception) {
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
-        }
+    public Booking updateBooking(Integer id, BookingRequest bookingRequest) throws InvalidRequestException, NoSuchElementException {
+        bookingRepository.findById(id);
+        Booking updatedBooking = processRequest(bookingRequest);
+        updatedBooking.setId(id);
+        bookingRepository.save(updatedBooking);
+        return updatedBooking;
     }
 
     public void deleteBooking(Integer id){
-        try{
-            bookingRepository.deleteById(id);
-        }catch(NoSuchElementException exception){
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
-        }
+        bookingRepository.deleteById(id);
     }
 
-    public Booking processRequest(BookingRequest bookingRequest){
+    public Booking processRequest(BookingRequest bookingRequest) throws InvalidRequestException{
         Showing showing = showingRepository.findById(bookingRequest.getShowingId()).get();
         User user = userRepository.findById(bookingRequest.getUserId()).get();
         SeatingPlan seatingPlan = seatingPlanRepository.findByShowingId(showing.getId());

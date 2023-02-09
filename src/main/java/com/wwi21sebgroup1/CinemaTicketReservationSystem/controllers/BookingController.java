@@ -1,10 +1,14 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Booking;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/booking")
@@ -13,28 +17,47 @@ BookingController {
     @Autowired
     BookingService bookingService;
 
-    @PostMapping("/add")
-    public void addBooking(@RequestBody BookingRequest bookingRequest){
-        bookingService.addBooking(bookingRequest);
+    @PutMapping("/add")
+    public @ResponseBody ResponseEntity<Object> addBooking(@RequestBody BookingRequest bookingRequest){
+        try{
+            return new ResponseEntity<>(bookingService.addBooking(bookingRequest), HttpStatus.ACCEPTED);
+        }catch (InvalidRequestException invalidRequestException){
+            return new ResponseEntity<>(invalidRequestException.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/all")
-    public @ResponseBody Iterable<Booking> getAllBookings(){
-        return bookingService.getAllBookings();
+    public @ResponseBody ResponseEntity<Object> getAllBookings(){
+        return new ResponseEntity<>(bookingService.getAllBookings(), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/user:{userId}")
-    public @ResponseBody Iterable<Booking> getBookingsByUserId(@PathVariable Integer userId){
-        return bookingService.getBookingsByUserId(userId);
+    public @ResponseBody ResponseEntity<Object> getBookingsByUserId(@PathVariable Integer userId){
+        try{
+            return new ResponseEntity<>(bookingService.getBookingsByUserId(userId), HttpStatus.ACCEPTED);
+        }catch (NoSuchElementException noSuchElementException){
+            return new ResponseEntity<>(noSuchElementException.toString(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/update:{id}")
-    public void updateBooking(@PathVariable Integer id, @RequestBody BookingRequest bookingRequest) {
-        bookingService.updateBooking(id, bookingRequest);
+    public @ResponseBody ResponseEntity<Object> updateBooking(@PathVariable Integer id, @RequestBody BookingRequest bookingRequest) {
+        try{
+            return new ResponseEntity<>(bookingService.updateBooking(id, bookingRequest), HttpStatus.ACCEPTED);
+        }catch (InvalidRequestException invalidRequestException){
+            return new ResponseEntity<>(invalidRequestException.toString(), HttpStatus.BAD_REQUEST);
+        }catch (NoSuchElementException noSuchElementException){
+            return new ResponseEntity<>(noSuchElementException.toString(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/delete:{id}")
-    public void deleteBooking(@PathVariable Integer id){
-        bookingService.deleteBooking(id);
+    public @ResponseBody ResponseEntity<Object> deleteBooking(@PathVariable Integer id){
+        try{
+            bookingService.deleteBooking(id);
+            return new ResponseEntity<>("Successfully deleted booking with Id: " + id, HttpStatus.ACCEPTED);
+        }catch (NoSuchElementException noSuchElementException){
+            return new ResponseEntity<>(noSuchElementException.toString(), HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -69,6 +69,8 @@ public class ShowingController {
             return new ResponseEntity<>(showingService.book(bookingRequest), HttpStatus.ACCEPTED);
         }catch(SeatBookedException seatBookedException){
             return new ResponseEntity<>(seatBookedException.toString(), HttpStatus.FORBIDDEN);
+        }catch (InvalidRequestException invalidRequestException){
+            return new ResponseEntity<>(invalidRequestException.toString(), HttpStatus.BAD_REQUEST);
         }
     }
 }

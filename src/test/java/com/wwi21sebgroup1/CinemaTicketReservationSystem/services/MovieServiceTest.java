@@ -50,6 +50,7 @@ public class MovieServiceTest {
             expected = movie;
             when(genreRepository.findByName(genreName)).thenReturn(Optional.of(genre));
             actual = movieService.addMovie(request);
+            assertEquals(expected, actual);
         }
         @Test
         public void t02InvalidRequest(){
@@ -87,7 +88,7 @@ public class MovieServiceTest {
     }
 
     @Nested
-    class getMoviesByGenre{
+    class GetMoviesByGenre{
         Iterable<Movie> expected;
         Iterable<Movie> actual;
         @Test

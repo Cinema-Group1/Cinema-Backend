@@ -21,7 +21,9 @@ public class MovieService {
     private GenreRepository genreRepository;
 
     public Movie addMovie(MovieRequest movieRequest) throws InvalidRequestException, NoSuchElementException{
-        return movieRepository.save(processRequest(movieRequest));
+        Movie movie = processRequest(movieRequest);
+        movieRepository.save(processRequest(movieRequest));
+        return movie;
     }
 
     public Iterable<Movie> getAllMovies(){

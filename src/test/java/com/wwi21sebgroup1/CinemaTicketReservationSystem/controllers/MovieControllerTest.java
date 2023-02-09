@@ -83,9 +83,10 @@ public class MovieControllerTest {
         ResponseEntity<Object> actual;
         @Test
         public void t01NoSuchGenre() throws NoSuchGenreException {
-            expected = new ResponseEntity<>(new NoSuchGenreException(genreName), HttpStatus.NOT_FOUND);
+            expected = new ResponseEntity<>(new NoSuchGenreException(genreName).toString(), HttpStatus.NOT_FOUND);
             when(movieService.getMoviesByGenre(genreName)).thenThrow(new NoSuchGenreException(genreName));
             actual = movieController.getMoviesByGenre(genreName);
+            assertEquals(expected, actual);
         }
         @Test
         public void t02NoMoviesFound() throws NoSuchGenreException {
