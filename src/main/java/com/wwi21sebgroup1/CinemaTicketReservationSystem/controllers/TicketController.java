@@ -39,7 +39,7 @@ public class TicketController {
         return ticketService.getTicketsByBookingId(bookingId);
     }
 
-    @PutMapping("check:{ticketId}")
+    @PostMapping("check:{ticketId}")
     public @ResponseBody ResponseEntity<Object> checkTicket(@PathVariable int ticketId){
         try{
             return new ResponseEntity<>(ticketService.checkTicket(ticketId), HttpStatus.ACCEPTED);
