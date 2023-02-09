@@ -29,11 +29,4 @@ public class SeatingPlanService {
         }
         return seatingPlan;
     }
-    public Iterable<SeatingPlan> getAllSeatingPlans(){
-        return seatingPlanRepository.findAll();
-    }
-
-    public SeatingPlan getSeatingPlanByShowing(Integer showingId){
-        return seatingPlanRepository.findByShowingId(showingId);
-    }
 }
