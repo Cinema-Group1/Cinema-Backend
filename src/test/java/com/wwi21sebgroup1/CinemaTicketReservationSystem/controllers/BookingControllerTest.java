@@ -1,7 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.BookingService;
 import org.junit.jupiter.api.Nested;

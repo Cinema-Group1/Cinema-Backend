@@ -2,8 +2,8 @@ package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Genre;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Movie;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.NoSuchGenreException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.NoSuchGenreException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.GenreRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.MovieRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.MovieRequest;

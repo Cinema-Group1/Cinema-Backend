@@ -30,23 +30,6 @@ public class Movie {
         this.releaseDate = releasedDate;
         this.genre = genre;
     }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -60,22 +43,6 @@ public class Movie {
     }
 
     public void setTitle(String title) {this.title = title;}
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(LocalDate releasedDate) {
-        this.releaseDate = releasedDate;
-    }
 
     public Genre getGenre() {
         return genre;

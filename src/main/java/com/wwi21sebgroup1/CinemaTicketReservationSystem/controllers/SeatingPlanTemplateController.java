@@ -1,6 +1,6 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.SeatingPlanTemplateRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.SeatingPlanTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;

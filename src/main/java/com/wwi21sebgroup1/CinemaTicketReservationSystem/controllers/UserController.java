@@ -1,6 +1,6 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.LoginRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.UserRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.UserService;

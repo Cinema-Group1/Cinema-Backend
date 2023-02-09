@@ -1,7 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.NoSuchGenreException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.NoSuchGenreException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.MovieRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;

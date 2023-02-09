@@ -1,6 +1,6 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.CinemaHall;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.SeatNumber;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.SeatingPlanTemplate;

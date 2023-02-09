@@ -1,9 +1,12 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Ticket;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidTicketException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.TicketRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,5 +37,14 @@ public class TicketController {
     @GetMapping("/bookingId:{bookingId}")
     public @ResponseBody Iterable<Ticket> getTicketsByBookingId(@PathVariable int bookingId){
         return ticketService.getTicketsByBookingId(bookingId);
+    }
+
+    @PutMapping("make_invalid:{ticketId}")
+    public @ResponseBody ResponseEntity<Object> checkTicket(@PathVariable int ticketId){
+        try{
+            return new ResponseEntity<>(ticketService.checkTicket(ticketId), HttpStatus.ACCEPTED);
+        }catch (InvalidTicketException invalidTicketException){
+            return new ResponseEntity<>(invalidTicketException.toString(), HttpStatus.FORBIDDEN);
+        }
     }
 }

@@ -19,9 +19,9 @@ public class Ticket {
     private Showing showing;
     @ManyToOne
     private SeatNumber seatNumber;
-
     @Lob
     private byte[] qrCode;
+    private boolean valid;
 
     public Ticket(){}
 
@@ -29,6 +29,7 @@ public class Ticket {
         this.showing = showing;
         this.seatNumber = seatNumber;
         this.booking = booking;
+        valid = true;
         try {
             QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
             qrCode = qrCodeGenerator.generateQRCode(    booking.getId() + "," +
@@ -69,6 +70,14 @@ public class Ticket {
 
     public void setQrCode(byte[] qrCode) {
         this.qrCode = qrCode;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 
     @Override

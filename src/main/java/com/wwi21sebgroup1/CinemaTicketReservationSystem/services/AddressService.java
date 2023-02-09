@@ -1,7 +1,7 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Address;
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.repositories.AddressRepository;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.AddressRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,11 @@ public class AddressService {
         return address;
     }
 
-    public Address updateAddress(Integer addressId, AddressRequest addressRequest) throws NoSuchElementException, InvalidRequestException{
-        addressRepository.findById(addressId);
+    public Address updateAddress(Integer oldAddressId, AddressRequest addressRequest) throws NoSuchElementException, InvalidRequestException{
+        //Checks if there is an address with the specified ID and throws NoSuchElementException instead
+        addressRepository.findById(oldAddressId);
         Address updatedAddress = processRequest(addressRequest);
-        updatedAddress.setId(addressId);
+        updatedAddress.setId(oldAddressId);
         addressRepository.save(updatedAddress);
         return updatedAddress;
     }
