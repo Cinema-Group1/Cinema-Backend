@@ -32,9 +32,7 @@ public class Ticket {
         valid = true;
         try {
             QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
-            qrCode = qrCodeGenerator.generateQRCode(    booking.getId() + "," +
-                                                        showing.getId().toString() + "," +
-                                                        seatNumber.toString());
+            qrCode = qrCodeGenerator.generateQRCode("https://cinema-backend-group1.azurewebsites.net/ticket/check:" + id);
         }catch (Exception e){
             System.out.println(e);
         }

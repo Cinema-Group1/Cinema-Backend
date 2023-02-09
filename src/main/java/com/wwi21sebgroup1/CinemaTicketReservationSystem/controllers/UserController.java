@@ -32,7 +32,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/validateLogin")
+    @PostMapping("/validateLogin")
     public ResponseEntity<Object> validateLogin(@RequestBody LoginRequest loginRequest){
         try{
             if(userService.validateLogin(loginRequest.getEMail(), loginRequest.getPwd())){

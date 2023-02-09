@@ -51,11 +51,11 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
-    public boolean checkTicket(Integer ticketId)throws InvalidTicketException {
+    public String checkTicket(Integer ticketId)throws InvalidTicketException {
         Ticket ticket = ticketRepository.findById(ticketId).get();
         if(ticket.isValid()){
             ticket.setValid(false);
-            return true;
+            return "true," + ticket.getShowing().getId();
         }else {
             throw new InvalidTicketException();
         }
