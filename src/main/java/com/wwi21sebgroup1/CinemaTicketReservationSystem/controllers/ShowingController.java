@@ -1,6 +1,5 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.*;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.SeatBookedException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.BookingRequest;
@@ -20,7 +19,7 @@ public class ShowingController {
     private ShowingService showingService;
 
     @PutMapping("/add")
-    public ResponseEntity<Object> addShowing(@RequestBody ShowingRequest showingRequest) {
+    public @ResponseBody ResponseEntity<Object> addShowing(@RequestBody ShowingRequest showingRequest) {
         try{
             return new ResponseEntity<>(showingService.addShowing(showingRequest), HttpStatus.ACCEPTED);
         }catch (InvalidRequestException invalidRequestException){
@@ -29,18 +28,18 @@ public class ShowingController {
     }
 
     @GetMapping("/all")
-    public @ResponseBody Iterable<Showing> getAllShowings() {
-        return showingService.getAllShowings();
+    public @ResponseBody ResponseEntity<Object> getAllShowings() {
+        return new ResponseEntity<>(showingService.getAllShowings(), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/allInFuture")
-    public @ResponseBody Iterable<Showing> getAllShowingsInFuture(){
-        return showingService.getAllShowingsInFuture();
+    public @ResponseBody ResponseEntity<Object> getAllShowingsInFuture(){
+        return new ResponseEntity<>(showingService.getAllShowingsInFuture(), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/movieId:{movieId}")
-    public @ResponseBody Iterable<Showing> getShowingsByMovieId(@PathVariable Integer movieId){
-        return showingService.getShowingsByMovieId(movieId);
+    public @ResponseBody ResponseEntity<Object> getShowingsByMovie(@PathVariable Integer movieId){
+        return new ResponseEntity<>(showingService.getShowingsByMovieId(movieId), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/update:{id}")

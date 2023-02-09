@@ -1,6 +1,5 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.Genre;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.GenreRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.services.GenreService;
@@ -27,7 +26,9 @@ public class GenreController {
     }
 
     @GetMapping("/all")
-    public @ResponseBody Iterable<Genre> getAllGenres(){return genreService.getAllGenres();}
+    public @ResponseBody ResponseEntity<Object> getAllGenres(){
+        return new ResponseEntity<>(genreService.getAllGenres(), HttpStatus.ACCEPTED);
+    }
 
     @PutMapping("/update:{genreName}")
     public ResponseEntity<Object> updateGenre(@PathVariable String genreName, @RequestBody GenreRequest genreRequest){

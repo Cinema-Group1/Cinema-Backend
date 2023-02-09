@@ -52,19 +52,17 @@ public class GenreControllerTest {
     }
     @Nested
     class GetAllGenres{
-        Iterable<Genre> expected;
-        Iterable<Genre> actual;
         @Test
         public void t01NoGenresFound(){
-            expected = List.of();
+            expected = new ResponseEntity<>(List.of(), HttpStatus.ACCEPTED);
             when(genreService.getAllGenres()).thenReturn(List.of());
             actual = genreController.getAllGenres();
             assertEquals(expected, actual);
         }
         @Test
         public void t02GenreFound(){
-            expected = List.of(genre);
-            when(genreController.getAllGenres()).thenReturn(List.of(genre));
+            expected = new ResponseEntity<>(List.of(genre), HttpStatus.ACCEPTED);
+            when(genreService.getAllGenres()).thenReturn(List.of(genre));
             actual = genreController.getAllGenres();
             assertEquals(expected, actual);
         }

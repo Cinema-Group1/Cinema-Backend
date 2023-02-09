@@ -17,7 +17,7 @@ public class AddressController {
     private AddressService addressService;
 
     @PutMapping("/add")
-    public ResponseEntity<Object> addAddress(@RequestBody AddressRequest addressRequest){
+    public @ResponseBody ResponseEntity<Object> addAddress(@RequestBody AddressRequest addressRequest){
         try{
             return new ResponseEntity<>(addressService.addAddress(addressRequest), HttpStatus.ACCEPTED);
         }catch (InvalidRequestException invalidRequestException){
@@ -26,7 +26,7 @@ public class AddressController {
     }
 
     @PostMapping("/update:{oldAddressId}")
-    public ResponseEntity<Object> updateAddress(@PathVariable Integer oldAddressId, @RequestBody AddressRequest addressRequest){
+    public @ResponseBody ResponseEntity<Object> updateAddress(@PathVariable Integer oldAddressId, @RequestBody AddressRequest addressRequest){
         try {
             return new ResponseEntity<>(addressService.updateAddress(oldAddressId, addressRequest), HttpStatus.ACCEPTED);
         }catch (InvalidRequestException invalidRequestException){
@@ -38,7 +38,7 @@ public class AddressController {
     }
 
     @PostMapping("/delete:{oldAddressId}")
-    public ResponseEntity<Object> deleteAddress(@PathVariable Integer oldAddressId){
+    public @ResponseBody ResponseEntity<Object> deleteAddress(@PathVariable Integer oldAddressId){
         try {
             addressService.deleteAddress(oldAddressId);
             return new ResponseEntity<>("Successfully deleted Address with Id: " + oldAddressId, HttpStatus.ACCEPTED);

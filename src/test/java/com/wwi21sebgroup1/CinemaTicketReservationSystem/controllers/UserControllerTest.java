@@ -45,14 +45,12 @@ public class UserControllerTest {
     User user = new User(firstName, lastName, LocalDate.parse(dob), eMail, password, address);
     UserRequest validRequest = new UserRequest(firstName, lastName, dob, eMail, password,
                                               zipCode, city, street, number, additionalInformation);
-
     UserRequest invalidRequest = new UserRequest();
+    ResponseEntity<Object> expected;
+    ResponseEntity<Object> actual;
 
     @Nested
     class AddUser{
-        ResponseEntity<Object> expected;
-        ResponseEntity<Object> actual;
-
         @Test
         public void t01ValidRequest() throws InvalidRequestException {
             expected = new ResponseEntity<>(user, HttpStatus.ACCEPTED);
@@ -71,19 +69,17 @@ public class UserControllerTest {
 
     @Nested
     class GetAllUsers{
-        Iterable<User> expected;
-        Iterable<User> actual;
         @Test
         public void t01NoUsersFound(){
-            expected = List.of();
+            expected = new ResponseEntity<>(List.of(), HttpStatus.ACCEPTED);
             when(userService.getAllUsers()).thenReturn(List.of());
             actual = userController.getAllUsers();
             assertEquals(expected, actual);
         }
         @Test
         public void t02UserFound(){
-            expected = List.of(user);
-            when(userController.getAllUsers()).thenReturn(List.of(user));
+            expected = new ResponseEntity<>(List.of(user), HttpStatus.ACCEPTED);
+            when(userService.getAllUsers()).thenReturn(List.of(user));
             actual = userController.getAllUsers();
             assertEquals(expected, actual);
         }
@@ -91,10 +87,6 @@ public class UserControllerTest {
 
     @Nested
     class ValidateLogin{
-
-        ResponseEntity<Object> expected;
-        ResponseEntity<Object> actual;
-
         @Test
         public void t01loginSuccessful(){
             expected = new ResponseEntity<>(true, HttpStatus.OK);
@@ -120,9 +112,6 @@ public class UserControllerTest {
 
     @Nested
     class UpdateUser{
-        ResponseEntity<Object> expected;
-        ResponseEntity<Object> actual;
-
         @Test
         public void t01ValidRequest() throws InvalidRequestException {
             expected = new ResponseEntity<>(user, HttpStatus.ACCEPTED);
@@ -141,8 +130,6 @@ public class UserControllerTest {
 
     @Nested
     class deleteUser{
-        ResponseEntity<Object> expected;
-        ResponseEntity<Object> actual;
         @Test
         public void t01UserFound(){
             expected = new ResponseEntity<>("Successfully deleted User with Id: " + 1, HttpStatus.ACCEPTED);

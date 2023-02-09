@@ -62,19 +62,17 @@ public class MovieControllerTest {
     }
     @Nested
     class GetAllMovies{
-        Iterable<Movie> expected;
-        Iterable<Movie> actual;
         @Test
         public void t01NoMoviesFound(){
-            expected = List.of();
+            expected = new ResponseEntity<>(List.of(), HttpStatus.ACCEPTED);
             when(movieService.getAllMovies()).thenReturn(List.of());
             actual = movieController.getAllMovies();
             assertEquals(expected, actual);
         }
         @Test
         public void t02MovieFound(){
-            expected = List.of(movie);
-            when(movieController.getAllMovies()).thenReturn(List.of(movie));
+            expected = new ResponseEntity<>(List.of(movie), HttpStatus.ACCEPTED);
+            when(movieService.getAllMovies()).thenReturn(List.of(movie));
             actual = movieController.getAllMovies();
             assertEquals(expected, actual);
         }

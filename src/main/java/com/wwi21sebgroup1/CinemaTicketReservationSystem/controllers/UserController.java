@@ -1,6 +1,5 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.controllers;
 
-import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.User;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.LoginRequest;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.requests.UserRequest;
@@ -29,8 +28,8 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public @ResponseBody Iterable<User> getAllUsers() {
-        return userService.getAllUsers();
+    public @ResponseBody ResponseEntity<Object> getAllUsers() {
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/validateLogin")
