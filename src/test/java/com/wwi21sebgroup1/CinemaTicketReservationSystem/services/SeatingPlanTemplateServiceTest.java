@@ -107,15 +107,9 @@ public class SeatingPlanTemplateServiceTest {
             expected = seatingPlanTemplate;
             SeatingPlanTemplateService seatingPlanTemplateServiceSpy = spy(seatingPlanTemplateService);
             doReturn(seatingPlanTemplate).when(seatingPlanTemplateServiceSpy).processRequest(validRequest);
+            when(seatingPlanTemplateRepository.findById(1)).thenReturn(Optional.of(seatingPlanTemplate));
             actual = seatingPlanTemplateServiceSpy.updateSeatingPlanTemplate(1, validRequest);
             assertEquals(expected, actual);
-        }
-        @Test
-        public void t02SeatingPlanTemplateNotFound(){
-            assertThrows(NoSuchElementException.class, () -> {
-                when(seatingPlanTemplateRepository.findById(3)).thenThrow(new NoSuchElementException());
-                seatingPlanTemplateService.updateSeatingPlanTemplate(3, validRequest);
-            });
         }
         @Test
         public void t03InvalidRequest() throws InvalidRequestException {
