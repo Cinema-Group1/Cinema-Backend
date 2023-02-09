@@ -1,5 +1,6 @@
 package com.wwi21sebgroup1.CinemaTicketReservationSystem.services;
 
+import com.wwi21sebgroup1.CinemaTicketReservationSystem.config.exceptions.InvalidRequestException;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.CinemaHall;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.SeatNumber;
 import com.wwi21sebgroup1.CinemaTicketReservationSystem.entities.SeatingPlanTemplate;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class SeatingPlanTemplateService {
@@ -21,40 +23,37 @@ public class SeatingPlanTemplateService {
     @Autowired
     CinemaHallRepository cinemaHallRepository;
 
-    public void addSeatingPlanTemplate(SeatingPlanTemplateRequest seatingPlanTemplateRequest){
-        seatingPlanTemplateRepository.save(processRequest(seatingPlanTemplateRequest));
-
+    public SeatingPlanTemplate addSeatingPlanTemplate(SeatingPlanTemplateRequest seatingPlanTemplateRequest)throws InvalidRequestException{
+        SeatingPlanTemplate seatingPlanTemplate = processRequest(seatingPlanTemplateRequest);
+        seatingPlanTemplateRepository.save(seatingPlanTemplate);
+        return seatingPlanTemplate;
     }
 
     public Iterable<SeatingPlanTemplate> getAllSeatingPlanTemplates(){
         return seatingPlanTemplateRepository.findAll();
     }
 
-    public SeatingPlanTemplate getByCinemaHallId(Integer cinemaHallId){
-        return seatingPlanTemplateRepository.findByCinemaHallId(cinemaHallId).get();
+    public Optional<SeatingPlanTemplate> getByCinemaHallId(Integer cinemaHallId){
+        return seatingPlanTemplateRepository.findByCinemaHallId(cinemaHallId);
     }
 
-    public void updateSeatingPlanTemplate(Integer id, SeatingPlanTemplateRequest seatingPlantemplateRequest){
-        try{
-            SeatingPlanTemplate updatedSeatingPlanTemplate = processRequest(seatingPlantemplateRequest);
-            updatedSeatingPlanTemplate.setId(id);
-            seatingPlanTemplateRepository.save(updatedSeatingPlanTemplate);
-        }catch(NoSuchElementException exception){
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
+    public SeatingPlanTemplate updateSeatingPlanTemplate(Integer id, SeatingPlanTemplateRequest seatingPlantemplateRequest)throws InvalidRequestException, NoSuchElementException{
+        seatingPlanTemplateRepository.findById(id);
+        SeatingPlanTemplate updatedSeatingPlanTemplate = processRequest(seatingPlantemplateRequest);
+        updatedSeatingPlanTemplate.setId(id);
+        seatingPlanTemplateRepository.save(updatedSeatingPlanTemplate);
+        return updatedSeatingPlanTemplate;
+    }
+
+    public void deleteSeatingPlanTemplate(Integer id) throws NoSuchElementException {
+        seatingPlanTemplateRepository.deleteById(id);
+    }
+
+    public SeatingPlanTemplate processRequest(SeatingPlanTemplateRequest seatingPlanTemplateRequest)throws InvalidRequestException, NoSuchElementException {
+        if(seatingPlanTemplateRequest.getCinemaHallId() == 0 || seatingPlanTemplateRequest.getSeatsPerRow() == 0 ||
+            seatingPlanTemplateRequest.getRows() == 0){
+            throw new InvalidRequestException("SeatingPlanTemplateRequest");
         }
-    }
-
-    public void deleteSeatingPlanTemplate(Integer id) {
-        try {
-            seatingPlanTemplateRepository.deleteById(id);
-        } catch (NoSuchElementException exception) {
-            exception.printStackTrace();
-            System.out.println(exception.getMessage());
-        }
-    }
-
-    public SeatingPlanTemplate processRequest(SeatingPlanTemplateRequest seatingPlanTemplateRequest){
         CinemaHall cinemaHall = cinemaHallRepository.findById(seatingPlanTemplateRequest.getCinemaHallId()).get();
         SeatingPlanTemplate seatingPlanTemplate = new SeatingPlanTemplate(cinemaHall, seatingPlanTemplateRequest.getRows(), seatingPlanTemplateRequest.getSeatsPerRow());
         seatingPlanTemplateRepository.save(seatingPlanTemplate);

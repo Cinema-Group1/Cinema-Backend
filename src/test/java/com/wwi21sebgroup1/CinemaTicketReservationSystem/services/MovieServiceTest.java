@@ -107,7 +107,7 @@ public class MovieServiceTest {
             assertEquals(expected, actual);
         }
         @Test
-        public void t03NoMoviesFound() throws NoSuchGenreException {
+        public void t03MoviesFound() throws NoSuchGenreException {
             when(genreRepository.findByName(genreName)).thenReturn(Optional.of(genre));
             expected = List.of(movie);
             when(movieRepository.findByGenreName(genreName)).thenReturn(List.of(movie));
