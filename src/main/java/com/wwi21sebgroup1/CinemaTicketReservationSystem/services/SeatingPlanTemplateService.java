@@ -38,11 +38,13 @@ public class SeatingPlanTemplateService {
     }
 
     public SeatingPlanTemplate updateSeatingPlanTemplate(Integer id, SeatingPlanTemplateRequest seatingPlantemplateRequest)throws InvalidRequestException, NoSuchElementException{
-        seatingPlanTemplateRepository.findById(id);
         SeatingPlanTemplate updatedSeatingPlanTemplate = processRequest(seatingPlantemplateRequest);
-        updatedSeatingPlanTemplate.setId(id);
-        seatingPlanTemplateRepository.save(updatedSeatingPlanTemplate);
-        return updatedSeatingPlanTemplate;
+        SeatingPlanTemplate seatingPlanTemplate = seatingPlanTemplateRepository.findById(id).get();
+        seatingPlanTemplate.setSeatsPerRow(updatedSeatingPlanTemplate.getSeatsPerRow());
+        seatingPlanTemplate.setRows(updatedSeatingPlanTemplate.getRows());
+        seatingPlanTemplate.setCinemaHall(updatedSeatingPlanTemplate.getCinemaHall());
+        seatingPlanTemplateRepository.save(seatingPlanTemplate);
+        return seatingPlanTemplate;
     }
 
     public void deleteSeatingPlanTemplate(Integer id) throws NoSuchElementException {
