@@ -18,11 +18,10 @@ public class AddressService {
         return address;
     }
 
-    public Address updateAddress(Integer oldAddressId, AddressRequest addressRequest) throws NoSuchElementException, InvalidRequestException{
-        //Checks if there is an address with the specified ID and throws NoSuchElementException instead
-        addressRepository.findById(oldAddressId);
+    public Address updateAddress(Integer addressId, AddressRequest addressRequest) throws NoSuchElementException, InvalidRequestException{
+        addressRepository.findById(addressId);
         Address updatedAddress = processRequest(addressRequest);
-        updatedAddress.setId(oldAddressId);
+        updatedAddress.setId(addressId);
         addressRepository.save(updatedAddress);
         return updatedAddress;
     }
