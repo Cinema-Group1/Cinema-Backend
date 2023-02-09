@@ -18,7 +18,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PutMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity<Object> addUser(@RequestBody UserRequest userRequest) {
         try{
             return new ResponseEntity<>(userService.addUser(userRequest), HttpStatus.ACCEPTED);
