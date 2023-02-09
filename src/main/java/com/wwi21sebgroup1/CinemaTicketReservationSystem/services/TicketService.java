@@ -55,6 +55,7 @@ public class TicketService {
         Ticket ticket = ticketRepository.findById(ticketId).get();
         if(ticket.isValid()){
             ticket.setValid(false);
+            ticketRepository.save(ticket);
             return "true," + ticket.getShowing().getId();
         }else {
             throw new InvalidTicketException();
