@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/ticket")
 public class TicketController {
@@ -38,13 +40,12 @@ public class TicketController {
     public @ResponseBody Iterable<Ticket> getTicketsByBookingId(@PathVariable int bookingId){
         return ticketService.getTicketsByBookingId(bookingId);
     }
-
     @PostMapping("check:{ticketId}")
     public @ResponseBody ResponseEntity<Object> checkTicket(@PathVariable int ticketId){
         try{
             return new ResponseEntity<>(ticketService.checkTicket(ticketId), HttpStatus.ACCEPTED);
-        }catch (InvalidTicketException invalidTicketException){
-            return new ResponseEntity<>(invalidTicketException.toString(), HttpStatus.FORBIDDEN);
+        }catch (NoSuchElementException noSuchElementException){
+            return new ResponseEntity<>(noSuchElementException.toString(), HttpStatus.FORBIDDEN);
         }
     }
 }

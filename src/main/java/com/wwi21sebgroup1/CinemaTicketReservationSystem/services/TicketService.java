@@ -51,15 +51,11 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
-    public String checkTicket(Integer ticketId)throws InvalidTicketException {
+    public String checkTicket(Integer ticketId)throws NoSuchElementException {
         Ticket ticket = ticketRepository.findById(ticketId).get();
-        if(ticket.isValid()){
-            ticket.setValid(false);
-            ticketRepository.save(ticket);
-            return "true," + ticket.getShowing().getId();
-        }else {
-            throw new InvalidTicketException();
-        }
+        Showing showing = ticket.getShowing();
+        ticketRepository.deleteById(ticketId);
+        return "true,"+showing.getId();
     }
 
     public Iterable<Ticket> getTicketsByBookingId(int bookingId){
